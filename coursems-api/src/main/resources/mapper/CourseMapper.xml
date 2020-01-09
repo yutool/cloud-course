@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.anko.coursems.dao.CourseMapper">
+    <resultMap id="clazzInfo" type="clazzDetail">
+        <id property="clazzId" column="clazz_id" />
+        <result property="courseName" column="course_name" />
+        <result property="clazzNum" column="clazz_num" />
+        <result property="teaName" column="tea_name" />
+        <result property="term" column="term" />
+    </resultMap>
+
+    <select id="getJoinCourses" parameterType="string" resultMap="clazzInfo">
+        select c.clazz_id, c.course_name, c.clazz_num, u.user_name tea_name, c.term
+        from t_clazz c, t_clamember m, t_user u
+        where m.user_id = #{userId}
+        and c.clazz_id = m.clazz_id
+        and u.user_id = c.tea_id
+    </select>
+
+    <select id="getCreateCourses" parameterType="string" resultMap="clazzInfo">
+        select c.clazz_id, c.course_name, c.clazz_num, u.user_name tea_name, c.term
+        from t_clazz c, t_user u
+        where tea_id = #{userId}
+        and u.user_id = c.tea_id
+    </select>
+
+    <insert id="createCourse" parameterType="clazzInfo">
+        insert into t_clazz(clazz_id, clazz_num, clazz_name, course_name, term, clazz_explain, tea_id)
+        values(#{clazzId}, #{clazzNum}, #{clazzName}, #{courseName}, #{term}, #{clazzExplain}, #{teaId})
+    </insert>
+
+    <select id="searchCourse" parameterType="string" resultType="clazzDetail">
+        select c.*, u.user_name tea_name
+        from t_clazz c, t_user u
+        where c.clazz_num = #{clazzNum}
+        and u.user_id = c.tea_id
+    </select>
+
+    <insert id="joinCourse" parameterType="clazzMember">
+        insert into t_clamember(clazz_id, user_id)
+        values(#{clazzId}, #{userId})
+    </insert>
+
+    <delete id="quitCourse" parameterType="clazzMember">
+        delete from t_clamember
+        where clazz_id = #{clazzId}
+        and user_id = #{userId}
+    </delete>
+
+    <delete id="dissolveCourse" parameterType="string">
+        delete from t_clazz where clazz_id = #{clazzId};
+    </delete>
+    <delete id="deleteClazzMember" parameterType="string">
+        delete from t_clamember where clazz_id = #{clazzId};
+    </delete>
+    <delete id="deleteClazzResource" parameterType="string">
+        delete from t_resource where clazz_id = #{clazzId};
+    </delete>
+    <delete id="deleteClazzNotice" parameterType="string">
+        delete from t_notice where clazz_id = #{clazzId};
+    </delete>
+
+    <select id="findClazzMemberById" parameterType="clazzMember" resultType="clazzMember">
+        select * from t_clamember
+        where clazz_id = #{clazzId}
+        and user_id = #{userId}
+    </select>
+
+</mapper>

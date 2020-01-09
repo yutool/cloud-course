@@ -1,0 +1,42 @@
+{
+  "allClazz": [
+    {
+      "clazzId": "c1",
+      "clazzNum": "123456",
+      "courseName": "云计算",
+      "teaName": "王飞",
+      "term": "2019-2020"
+    },
+    {
+      "clazzId": "c2",
+      "clazzNum": "123456",
+      "courseName": "软件工程",
+      "teaName": "王飞",
+      "term": "2019-2020"
+    },
+    {
+      "clazzId": "c3",
+      "clazzNum": "123456",
+      "courseName": "数据库",
+      "teaName": "王飞",
+      "term": "2019-2020"
+    }
+  ],
+  "clazzDetail": 
+  {
+    "clazzId": "c1",
+    "clazzNum": "123456",
+    "clazzName": "17计科本1",
+    "courseName": "云计算",
+    "clazzPhoto": "@/assets/images/1.jpeg",
+    "clazz_explain": "null",
+    "term": "2019-2020",
+    "teaName": "戴晶晶"
+  },
+  "clazzMember": [
+    { "userId": "123", "stuName": "姓名", "stuNum": "aaa", "signature": "这个人很懒，什么都没写", "experience": 0, "viewRes": 0, "arrive": 0 },
+    { "userId": "111", "stuName": "姓名", "stuNum": "bbb", "signature": "这个人很懒，什么都没写", "experience": 0, "viewRes": 0, "arrive": 0 },
+    { "userId": "222", "stuName": "姓名", "stuNum": "ccc", "signature": "这个人很懒，什么都没写", "experience": 0, "viewRes": 0, "arrive": 0 }
+  ]
+  
+}

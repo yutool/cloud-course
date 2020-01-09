@@ -1,0 +1,45 @@
+coursems-api/HELP.md
+coursems-api/target/
+!coursems-api/.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+coursems-api/.apt_generated
+coursems-api/.classpath
+coursems-api/.factorypath
+coursems-api/.project
+coursems-api/.settings
+coursems-api/.springBeans
+coursems-api/.sts4-cache
+
+### IntelliJ IDEA ###
+**/.idea
+coursems-api/*.iws
+coursems-api/*.iml
+coursems-api/*.ipr
+
+### NetBeans ###
+coursems-api/nbproject/private/
+coursems-api/nbbuild/
+coursems-api/dist/
+coursems-api/nbdist/
+coursems-api/.nb-gradle/
+coursems-api/build/
+
+### VS Code ###
+**/.vscode/
+
+# ----------app----------
+coursems-app/.DS_Store
+coursems-app/node_modules/
+coursems-app/dist/
+coursems-app/npm-debug.log*
+coursems-app/yarn-debug.log*
+coursems-app/yarn-error.log*
+
+# Editor directories and files
+coursems-app/*.suo
+coursems-app/*.ntvs*
+coursems-app/*.njsproj
+coursems-app/*.sln
