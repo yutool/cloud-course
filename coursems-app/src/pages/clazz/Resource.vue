@@ -10,7 +10,7 @@
     </div>
     <ul class="list-group pt-2">
       <li v-for="resource in this.getClazzResource" :key="resource.resId" class="list-group-item list-group-item-action">
-        <img src="@/assets/images/1.jpeg" class="wpx-60 float-left" alt="">
+        <img src="@/assets/1.jpeg" class="wpx-60 float-left" alt="">
         <div class="plpx-75">
           <div class="res-name">
             <span>{{resource.resName}}</span>

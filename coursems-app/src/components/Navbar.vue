@@ -20,7 +20,7 @@
             <a class="nav-link disabled" href="#">库管理</a>
           </li>
           <li class="nav-item">
-            <router-link to="/about" class="nav-link">关于我们</router-link>
+            <router-link to="/" class="nav-link">关于我们</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/feedback" class="nav-link">反馈</router-link>
@@ -49,7 +49,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import auth from '@/api/auth'
+import auth from '@/utils/auth'
 
 export default {
   name: 'Navbar',

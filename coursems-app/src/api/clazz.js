@@ -1,9 +1,8 @@
-import { request } from './request'
-import api from './url'
+import { request } from '@/utils/request'
 
 export function getClazzDetail (clazzId) {
   return request({
-    url: api.url + '/clazzDetail',
+    url: '/clazzDetail',
     method: 'get',
     params: { clazzId: clazzId }
   })
@@ -11,7 +10,7 @@ export function getClazzDetail (clazzId) {
 
 export function deleteMember (clazzId, userId) {
   return request({
-    url: api.url + '/clazzMember',
+    url: '/clazzMember',
     method: 'delete',
     params: {
       clazzId: clazzId,
@@ -22,7 +21,7 @@ export function deleteMember (clazzId, userId) {
 
 export function sendNotice (messageForm) {
   return request({
-    url: api.url + '/sendNotice',
+    url: '/sendNotice',
     method: 'post',
     data: JSON.stringify(messageForm)
   })
@@ -30,7 +29,7 @@ export function sendNotice (messageForm) {
 
 export function deleteNotice (noticeId) {
   return request({
-    url: api.url + '/deleteNotice',
+    url: '/deleteNotice',
     method: 'delete',
     params: { noticeId: noticeId }
   })
@@ -38,7 +37,7 @@ export function deleteNotice (noticeId) {
 
 export function uploadResource (resourceForm) {
   return request({
-    url: api.url + '/uploadResource',
+    url: '/uploadResource',
     method: 'post',
     data: JSON.stringify(resourceForm)
   })
@@ -46,7 +45,7 @@ export function uploadResource (resourceForm) {
 
 export function deleteResource (resId) {
   return request({
-    url: api.url + '/deleteResource',
+    url: '/deleteResource',
     method: 'delete',
     params: { resId: resId }
   })
@@ -54,7 +53,7 @@ export function deleteResource (resId) {
 
 export function gradeStudent (scoreForm) {
   return request({
-    url: api.url + '/gradeStudent',
+    url: '/gradeStudent',
     method: 'put',
     data: JSON.stringify(scoreForm)
   })
@@ -62,7 +61,7 @@ export function gradeStudent (scoreForm) {
 
 export function enableAppraise (clazzDetail) {
   return request({
-    url: api.url + '/enableAppraise',
+    url: '/enableAppraise',
     method: 'put',
     data: JSON.stringify(clazzDetail)
   })

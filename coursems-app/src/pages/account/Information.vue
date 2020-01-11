@@ -9,7 +9,7 @@
         <div class="row">
           <!-- 头像 -->
           <div class="col-md-3 text-center">
-            <img src="@/assets/images/1.jpeg" class="wpx-150" alt="">
+            <img src="@/assets/1.jpeg" class="wpx-150" alt="">
             <div class="hpx-10"></div>
             <a href="#" class="btn btn-primary">设置头像</a>
             <div class="hpx-10"></div>

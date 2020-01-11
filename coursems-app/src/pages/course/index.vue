@@ -30,7 +30,7 @@
             <a class="card border-0 shadow-sm pointer" @click="bindClazz(course)">
               <el-row>
                 <el-col :xs="9">
-                  <img src="@/assets/images/1.jpeg" class="card-img-top" alt="..." />
+                  <img src="@/assets/1.jpeg" class="card-img-top" alt="..." />
                 </el-col>
                 <el-col :xs="15">
                   <div class="text-dark clazz-info">
@@ -63,7 +63,7 @@
             <a class="card border-0 shadow-sm  pointer" @click="bindClazz(course)" >
               <el-row>
                 <el-col :xs="9">
-                  <img src="@/assets/images/1.jpeg" class="card-img-top" alt="..." />
+                  <img src="@/assets/1.jpeg" class="card-img-top" alt="..." />
                 </el-col>
                 <el-col :xs="15">
                   <div class="text-dark clazz-info">

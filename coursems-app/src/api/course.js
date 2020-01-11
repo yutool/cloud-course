@@ -1,9 +1,8 @@
-import { request } from './request'
-import api from './url'
+import { request } from '@/utils/request'
 
 export function getAllCourse (userId) {
   return request({
-    url: api.url + '/allCourse',
+    url: '/allCourse',
     method: 'get',
     params: {userId: userId}
   })
@@ -11,7 +10,7 @@ export function getAllCourse (userId) {
 
 export function createCourse (clazzForm) {
   return request({
-    url: api.url + '/createCourse',
+    url: '/createCourse',
     method: 'post',
     data: JSON.stringify(clazzForm)
   })
@@ -19,7 +18,7 @@ export function createCourse (clazzForm) {
 
 export function searchCourse (clazzNum) {
   return request({
-    url: api.url + '/searchCourse',
+    url: '/searchCourse',
     method: 'get',
     params: { clazzNum: clazzNum }
   })
@@ -27,7 +26,7 @@ export function searchCourse (clazzNum) {
 
 export function joinCourse (joinClazzForm) {
   return request({
-    url: api.url + '/joinCourse',
+    url: '/joinCourse',
     method: 'post',
     data: JSON.stringify(joinClazzForm)
   })
@@ -35,7 +34,7 @@ export function joinCourse (joinClazzForm) {
 
 export function quitCourse (clazzId, userId) {
   return request({
-    url: api.url + '/quitCourse',
+    url: '/quitCourse',
     method: 'delete',
     params: {
       clazzId: clazzId,
@@ -46,7 +45,7 @@ export function quitCourse (clazzId, userId) {
 
 export function dissolveCourse (clazzId) {
   return request({
-    url: api.url + '/dissolveCourse',
+    url: '/dissolveCourse',
     method: 'delete',
     params: {clazzId: clazzId}
   })

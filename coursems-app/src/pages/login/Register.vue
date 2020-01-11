@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import { randomString } from '@/assets/js/utils'
+import { randomString } from '@/utils/utils'
 import { register } from '@/api/account'
-import auth from '@/api/auth'
+import auth from '@/utils/auth'
 
 export default {
   userName: 'Register',

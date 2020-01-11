@@ -4,6 +4,7 @@ const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
+const PrerenderSPAPlugin = require('prerender-spa-plugin')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -12,6 +13,7 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const env = require('../config/prod.env')
+const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -115,7 +117,19 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    
+    // prerender-spa-plugin
+    new PrerenderSPAPlugin({
+      // 存放的静态资源目录
+      staticDir: path.join(__dirname, '../dist'),
+      // 对应路由文件的path
+      routes: ['/'],
+      // 预编译的重要配置
+      renderer: new Renderer({
+        renderAfterDocumentEvent: 'render-event'
+      })
+    })
   ]
 })
 

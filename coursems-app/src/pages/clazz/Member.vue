@@ -19,7 +19,7 @@
         <el-col :md="7" :sm="10">
           <ul class="list-group">
             <li v-for="member in this.getClazzMember" :key="member.userId" class="list-group-item list-group-item-action pointer" @click="selectMember(member)">
-              <img src="@/assets/images/1.jpeg" class="wpx-30 mr-2 rounded-circle" alt="">
+              <img src="@/assets/1.jpeg" class="wpx-30 mr-2 rounded-circle" alt="">
               <span>{{member.stuName}}</span> <span>{{member.stuNum}}</span>
               <span class="float-right">{{member.experience}}</span>
             </li>
@@ -31,7 +31,7 @@
         <el-col v-if="this.getClazzMember.length" :md="17" :sm="14"  class="hidden-xs-only border p-0">
           <!-- 个人信息 -->
           <div class="border-bottom clearfix p-1">
-            <img src="@/assets/images/1.jpeg" class="wpx-75 rounded-circle m-2 float-left" alt="头像">
+            <img src="@/assets/1.jpeg" class="wpx-75 rounded-circle m-2 float-left" alt="头像">
             <div class="float-left pt-1 pl-2">
                 <div class="hpx-10"></div>
                 <span>{{selectedMember.stuName}}</span>

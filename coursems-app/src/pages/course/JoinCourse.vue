@@ -18,7 +18,7 @@
             <!-- 班级存在 -->
             <el-row v-if="clazzInfo" :gutter="20" class="pt-5">
               <el-col :md="9" :sm="9" :xs="24" class="text-center">
-                <img src="@/assets/images/1.jpeg" class="wpx-150 mt-2" alt="">
+                <img src="@/assets/1.jpeg" class="wpx-150 mt-2" alt="">
                 <div class="text-center pt-3 pb-3">
                   <el-button type="primary" class="btn-flat" @click="goJoinCourse">加入班级</el-button>
                 </div>

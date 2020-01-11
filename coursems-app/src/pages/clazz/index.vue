@@ -3,7 +3,7 @@
     <!-- 班级标题 -->
     <el-row class="w-70 mb-3">
       <el-col :md="4" :sm="5" :xs="12">
-        <img src="@/assets/images/1.jpeg" class="rounded-circle wpx-90 float-left" alt="...">
+        <img src="@/assets/1.jpeg" class="rounded-circle wpx-90 float-left" alt="...">
       </el-col>
       <el-col :md="8" :sm="7" :xs="12" class="text-truncate pt-3">
         <span>{{clazzDetail.courseName}}</span>

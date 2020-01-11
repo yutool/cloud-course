@@ -6,16 +6,16 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
-import ElementUI from 'element-ui'
 import Popconfirm from '@/components'
+import elementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min.js'
-import '@/assets/css/style.css'
-import logger from '@/assets/js/logger.js'
+import './styles/style.css'
+import logger from './utils/logger.js'
 
-Vue.use(ElementUI)
+Vue.use(elementUI)
 Vue.use(Popconfirm)
 Vue.prototype.$log = logger
 Vue.prototype.$http = axios
@@ -26,6 +26,8 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
-  template: '<App/>'
+  render: h => h(App),
+  mounted () {
+    document.dispatchEvent(new Event('render-event'))
+  }
 })

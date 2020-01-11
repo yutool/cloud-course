@@ -2,7 +2,7 @@
   <div class="container">
     <el-row class="pb-5">
       <el-col :md="7" :sm="10" class="text-center">
-          <img src="@/assets/images/computing-on-a-chart.png" width="200">
+          <img src="@/assets/computing-on-a-chart.png" width="200">
         </el-col>
       <el-col :md="17" :sm="14" class="pt-5">
         <h2 class="pl-3">课程管理系统</h2>
@@ -15,7 +15,7 @@
     <el-row :gutter="30" class="pb-5">
       <el-col :md="8" :sm="12" class="pb-2">
         <el-card class="box-card text-center pt-3">
-          <img src="@/assets/images/1.jpeg" class="wpx-75 rounded-circle" >
+          <img src="@/assets/1.jpeg" class="wpx-75 rounded-circle" >
           <div class="pt-2">
             <el-popover placement="bottom"  width="200" trigger="click"
               content="任务分配：系统设计实现">
@@ -32,7 +32,7 @@
       </el-col>
       <el-col :md="8" :sm="12" class="pb-2">
         <el-card class="box-card text-center pt-3">
-          <img src="@/assets/images/1.jpeg" class="wpx-75 rounded-circle" >
+          <img src="@/assets/1.jpeg" class="wpx-75 rounded-circle" >
           <div class="pt-2">
             <el-popover placement="bottom"  width="200" trigger="click"
               content="任务分配：系统BUG测试">
@@ -49,7 +49,7 @@
       </el-col>
       <el-col :md="8" :sm="12" class="pb-2">
         <el-card class="box-card text-center pt-3">
-          <img src="@/assets/images/1.jpeg" class="wpx-75 rounded-circle" >
+          <img src="@/assets/1.jpeg" class="wpx-75 rounded-circle" >
           <div class="pt-2">
             <el-popover placement="bottom"  width="200" trigger="click"
               content="任务分配：系统需求分析">
@@ -66,7 +66,7 @@
       </el-col>
       <el-col :md="8" :sm="12" class="pb-2">
         <el-card class="box-card text-center pt-3">
-          <img src="@/assets/images/1.jpeg" class="wpx-75 rounded-circle" >
+          <img src="@/assets/1.jpeg" class="wpx-75 rounded-circle" >
           <div class="pt-2">
             <el-popover placement="bottom"  width="200" trigger="click"
               content="任务分配：数据库设计">
@@ -83,7 +83,7 @@
       </el-col>
       <el-col :md="8" :sm="12" class="pb-2">
         <el-card class="box-card text-center pt-3">
-          <img src="@/assets/images/1.jpeg" class="wpx-75 rounded-circle" >
+          <img src="@/assets/1.jpeg" class="wpx-75 rounded-circle" >
           <div class="pt-2">
             <el-popover placement="bottom" width="200" trigger="click"
               content="不懂就问他">

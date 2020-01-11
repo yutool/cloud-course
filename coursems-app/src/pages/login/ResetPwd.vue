@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { randomString } from '@/assets/js/utils'
+import { randomString } from '@/utils/utils'
 import { resetPassWord } from '@/api/account'
 export default {
   name: 'ResetPwd',

@@ -16,7 +16,7 @@
           <div class="col-md-1"></div>
           <div class="col-md-3 text-center mb-2">
             <div class="mb-2">
-              <img src="@/assets/images/1.jpeg" class="rounded wpx-150" alt="">
+              <img src="@/assets/1.jpeg" class="rounded wpx-150" alt="">
             </div>
             <el-button type="primary" class="mt-1 bt-1">
               <i class="el-icon-upload"></i>上传图片

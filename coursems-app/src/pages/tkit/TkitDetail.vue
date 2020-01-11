@@ -14,7 +14,7 @@
       <div class="card-header mb-2">
         <div class="row">
           <div class="col-md-7">
-          <img src="@/assets/images/1.jpeg" class="wpx-90 float-left" alt="">
+          <img src="@/assets/1.jpeg" class="wpx-90 float-left" alt="">
           <div class="plpx-115">
             <h5 class="mt-3">课程名：xxx</h5>
             <span>xxx发布</span>
@@ -49,17 +49,17 @@
             <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item clearfix">
-                  <img src="@/assets/images/1.jpeg" class="wpx-40 float-left" alt="">
+                  <img src="@/assets/1.jpeg" class="wpx-40 float-left" alt="">
                   <div class="pl-3 pt-2 float-left">1.资源名xxx</div>
                   <div class="pt-2 float-right">描述</div>
                 </li>
                 <li class="list-group-item clearfix">
-                  <img src="@/assets/images/1.jpeg" class="wpx-40 float-left" alt="">
+                  <img src="@/assets/1.jpeg" class="wpx-40 float-left" alt="">
                   <div class="pl-3 pt-2 float-left">1.资源名xxx</div>
                   <div class="pt-2 float-right">描述</div>
                 </li>
                 <li class="list-group-item clearfix">
-                  <img src="@/assets/images/1.jpeg" class="wpx-40 float-left" alt="">
+                  <img src="@/assets/1.jpeg" class="wpx-40 float-left" alt="">
                   <div class="pl-3 pt-2 float-left">1.资源名xxx</div>
                   <div class="pt-2 float-right">描述</div>
                 </li>

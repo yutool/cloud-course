@@ -67,7 +67,7 @@
         <div class="col-md-9">
           <div class="list-group">
             <router-link to="detail" class="list-group-item list-group-item-action">
-              <img src="@/assets/images/1.jpeg" class="wpx-90 float-left" alt="">
+              <img src="@/assets/1.jpeg" class="wpx-90 float-left" alt="">
               <div class="float-left pt-3 pl-4">
                   <span>课程名：xxx</span>
                   <div class="hpx-10"></div>
@@ -80,7 +80,7 @@
               </div>
             </router-link>
             <router-link to="cpdetail" class="list-group-item list-group-item-action">
-              <img src="@/assets/images/1.jpeg" class="wpx-90 float-left" alt="">
+              <img src="@/assets/1.jpeg" class="wpx-90 float-left" alt="">
               <div class="float-left pt-3 pl-4">
                   <span>课程名：xxx</span>
                   <div class="hpx-10"></div>

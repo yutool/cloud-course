@@ -9,7 +9,7 @@
         <el-row class="pb-4">
           <el-col :md="5" :sm="2">&emsp;</el-col>
           <el-col :md="3" :sm="6" :xs="24" class="text-center">
-            <img src="@/assets/images/1.jpeg" class="wpx-90 rounded-circle" alt="...">
+            <img src="@/assets/1.jpeg" class="wpx-90 rounded-circle" alt="...">
           </el-col>
           <el-col :md="13 " :sm="16" :xs="24" class="text-center pt-2">
             <a href="javascript:void(0);" class="pointer" @click="enEmail = !enEmail">关联邮箱：{{userInfo.email}}</a>
@@ -42,7 +42,7 @@
         <el-row class="pb-4">
           <el-col :md="5" :sm="2">&emsp;</el-col>
           <el-col :md="3" :sm="6" :xs="24" class="text-center">
-            <img src="@/assets/images/1.jpeg" class="wpx-90 rounded-circle" alt="...">
+            <img src="@/assets/1.jpeg" class="wpx-90 rounded-circle" alt="...">
           </el-col>
           <el-col :md="13" :sm="16" :xs="24" class="text-center pt-2">
             <a href="javascript:void(0);" class="pointer" @click="enPhone = !enPhone">关联手机：{{userInfo.phoneNum || '未绑定'}}</a>
@@ -75,7 +75,7 @@
         <el-row class="pb-4">
           <el-col :md="5" :sm="2">&emsp;</el-col>
           <el-col :md="3" :sm="6" :xs="24" class="text-center">
-            <img src="@/assets/images/1.jpeg" class="wpx-90 rounded-circle" alt="...">
+            <img src="@/assets/1.jpeg" class="wpx-90 rounded-circle" alt="...">
           </el-col>
           <el-col :md="13" :sm="16" :xs="24" class="text-center pt-3">
             <a href="javascript:void(0);" class="pointer" @click="enRestPwd = !enRestPwd">修改密码</a>
@@ -105,7 +105,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { randomString } from '@/assets/js/utils'
+import { randomString } from '@/utils/utils'
 import { bindEmail, bindPhone, resetPassWord } from '@/api/account'
 export default {
   name: 'Security',

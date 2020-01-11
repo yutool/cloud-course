@@ -5,7 +5,7 @@
     <el-row :gutter="20">
       <!-- 二维码 -->
       <el-col :md="12" :sm="9" class="text-center">
-        <img src="@/assets/images/QRcode.jpg" class="rounded mx-auto d-block wpx-160" alt="...">
+        <img src="@/assets/QRcode.jpg" class="rounded mx-auto d-block wpx-160" alt="...">
         <h6 class="pt-3">扫描二维码登录</h6>
         <p>请使用<a href="#">客户端</a>扫码登录</p>
       </el-col>
@@ -34,7 +34,7 @@
 <script>
 import { login } from '@/api/account'
 import { mapActions } from 'vuex'
-import auth from '@/api/auth'
+import auth from '@/utils/auth'
 
 export default {
   name: 'Register',
