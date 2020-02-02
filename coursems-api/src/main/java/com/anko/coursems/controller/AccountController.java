@@ -1,52 +1,58 @@
 package com.anko.coursems.controller;
 
+import com.anko.coursems.common.result.ResultCode;
 import com.anko.coursems.entity.UserInfo;
-import com.anko.coursems.model.RequestResult;
-import com.anko.coursems.service.impl.AccountService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.anko.coursems.common.result.Result;
+import com.anko.coursems.service.IAccountService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
+@Slf4j
+@RequestMapping("/api/v1")
 @RestController
 public class AccountController {
-    private Logger log = LoggerFactory.getLogger(AccountController.class);
     @Autowired
-    private AccountService accountService;
+    private IAccountService userService;
 
     @PostMapping("/login")
-    public RequestResult login(@RequestBody UserInfo loginForm) {
+    public Result login(@RequestBody UserInfo loginForm, HttpServletRequest request) {
         log.info(loginForm.toString());
-        return accountService.login(loginForm);
+        UserInfo userInfo = userService.login(loginForm);
+        if(userInfo == null) {
+            return Result.error(ResultCode.USER_LOGIN_ERROR);
+        }
+        request.getSession().setAttribute("userInfo", userInfo);
+        return Result.success(userInfo);
+    }
+
+    @PostMapping("/logout")
+    public Result logout(HttpServletRequest request) {
+        log.info("用户退出");
+        request.getSession().removeAttribute("userInfo");
+        return Result.success();
     }
 
     @PostMapping("/register")
-    public RequestResult register(@RequestBody UserInfo registerForm) {
+    public Result register(@RequestBody UserInfo registerForm) {
         log.info(registerForm.toString());
-        return accountService.register(registerForm);
+        UserInfo userInfo = userService.register(registerForm);
+        if(userInfo == null) {
+            return Result.error(ResultCode.USER_REGISTER_ERROR);
+        }
+        return Result.success(userInfo);
     }
 
-    @PutMapping("resetPassWord")
-    public RequestResult resetPassWord(@RequestBody UserInfo userInfo) {
-        log.info(userInfo.toString());
-        return accountService.resetPassWord(userInfo);
+    @PostMapping("/resetPassword")
+    public Result resetPassword(@RequestBody UserInfo passwordForm) {
+        log.info(passwordForm.toString());
+        ResultCode code =  userService.resetPassword(passwordForm);
+        return Result.builder().build().setResultCode(code);
     }
 
-    @PutMapping("userInfo")
-    public RequestResult updateUserInfo(@RequestBody UserInfo userInfo) {
-        log.info(userInfo.toString());
-        return accountService.updateUserInfo(userInfo);
-    }
-
-    @PutMapping("bindEmail")
-    public RequestResult bindEmail(@RequestBody UserInfo userInfo) {
-        log.info(userInfo.toString());
-        return accountService.bindEmail(userInfo);
-    }
-
-    @PutMapping("bindPhone")
-    public RequestResult bindPhone(@RequestBody UserInfo userInfo) {
-        log.info(userInfo.toString());
-        return accountService.bindPhone(userInfo);
-    }
 }

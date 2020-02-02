@@ -7,13 +7,14 @@ import com.anko.coursems.model.MemberDetail;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public interface CourseMapper {
     // 获取用户加入的班级
-    ArrayList<ClazzDetail> getJoinCourses(String userId);
+    List<ClazzDetail> getJoinCourses(String userId);
     // 获取用户创建的班级
-    ArrayList<ClazzDetail> getCreateCourses(String userId);
+    List<ClazzDetail> getCreateCourses(String userId);
     // 创建班级
     int createCourse(ClazzInfo clazzInfo);
     // 通过班课号查找班级

@@ -50,7 +50,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { updateUserInfo } from '@/api/account'
+import { updateUserInfo } from '@/api/user'
 export default {
   name: 'Information',
   data () {
@@ -87,7 +87,7 @@ export default {
         if (valid) {
           this.$log.info('info/form', this.userInfo)
           updateUserInfo(this.userInfo).then(res => {
-            if (res.status === 1) {
+            if (res.code === 0) {
               this.setUserInfo(this.userInfo)
               this.$message({ message: '更新信息成功', type: 'success' })
             }

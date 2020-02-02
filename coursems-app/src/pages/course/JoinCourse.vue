@@ -62,8 +62,8 @@ export default {
   methods: {
     submit () {
       searchCourse(this.serachNum).then(res => {
-        if (res.status === 1) {
-          this.clazzInfo = res.content
+        if (res.code === 0) {
+          this.clazzInfo = res.data
         } else {
           this.clazzInfo = null
           this.hint = res.message
@@ -81,7 +81,7 @@ export default {
         userId: this.$store.state.userInfo.userId
       }
       joinCourse(joinForm).then(res => {
-        if (res.status === 1) {
+        if (res.code === 0) {
           this.$log.info('join/result', res)
           this.$router.push('/course')
           this.$message({type: 'success', message: res.message})

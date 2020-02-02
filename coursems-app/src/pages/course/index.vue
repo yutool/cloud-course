@@ -94,13 +94,12 @@ export default {
   name: 'Course',
   data () {
     return {
-      fullscreenLoading: false,
       serachName: '',
       activeName: 'join'
     }
   },
   computed: {
-    ...mapState(['userCourse']),
+    ...mapState(['userCourse', 'fullscreenLoading']),
     ...mapGetters(['getUserId'])
   },
   methods: {
@@ -112,8 +111,8 @@ export default {
   },
   mounted () {
     getAllCourse(this.getUserId).then(res => {
-      if (res.status === 1) {
-        this.setUserCourse(res.content)
+      if (res.code === 0) {
+        this.setUserCourse(res.data)
         this.$log.info('getJoinCourses', res)
       }
     })

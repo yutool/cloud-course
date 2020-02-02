@@ -57,7 +57,7 @@ export default {
   methods: {
     quitClazz () {
       quitCourse(this.getClazzId, this.getUserId).then(res => {
-        if (res.status === 1) {
+        if (res.code === 0) {
           this.$router.push('/course')
           this.$message({type: 'success', message: '成功退出班级'})
           this.$log.info('quitCourse', res)
@@ -67,7 +67,7 @@ export default {
     dissolveClazz () {
       dissolveCourse(this.getClazzId).then(res => {
         this.$log.info('dissolveCourse', res)
-        if (res.status === 1) {
+        if (res.code === 0) {
           this.$router.push('/course')
           this.$message({type: 'success', message: '成功解散班级'})
           this.$log.info('dissolveCourse', res)

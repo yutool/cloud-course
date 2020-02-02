@@ -41,5 +41,8 @@ export default {
   },
   [types.SET_SELECTED_MEMBER] (state, member) {
     state.selectedMember = member
+  },
+  [types.SET_FULLSCREEN_LOADING] (state, loading) {
+    state.fullscreenLoading = loading
   }
 }

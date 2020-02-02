@@ -33,7 +33,6 @@ import { getClazzDetail } from '@/api/clazz'
 export default {
   name: 'Clazz',
   data: () => ({
-    fullscreenLoading: false,
     selected: {},
     activeName: '/clazz/member',
     serachName: '',
@@ -42,7 +41,7 @@ export default {
     timeout: null
   }),
   computed: {
-    ...mapState(['clazzDetail', 'userCourse']),
+    ...mapState(['clazzDetail', 'userCourse', 'fullscreenLoading']),
     ...mapGetters(['getClazzId', 'getClazzMember'])
   },
   methods: {
@@ -74,7 +73,7 @@ export default {
     handleSelect (item) {
       this.courseList = ''
       getClazzDetail(item.clazzId).then(res => {
-        this.setClazzDetail(res.content)
+        this.setClazzDetail(res.data)
         this.setSelectedMember(this.getClazzMember[0])
         this.$log.info('getClazzDetail', res)
       })
@@ -92,7 +91,7 @@ export default {
   mounted () {
     this.loadAll()
     getClazzDetail(this.getClazzId).then(res => {
-      this.setClazzDetail(res.content)
+      this.setClazzDetail(res.data)
       this.setSelectedMember(this.getClazzMember[0])
       this.$router.push('/clazz/member')
       this.$log.info('getClazzDetail', res)

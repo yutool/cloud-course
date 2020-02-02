@@ -1,6 +1,7 @@
 import axios from 'axios'
 import auth from './auth'
 import store from '@/store'
+import {Message} from 'element-ui'
 
 export function request (options) {
   return new Promise((resolve, reject) => {
@@ -11,14 +12,11 @@ export function request (options) {
       headers: {
         'Content-Type': 'application/json'
       },
-      timeout: 30 * 1000 // 30秒超时
+      timeout: 20 * 1000 // 20秒超时
     })
     // 拦截请求
     instance.interceptors.request.use(config => {
-      const token = auth.getToken()
-      if (token) { // 如果本地存在token，请求时带上
-        config.headers.Authorization = auth.addAuthorization(token)
-      }
+      store.dispatch('setFullscreenLoading', true)
       return config
     }, error => {
       reject(error)
@@ -37,6 +35,7 @@ export function request (options) {
         2 如果这时有请求，将其添加到requests
         3 刷新token后，requests中的请求发至服务器
       */
+      store.dispatch('setFullscreenLoading', false)
       if (response.data.status === 1000) {
         alert('fsdfdsfds')
         const config = response.config
@@ -69,12 +68,9 @@ export function request (options) {
       return response.data
     }, error => {
       // 请求被拦截被跳到这里
+      store.dispatch('setFullscreenLoading', false)
+      Message({ type: 'error', message: '连接超时了，检查下网络' })
       reject(error)
-      // alert('fdsfa')
-      // if (error.response.status === 401 || error.response.status === 403) {
-      //   // return Promise.reject(error)
-      //   reject(error)
-      // }
     })
     // 执行的请求
     instance(options).then(response => {

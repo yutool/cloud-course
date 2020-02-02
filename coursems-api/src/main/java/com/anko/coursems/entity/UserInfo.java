@@ -3,10 +3,11 @@ package com.anko.coursems.entity;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 @ToString(exclude = {"signature","birthday", "gender", "nickname"})
 @Data
-public class UserInfo {
+public class UserInfo implements Serializable {
     private String userId;
     private String userName;
     private String email;

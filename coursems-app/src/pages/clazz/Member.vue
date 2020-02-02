@@ -138,7 +138,7 @@ export default {
     },
     removeMember () { // 删除成员
       deleteMember(this.getClazzId, this.selectedMember.userId).then(res => {
-        if (res.status === 1) { // 删除成员成功
+        if (res.code === 0) { // 删除成员成功
           for (let i = 0; i < this.getClazzMember.length; i++) {
             if (this.getClazzMember[i] === this.selectedMember) {
               this.removeClazzMember(i)

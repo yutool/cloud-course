@@ -1,6 +1,5 @@
-package com.anko.coursems.filter;
+package com.anko.coursems.common.jwt;
 
-import com.anko.coursems.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

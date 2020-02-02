@@ -19,7 +19,7 @@
           </el-form-item>
           <div class="form-save-pwd clearfix" style="margin: 0 1.3rem 1rem;">
             <el-checkbox v-model="checked">记住密码</el-checkbox>
-            <router-link to="/resetpwd" class="text-right-sm">忘记密码?</router-link>
+            <router-link to="/forget_password" class="text-right-sm">忘记密码?</router-link>
           </div>
           <div class="form-group-btn">
             <el-button type="primary" @click="submitForm('loginForm')" style="widht:200px;">登录</el-button>
@@ -33,7 +33,7 @@
 
 <script>
 import { login } from '@/api/account'
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import auth from '@/utils/auth'
 
 export default {
@@ -41,7 +41,6 @@ export default {
   data () {
     return {
       checked: false,
-      fullscreenLoading: false,
       loginForm: {
         account: '',
         password: ''
@@ -61,7 +60,6 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 提交表单
-          this.fullscreenLoading = true
           this.$log.info('login/from', this.loginForm)
           var userInfo = {
             email: this.loginForm.account,
@@ -69,18 +67,15 @@ export default {
             userPwd: this.loginForm.password
           }
           login(userInfo).then(res => {
-            if (res.status === 1) { // 登录成功
-              auth.login(res.content, res.token)
+            if (res.code === 0) { // 登录成功
               this.$log.info('login', res)
+              this.setUserInfo(res.data)
               this.$router.push(this.$route.query.redirect || '/course')
-              this.$message({ showClose: true, type: 'success', message: '登录成功，又是元气满满的一天' })
+              this.$message({ type: 'success', message: res.message })
             } else {
-              this.$message({ showClose: true, type: 'error', message: res.message })
+              this.$message({ type: 'error', message: res.message })
             }
-            this.fullscreenLoading = false
           }).catch(res => {
-            this.fullscreenLoading = false
-            this.$message({type: 'error', message: '连接超时了，检查下网络'})
           })
         } else {
           this.$log.info('login/from', 'error submit!!')
@@ -91,6 +86,9 @@ export default {
     goRegister () {
       this.$router.push({path: '/register'})
     }
+  },
+  computed: {
+    ...mapState(['fullscreenLoading'])
   },
   mounted () {
     if (this.$store.state.userInfo && auth.getToken()) {

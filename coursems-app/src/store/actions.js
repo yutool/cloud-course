@@ -16,6 +16,7 @@ export default {
   removeClazzNotice: ({ commit }, index) => commit(types.REMOVE_CLAZZ_NOTICE, index),
   setClazzAppraise: ({ commit }, enAppraise) => commit(types.SET_CLAZZ_APPRAISE, enAppraise),
   setSelectedMember: ({ commit }, member) => commit(types.SET_SELECTED_MEMBER, member),
+  setFullscreenLoading: ({ commit }, loading) => commit(types.SET_FULLSCREEN_LOADING, loading),
   clearState ({ commit }) { // 清除状态
     commit(types.SET_USER_INFO, null)
     commit(types.SET_USER_COURSE, null)

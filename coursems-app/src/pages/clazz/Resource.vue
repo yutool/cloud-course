@@ -110,8 +110,8 @@ export default {
           this.resourceForm['clazzId'] = this.getClazzId
           this.$log.info('resourceForm', this.resourceForm)
           uploadResource(this.resourceForm).then(res => {
-            if (res.status === 1) {
-              this.addClazzResource(res.content)
+            if (res.code === 0) {
+              this.addClazzResource(res.data)
               this.dialogFormVisible = false
               this.resetForm(formName)
               this.$log.info('uploadResource', res)
@@ -125,7 +125,7 @@ export default {
     },
     removeResource (resource) {
       deleteResource(resource.resId).then(res => {
-        if (res.status === 1) {
+        if (res.code === 0) {
           for (let i = 0; i < this.getClazzResource.length; i++) {
             if (resource === this.getClazzResource[i]) {
               this.removeClazzResource(i)

@@ -106,7 +106,7 @@ export default {
             remark: this.selectedMember.remark
           }
           gradeStudent(scoreForm).then(res => {
-            if (res.status === 1) {
+            if (res.code === 0) {
               this.$message({ message: '评分成功', type: 'success' })
             }
           })
@@ -118,7 +118,7 @@ export default {
     },
     enAppraise () {
       enableAppraise(this.clazzDetail).then(res => {
-        if (res.status === 1) {
+        if (res.code === 0) {
           this.setClazzAppraise(this.clazzDetail.enAppraise)
           this.$log.info('enableAppraise', res)
         }

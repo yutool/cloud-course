@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { Message } from 'element-ui'
+// import { Message } from 'element-ui'
 
 // 导入组件
 import Login from '@/pages/login/Login.vue'
@@ -25,7 +25,7 @@ const router = new Router({
       meta: { requireAuth: true }
     },
     { path: '/register', component: () => import('@/pages/login/Register.vue') },
-    { path: '/resetpwd', component: () => import('@/pages/login/ResetPwd.vue') },
+    { path: '/forget_password', component: () => import('@/pages/login/ForgetPassword.vue') },
     { path: '/course/create', component: () => import('@/pages/course/CreateCourse.vue') },
     { path: '/course/join', component: () => import('@/pages/course/JoinCourse.vue') },
     {
@@ -61,13 +61,14 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) { // 如果meta中存在requireAuth进行拦截
-    if (localStorage.getItem('token')) {
-      next()
-    } else {
-      // 跳转至登录页面，并将页面路径作为参数，完成后跳转回来
-      next({ path: '/login', query: {redirect: to.fullPath} })
-      Message({ type: 'warning', showClose: true, message: '请先登录哦!' })
-    }
+    // if (localStorage.getItem('token')) {
+    //   next()
+    // } else {
+    //   // 跳转至登录页面，并将页面路径作为参数，完成后跳转回来
+    //   next({ path: '/login', query: {redirect: to.fullPath} })
+    //   Message({ type: 'warning', showClose: true, message: '请先登录哦!' })
+    // }
+    next()
   } else {
     next()
   }

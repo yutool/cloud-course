@@ -77,7 +77,7 @@ export default {
           this.$log.info('create/form', this.clazzForm)
           createCourse(this.clazzForm).then(res => {
             this.$log.info('create/result', res)
-            if (res.status === 1) { // 班级创建成功
+            if (res.code === 0) { // 班级创建成功
               this.$router.push('/course')
               this.$message({type: 'success', message: res.message})
             }

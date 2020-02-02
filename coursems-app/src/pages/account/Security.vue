@@ -106,7 +106,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import { randomString } from '@/utils/utils'
-import { bindEmail, bindPhone, resetPassWord } from '@/api/account'
+import { bindEmail, bindPhone, resetPassWord } from '@/api/user'
 export default {
   name: 'Security',
   data () {
@@ -185,7 +185,7 @@ export default {
             return
           }
           bindEmail(userInfo).then(res => {
-            if (res.status === 1) {
+            if (res.code === 0) {
               this.setUserEmail(userInfo.email)
               this.$message({type: 'success', message: '绑定邮箱成功'})
               this.$refs[formName].resetFields()
@@ -213,7 +213,7 @@ export default {
             return
           }
           bindPhone(userInfo).then(res => {
-            if (res.status === 1) {
+            if (res.code === 0) {
               this.setUserPhoneNum(userInfo.phoneNum)
               this.$message({type: 'success', message: '绑定手机成功'})
               this.$refs[formName].resetFields()
@@ -233,7 +233,7 @@ export default {
         if (valid) {
           var userInfo = {
             userPwd: this.pwdForm.pass,
-            email: this.userInfo.email
+            userId: this.userInfo.userId
           }
           this.$log.info('pwdForm', userInfo)
           if (userInfo.userPwd === this.userInfo.userPwd) {
@@ -241,7 +241,7 @@ export default {
             return
           }
           resetPassWord(userInfo).then(res => {
-            if (res.status === 1) {
+            if (res.code === 0) {
               this.setUserPwd(userInfo.userPwd)
               this.$message({type: 'success', message: '修改密码成功'})
               this.$refs[formName].resetFields()

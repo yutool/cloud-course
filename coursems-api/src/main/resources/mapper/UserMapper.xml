@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.anko.coursems.dao.UserMapper">
+
+    <select id="findUserById" parameterType="string" resultType="userInfo">
+        select * from t_user
+        where user_id=#{userId}
+    </select>
+
+    <select id="login" parameterType="userInfo" resultType="userInfo">
+        select * from t_user
+        where user_pwd = #{userPwd}
+        and (email=#{email} or phone_num=#{phoneNum})
+    </select>
+
+    <insert id="register" parameterType="userInfo">
+        insert into t_user(user_id, user_name, nickname, user_pwd, email)
+        values(#{userId}, #{userName}, #{nickname}, #{userPwd}, #{email})
+    </insert>
+    <update id="updateUserInfo" parameterType="userInfo">
+        update t_user
+        set user_name=#{userName}, nickname=#{nickname},
+            stu_num=#{stuNum}, gender=#{gender},
+            birthday=#{birthday}, signature=#{signature}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updatePassword" parameterType="userInfo">
+        update t_user
+        set user_pwd = #{userPwd}
+        where user_id = #{userId}
+    </update>
+
+    <update id="bindEmail" parameterType="userInfo">
+        update t_user
+        set email = #{email}
+        where user_id = #{userId}
+    </update>
+
+    <update id="bindPhone" parameterType="userInfo">
+        update t_user
+        set phone_num = #{phoneNum}
+        where user_id = #{userId}
+    </update>
+
+    <select id="emailIsExist" parameterType="string" resultType="userInfo">
+        select * from t_user
+        where email = #{email}
+    </select>
+
+    <select id="phoneIsExist" parameterType="string" resultType="userInfo">
+        select * from t_user
+        where phone_num = #{phoneNum}
+    </select>
+    
+</mapper>

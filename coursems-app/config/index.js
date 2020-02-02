@@ -16,7 +16,7 @@ module.exports = {
         target: 'http://localhost:9100',  // 代理接口
         changeOrigin: true,  // 设置这个参数可以避免跨域
         pathRewrite: {
-          '^/api': '/'
+          '^/api': '/api'
         }
       }
     },

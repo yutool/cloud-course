@@ -2,48 +2,31 @@ import { request } from '@/utils/request'
 
 export function login (loginForm) {
   return request({
-    url: '/login',
+    url: 'v1/login',
     method: 'post',
     data: JSON.stringify(loginForm)
   })
 }
 
+export function logout () {
+  return request({
+    url: 'v1/logout',
+    method: 'post'
+  })
+}
+
 export function register (registerForm) {
   return request({
-    url: '/register',
+    url: 'v1/register',
     method: 'post',
     data: JSON.stringify(registerForm)
   })
 }
 
-export function resetPassWord (userForm) {
+export function forgetPassWord (userForm) {
   return request({
-    url: '/resetPassWord',
+    url: 'v1/forgetPassword',
     method: 'put',
     data: JSON.stringify(userForm)
-  })
-}
-
-export function updateUserInfo (userInfo) {
-  return request({
-    url: '/userInfo',
-    method: 'put',
-    data: JSON.stringify(userInfo)
-  })
-}
-
-export function bindEmail (emailForm) {
-  return request({
-    url: '/bindEmail',
-    method: 'put',
-    data: JSON.stringify(emailForm)
-  })
-}
-
-export function bindPhone (phoneForm) {
-  return request({
-    url: '/bindPhone',
-    method: 'put',
-    data: JSON.stringify(phoneForm)
   })
 }

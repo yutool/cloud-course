@@ -3,9 +3,11 @@ package com.anko.coursems.entity;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @ToString(exclude = {"clazzPhoto","clazzExplain","term", "arrives"})
 @Data
-public class ClazzInfo {
+public class ClazzInfo implements Serializable {
     private String clazzId;
     private String clazzNum;
     private String clazzName;

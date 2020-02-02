@@ -1,7 +1,6 @@
-package com.anko.coursems.utils;
+package com.anko.coursems.common.jwt;
 
 import com.anko.coursems.entity.UserInfo;
-import com.anko.coursems.model.UserCourse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

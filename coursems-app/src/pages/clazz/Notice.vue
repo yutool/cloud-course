@@ -85,8 +85,8 @@ export default {
         clazzId: this.getClazzId
       }
       sendNotice(noticeForm).then(res => { // 发送通知
-        if (res.status === 1) {
-          this.addClazzNotice(res.content)
+        if (res.code === 0) {
+          this.addClazzNotice(res.data)
           this.dialogFormVisible = false
           this.content = ''
           this.$log.info('sendNotice', res)
@@ -95,7 +95,7 @@ export default {
     },
     removeNotice (notice) { // 删除通知
       deleteNotice(notice.noticeId).then(res => {
-        if (res.status === 1) {
+        if (res.code === 0) {
           for (let i = 0; i < this.getClazzNotice.length; i++) {
             if (notice === this.getClazzNotice[i]) {
               this.removeClazzNotice(i)

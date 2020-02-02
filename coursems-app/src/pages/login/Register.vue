@@ -37,7 +37,7 @@
 <script>
 import { randomString } from '@/utils/utils'
 import { register } from '@/api/account'
-import auth from '@/utils/auth'
+import { mapActions } from 'vuex'
 
 export default {
   userName: 'Register',
@@ -70,6 +70,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['setUserInfo']),
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 提交表单
@@ -82,9 +83,9 @@ export default {
             gender: '男'
           }
           register(userInfo).then(res => {
-            if (res.status === 1) { // 注册成功
-              auth.login(res.content, res.token)
+            if (res.code === 0) { // 注册成功
               this.$log.info('register', res)
+              this.setUserInfo(res.data)
               this.$router.push('/account')
               this.$message({type: 'success', message: '注册成功，请完善资料'})
             } else {

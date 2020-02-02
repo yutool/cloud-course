@@ -10,6 +10,6 @@
     </typeAliases>
     <typeHandlers>
         <typeHandler jdbcType="INTEGER" javaType="boolean"
-                     handler="com.anko.coursems.typehandler.BooleanAndIntConverter" />
+                     handler="com.anko.coursems.common.typehandler.BooleanAndIntConverter" />
     </typeHandlers>
 </configuration>

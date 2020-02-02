@@ -49,7 +49,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import auth from '@/utils/auth'
+import { logout } from '@/api/account'
 
 export default {
   name: 'Navbar',
@@ -60,8 +60,13 @@ export default {
   },
   methods: {
     logout () {
-      auth.logout()
-      this.$router.push('/login')
+      logout().then(res => {
+        if (res.code === 0) {
+          this.$store.dispatch('clearState')
+          this.$router.push('/login')
+          this.$message({type: 'success', message: res.message})
+        }
+      })
     }
   }
 }

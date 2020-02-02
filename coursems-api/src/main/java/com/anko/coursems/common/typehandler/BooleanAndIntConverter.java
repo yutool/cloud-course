@@ -1,4 +1,4 @@
-package com.anko.coursems.typehandler;
+package com.anko.coursems.common.typehandler;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
