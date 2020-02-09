@@ -16,6 +16,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/current")
+    public Result getCurrentUser(@SessionAttribute("userInfo") UserInfo user) {
+        log.info(user.toString());
+        return Result.success(user);
+    }
+
     @PutMapping
     public Result updateUserInfo(@RequestBody UserInfo userInfo) {
         log.info(userInfo.toString());

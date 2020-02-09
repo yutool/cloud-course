@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '@/store'
 // import { Message } from 'element-ui'
 
 // 导入组件
@@ -60,18 +61,27 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth) { // 如果meta中存在requireAuth进行拦截
-    // if (localStorage.getItem('token')) {
-    //   next()
-    // } else {
-    //   // 跳转至登录页面，并将页面路径作为参数，完成后跳转回来
-    //   next({ path: '/login', query: {redirect: to.fullPath} })
-    //   Message({ type: 'warning', showClose: true, message: '请先登录哦!' })
-    // }
+  if (to.path === '/login') {
     next()
   } else {
-    next()
+    store.dispatch('getCurrentUser').then(res => {
+      next()
+    }).catch(() => {
+      next({ path: '/' })
+    })
   }
+  // if (to.meta.requireAuth) { // 如果meta中存在requireAuth进行拦截
+  //   // if (localStorage.getItem('token')) {
+  //   //   next()
+  //   // } else {
+  //   //   // 跳转至登录页面，并将页面路径作为参数，完成后跳转回来
+  //   //   next({ path: '/login', query: {redirect: to.fullPath} })
+  //   //   Message({ type: 'warning', showClose: true, message: '请先登录哦!' })
+  //   // }
+  //   next()
+  // } else {
+  //   next()
+  // }
 })
 
 export default router

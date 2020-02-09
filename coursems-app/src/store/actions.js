@@ -1,4 +1,6 @@
 import types from './mutation-types'
+import { getCurrentUser } from '@/api/user'
+
 export default {
   // 用户信息
   setUserInfo: ({ commit }, userInfo) => commit(types.SET_USER_INFO, userInfo),
@@ -17,6 +19,17 @@ export default {
   setClazzAppraise: ({ commit }, enAppraise) => commit(types.SET_CLAZZ_APPRAISE, enAppraise),
   setSelectedMember: ({ commit }, member) => commit(types.SET_SELECTED_MEMBER, member),
   setFullscreenLoading: ({ commit }, loading) => commit(types.SET_FULLSCREEN_LOADING, loading),
+  getCurrentUser ({ commit }) { // 获取当前用户
+    getCurrentUser().then(res => {
+      if (res.code === 0) {
+        commit(types.SET_USER_INFO, res.data)
+      } else {
+        commit(types.SET_USER_INFO, null)
+        commit(types.SET_USER_COURSE, null)
+        commit(types.SET_CLAZZ_DETAIL, null)
+      }
+    })
+  },
   clearState ({ commit }) { // 清除状态
     commit(types.SET_USER_INFO, null)
     commit(types.SET_USER_COURSE, null)

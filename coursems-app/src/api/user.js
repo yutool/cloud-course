@@ -1,5 +1,12 @@
 import request from '@/utils/request'
 
+export function getCurrentUser () {
+  return request({
+    url: 'v1/users/current',
+    method: 'get'
+  })
+}
+
 export function resetPassWord (userForm) {
   return request({
     url: 'v1/users/password',
