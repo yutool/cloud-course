@@ -88,8 +88,7 @@
 </template>
 
 <script>
-import { getAllCourse } from '@/api/course'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   name: 'Course',
   data () {
@@ -99,23 +98,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userCourse', 'fullscreenLoading']),
-    ...mapGetters(['getUserId'])
+    ...mapState(['userCourse', 'fullscreenLoading'])
   },
   methods: {
-    ...mapActions(['setClazzDetail', 'setUserCourse']),
     bindClazz (course) { // 跳转绑定班级
-      this.setClazzDetail(course)
-      this.$router.push('/clazz')
+      this.$router.push(`/clazz/${course.clazzId}`)
     }
   },
   mounted () {
-    getAllCourse(this.getUserId).then(res => {
-      if (res.code === 0) {
-        this.setUserCourse(res.data)
-        this.$log.info('getJoinCourses', res)
-      }
-    })
+    this.$store.dispatch('getAllCourse')
   }
 }
 </script>

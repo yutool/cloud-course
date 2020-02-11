@@ -16,11 +16,11 @@
     </el-row>
     <!-- 子导航栏 -->
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="班级成员" name="/clazz/member"></el-tab-pane>
-      <el-tab-pane label="资源列表" name="/clazz/resource"></el-tab-pane>
-      <el-tab-pane label="班级消息" name="/clazz/notice"></el-tab-pane>
-      <el-tab-pane label="结课评分" name="/clazz/appraise"></el-tab-pane>
-      <el-tab-pane label="班级详情" name="/clazz/detail"></el-tab-pane>
+      <el-tab-pane label="班级成员" name="member"></el-tab-pane>
+      <el-tab-pane label="资源列表" name="resource"></el-tab-pane>
+      <el-tab-pane label="班级消息" name="notice"></el-tab-pane>
+      <el-tab-pane label="结课评分" name="appraise"></el-tab-pane>
+      <el-tab-pane label="班级详情" name="detail"></el-tab-pane>
     </el-tabs>
     <!-- 子路由 -->
     <router-view />
@@ -29,12 +29,11 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import { getClazzDetail } from '@/api/clazz'
 export default {
   name: 'Clazz',
   data: () => ({
     selected: {},
-    activeName: '/clazz/member',
+    activeName: 'member',
     serachName: '',
     restaurants: [],
     courseList: '',
@@ -42,15 +41,18 @@ export default {
   }),
   computed: {
     ...mapState(['clazzDetail', 'userCourse', 'fullscreenLoading']),
-    ...mapGetters(['getClazzId', 'getClazzMember'])
+    ...mapGetters(['getClazzMember'])
   },
   methods: {
     ...mapActions(['setClazzDetail', 'setSelectedMember']),
     handleClick (tabs) { // 路由跳转
       if (this.$route.path === this.activeName) return
-      this.$router.push({path: this.activeName})
+      this.$router.push(this.activeName)
     },
     loadAll () {
+      if (this.restaurants.length > 0 || this.userCourse === null) {
+        return this.restaurants
+      }
       for (let course of this.userCourse.joinCourses) {
         let list = {}
         list['value'] = course.courseName + ': ' + course.teaName
@@ -63,7 +65,7 @@ export default {
         list['clazzId'] = course.clazzId
         this.restaurants.push(list)
       }
-      this.$log.info('fasdfa', this.restaurants)
+      return this.restaurants
     },
     courseListFilter (queryString) {
       return (courseList) => {
@@ -72,14 +74,11 @@ export default {
     },
     handleSelect (item) {
       this.courseList = ''
-      getClazzDetail(item.clazzId).then(res => {
-        this.setClazzDetail(res.data)
-        this.setSelectedMember(this.getClazzMember[0])
-        this.$log.info('getClazzDetail', res)
-      })
+      this.$router.push(`/clazz/${item.clazzId}`)
+      this.$store.dispatch('getClazz', item.clazzId)
     },
     querySearchAsync (queryString, cb) {
-      var restaurants = this.restaurants
+      var restaurants = this.loadAll()
       var results = queryString ? restaurants.filter(this.courseListFilter(queryString)) : restaurants
       cb(results)
       // clearTimeout(this.timeout)
@@ -89,13 +88,8 @@ export default {
     }
   },
   mounted () {
-    this.loadAll()
-    getClazzDetail(this.getClazzId).then(res => {
-      this.setClazzDetail(res.data)
-      this.setSelectedMember(this.getClazzMember[0])
-      this.$router.push('/clazz/member')
-      this.$log.info('getClazzDetail', res)
-    })
+    this.$store.dispatch('getAllCourse')
+    this.$store.dispatch('getClazz', this.$route.params.id)
   }
 }
 </script>

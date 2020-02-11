@@ -37,51 +37,57 @@ const router = new Router({
     {
       path: '/account',
       component: () => import('@/pages/account/index.vue'),
-      meta: { requireAuth: true },
       children: [
         { path: 'information', component: () => import('@/pages/account/Information.vue') },
         { path: 'security', component: () => import('@/pages/account/Security.vue') },
         { path: 'experience', component: () => import('@/pages/account/Experience.vue') },
         { path: '/account', redirect: 'information' }
-      ]
+      ],
+      meta: { requireAuth: true }
     },
     {
-      path: '/clazz',
+      path: '/clazz/:id',
       component: () => import('@/pages/clazz/index.vue'),
-      meta: { requireAuth: true },
       children: [
         { path: 'member', component: () => import('@/pages/clazz/Member.vue') },
         { path: 'resource', component: () => import('@/pages/clazz/Resource.vue') },
         { path: 'notice', component: () => import('@/pages/clazz/Notice.vue') },
         { path: 'detail', component: () => import('@/pages/clazz/Detail.vue') },
         { path: 'appraise', component: () => import('@/pages/clazz/Appraise.vue') }
-      ]
+      ],
+      redirect: '/clazz/:id/member',
+      meta: { requireAuth: true }
+    },
+    {
+      path: '/404',
+      component: () => import('@/pages/about/About.vue')
+    },
+    {
+      path: '*',
+      redirect: '/404'
     }
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/login') {
-    next()
-  } else {
-    store.dispatch('getCurrentUser').then(res => {
-      next()
-    }).catch(() => {
+router.beforeEach(async (to, from, next) => {
+  const { data } = await store.dispatch('getCurrentUser')
+  if (data) {
+    if (to.path === '/login') {
       next({ path: '/' })
-    })
+    } else {
+      next()
+    }
+  } else {
+    if (to.matched.some(r => r.meta.requireAuth)) {
+      if (to.path === '/login') {
+        next()
+      } else {
+        next(`/login?redirect=${to.path}`)
+      }
+    } else {
+      next()
+    }
   }
-  // if (to.meta.requireAuth) { // 如果meta中存在requireAuth进行拦截
-  //   // if (localStorage.getItem('token')) {
-  //   //   next()
-  //   // } else {
-  //   //   // 跳转至登录页面，并将页面路径作为参数，完成后跳转回来
-  //   //   next({ path: '/login', query: {redirect: to.fullPath} })
-  //   //   Message({ type: 'warning', showClose: true, message: '请先登录哦!' })
-  //   // }
-  //   next()
-  // } else {
-  //   next()
-  // }
 })
 
 export default router

@@ -1,5 +1,7 @@
 import types from './mutation-types'
 import { getCurrentUser } from '@/api/user'
+import { getAllCourse } from '@/api/course'
+import { getClazzDetail } from '@/api/clazz'
 
 export default {
   // 用户信息
@@ -20,14 +22,35 @@ export default {
   setSelectedMember: ({ commit }, member) => commit(types.SET_SELECTED_MEMBER, member),
   setFullscreenLoading: ({ commit }, loading) => commit(types.SET_FULLSCREEN_LOADING, loading),
   getCurrentUser ({ commit }) { // 获取当前用户
-    getCurrentUser().then(res => {
-      if (res.code === 0) {
-        commit(types.SET_USER_INFO, res.data)
-      } else {
+    return new Promise((resolve, reject) => {
+      getCurrentUser().then(res => {
+        if (res.code === 0) {
+          commit(types.SET_USER_INFO, res.data)
+        } else {
+          commit(types.SET_USER_INFO, null)
+          commit(types.SET_USER_COURSE, null)
+          commit(types.SET_CLAZZ_DETAIL, null)
+        }
+        resolve(res)
+      }).catch(error => {
         commit(types.SET_USER_INFO, null)
         commit(types.SET_USER_COURSE, null)
         commit(types.SET_CLAZZ_DETAIL, null)
+        reject(error)
+      })
+    })
+  },
+  getAllCourse ({ commit, state }) {
+    getAllCourse(state.userInfo.userId).then(res => {
+      if (res.code === 0) {
+        commit(types.SET_USER_COURSE, res.data)
       }
+    })
+  },
+  getClazz ({ commit }, clazzId) {
+    getClazzDetail(clazzId).then(res => {
+      commit(types.SET_CLAZZ_DETAIL, res.data)
+      commit(types.SET_SELECTED_MEMBER, res.data.members[0])
     })
   },
   clearState ({ commit }) { // 清除状态
