@@ -1,37 +1,35 @@
 package com.anko.coursems.dao;
 
-import com.anko.coursems.entity.ClazzMember;
+import com.anko.coursems.entity.Member;
 import com.anko.coursems.entity.Notice;
 import com.anko.coursems.entity.Resource;
-import com.anko.coursems.model.ClazzDetail;
-import com.anko.coursems.model.MemberDetail;
-import com.anko.coursems.model.ResourceDetail;
+import com.anko.coursems.model.ClazzDto;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface ClazzMapper {
-    // 查询班级成员
-    List<MemberDetail> getClazzMembers(String clazzId);
     // 查询班级详情
-    ClazzDetail getClazzDetail(String clazzId);
+    ClazzDto getClazzDetail(String clazzId);
+    // 添加成员
+    int addMember(Member member);
     // 删除班级成员
-    int deleteMember(ClazzMember clazzMember);
-    // 查询班级通知
-    List<Notice> getClazzNotices(String clazzId);
-    // 发送通知
-    int sendNotice(Notice noticeForm);
-    // 删除通知
-    int deleteNotice(String noticeId);
-    // 查询班级资源
-    List<ResourceDetail> getClazzResources(String clazzId);
+    int deleteMember(Member clazzMember);
+    // 删除班级成员
+    int deleteMembers(String id);
     // 上传资源
     int uploadResource(Resource resourceForm);
     // 删除资源
     int deleteResource(String resId);
+    // 删除资源
+    int deleteResources(String id);
+    // 发送通知
+    int sendNotice(Notice noticeForm);
+    // 删除通知
+    int deleteNotice(String noticeId);
+    // 删除通知
+    int deleteNotices(String id);
     // 评分
-    int gradeStudent(ClazzMember scoreForm);
-    // 开启评分
-    int enableAppraise(ClazzDetail clazzDetail);
+    int gradeStudent(Member scoreForm);
+    // 查看成员是否在班级中
+    Member findMemberById(Member member);
 }

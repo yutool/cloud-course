@@ -1,5 +1,5 @@
 <template>
-  <div class="container clearfix" v-loading.fullscreen.lock="fullscreenLoading">
+  <div class="container clearfix" v-loading.fullscreen.lock="loading">
     <!-- 标题 -->
     <el-divider class="title">登录</el-divider>
     <el-row :gutter="20">
@@ -9,6 +9,7 @@
         <h6 class="pt-3">扫描二维码登录</h6>
         <p>请使用<a href="#">客户端</a>扫码登录</p>
       </el-col>
+      <!-- 表单 -->
       <el-col :md="12" :sm="15">
         <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" label-width="100px" class="demo-loginForm pr-3">
           <el-form-item label="账 号" prop="account" label-width="60px">
@@ -32,9 +33,7 @@
 </template>
 
 <script>
-import { login } from '@/api/account'
-import { mapState, mapActions } from 'vuex'
-import auth from '@/utils/auth'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Register',
@@ -42,8 +41,8 @@ export default {
     return {
       checked: false,
       loginForm: {
-        account: '',
-        password: ''
+        account: 'admin@qq.com',
+        password: '123456'
       },
       rules: {
         password: [
@@ -56,27 +55,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setUserInfo']),
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 提交表单
           this.$log.info('login/from', this.loginForm)
-          var userInfo = {
-            email: this.loginForm.account,
-            phoneNum: this.loginForm.account,
-            userPwd: this.loginForm.password
-          }
-          login(userInfo).then(res => {
-            if (res.code === 0) { // 登录成功
-              this.$log.info('login', res)
-              this.setUserInfo(res.data)
-              this.$router.push(this.$route.query.redirect || '/course')
-              this.$message({ type: 'success', message: res.message })
-            } else {
-              this.$message({ type: 'error', message: res.message })
-            }
-          }).catch(res => {
-          })
+          this.$store.dispatch('user/login', this.loginForm)
         } else {
           this.$log.info('login/from', 'error submit!!')
           return false
@@ -88,12 +71,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(['fullscreenLoading'])
-  },
-  mounted () {
-    if (this.$store.state.userInfo && auth.getToken()) {
-      this.$router.push('/course')
-    }
+    ...mapState({
+      loading: state => state.app.loading
+    })
   }
 }
 </script>

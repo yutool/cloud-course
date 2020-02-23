@@ -3,69 +3,49 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.anko.coursems.dao.CourseMapper">
-    <resultMap id="clazzInfo" type="clazzDetail">
-        <id property="clazzId" column="clazz_id" />
-        <result property="courseName" column="course_name" />
-        <result property="clazzNum" column="clazz_num" />
-        <result property="teaName" column="tea_name" />
-        <result property="term" column="term" />
-    </resultMap>
 
-    <select id="getJoinCourses" parameterType="string" resultMap="clazzInfo">
-        select c.clazz_id, c.course_name, c.clazz_num, u.user_name tea_name, c.term
-        from t_clazz c, t_clamember m, t_user u
-        where m.user_id = #{userId}
-        and c.clazz_id = m.clazz_id
-        and u.user_id = c.tea_id
+    <select id="getAllCourses" parameterType="string" resultType="courseDto">
+        select c.*, u.user_name teacher_name
+        from t_course c
+        join t_user u on u.user_id = c.teacher_id
+        join t_member m on c.course_id=m.course_id
+        where c.teacher_id = #{userId}
+        or m.user_id = #{userId}
+        GROUP BY c.course_id
     </select>
 
-    <select id="getCreateCourses" parameterType="string" resultMap="clazzInfo">
-        select c.clazz_id, c.course_name, c.clazz_num, u.user_name tea_name, c.term
-        from t_clazz c, t_user u
-        where tea_id = #{userId}
-        and u.user_id = c.tea_id
+    <select id="searchCourse" parameterType="string" resultType="courseDto">
+        select c.*, u.user_name teacher_name
+        from t_course c, t_user u
+        where c.course_num = #{courseNum}
+        and u.user_id = c.teacher_id
     </select>
 
-    <insert id="createCourse" parameterType="clazzInfo">
-        insert into t_clazz(clazz_id, clazz_num, clazz_name, course_name, term, clazz_explain, tea_id)
-        values(#{clazzId}, #{clazzNum}, #{clazzName}, #{courseName}, #{term}, #{clazzExplain}, #{teaId})
+    <select id="getCourseById" parameterType="string" resultType="course">
+        select * from t_course
+        where course_id = #{courseId}
+    </select>
+
+    <insert id="createCourse" parameterType="course">
+        insert into t_course(course_id, course_num, clazz_name, course_name, term, synopsis, teacher_id)
+        values(#{courseId}, #{courseNum}, #{clazzName}, #{courseName}, #{term}, #{synopsis}, #{teacherId})
     </insert>
 
-    <select id="searchCourse" parameterType="string" resultType="clazzDetail">
-        select c.*, u.user_name tea_name
-        from t_clazz c, t_user u
-        where c.clazz_num = #{clazzNum}
-        and u.user_id = c.tea_id
-    </select>
-
-    <insert id="joinCourse" parameterType="clazzMember">
-        insert into t_clamember(clazz_id, user_id)
-        values(#{clazzId}, #{userId})
-    </insert>
-
-    <delete id="quitCourse" parameterType="clazzMember">
-        delete from t_clamember
-        where clazz_id = #{clazzId}
-        and user_id = #{userId}
+    <delete id="deleteCourse" parameterType="string">
+        delete from t_course
+        where course_id = #{courseId}
     </delete>
 
-    <delete id="dissolveCourse" parameterType="string">
-        delete from t_clazz where clazz_id = #{clazzId};
-    </delete>
-    <delete id="deleteClazzMember" parameterType="string">
-        delete from t_clamember where clazz_id = #{clazzId};
-    </delete>
-    <delete id="deleteClazzResource" parameterType="string">
-        delete from t_resource where clazz_id = #{clazzId};
-    </delete>
-    <delete id="deleteClazzNotice" parameterType="string">
-        delete from t_notice where clazz_id = #{clazzId};
-    </delete>
+    <update id="toggleAppraise" parameterType="course">
+        update t_course
+        set appraise = #{appraise}
+        where course_id=#{courseId}
+    </update>
 
-    <select id="findClazzMemberById" parameterType="clazzMember" resultType="clazzMember">
-        select * from t_clamember
-        where clazz_id = #{clazzId}
-        and user_id = #{userId}
-    </select>
+    <update id="savePhoto">
+        update  t_course
+        set course_pic = #{coursePic}
+        where course_id = #{courseId}
+    </update>
 
 </mapper>

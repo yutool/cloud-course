@@ -16,7 +16,7 @@ const instance = axios.create({
 
 // 拦截请求
 instance.interceptors.request.use(config => {
-  store.dispatch('setFullscreenLoading', true)
+  store.dispatch('app/setLoading', true)
   return config
 }, error => {
   Promise.reject(error)
@@ -24,11 +24,11 @@ instance.interceptors.request.use(config => {
 
 // 拦截响应
 instance.interceptors.response.use(response => {
-  store.dispatch('setFullscreenLoading', false)
+  store.dispatch('app/setLoading', false)
   return response.data
 }, error => {
   // 请求被拦截被跳到这里
-  store.dispatch('setFullscreenLoading', false)
+  store.dispatch('app/setLoading', false)
   Message({ type: 'error', message: error.message })
   Promise.reject(error)
 })

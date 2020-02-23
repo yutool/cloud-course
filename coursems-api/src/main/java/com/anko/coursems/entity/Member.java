@@ -3,8 +3,8 @@ package com.anko.coursems.entity;
 import lombok.Data;
 
 @Data
-public class ClazzMember {
-    private String clazzId;
+public class Member {
+    private String courseId;
     private String userId;
     private int experience;
     private int arrive;

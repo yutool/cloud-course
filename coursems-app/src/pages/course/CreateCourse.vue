@@ -9,26 +9,26 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8 shadow rounded pt-5 pb-5">
-        <el-form :model="clazzForm" :rules="rules" ref="clazzForm" label-width="100px" class="pr-3">
+        <el-form :model="courseForm" :rules="rules" ref="courseForm" label-width="100px" class="pr-3">
           <h5 class="text-center mb-5">创建班级</h5>
           <el-form-item label="班级名称" prop="clazzName">
-            <el-input v-model.trim="clazzForm.clazzName"></el-input>
+            <el-input v-model.trim="courseForm.clazzName"></el-input>
           </el-form-item>
           <el-form-item label="课程名称" prop="courseName">
-            <el-input v-model.trim="clazzForm.courseName"></el-input>
+            <el-input v-model.trim="courseForm.courseName"></el-input>
           </el-form-item>
           <el-form-item label="学期区间" prop="term">
-            <el-select v-model="clazzForm.term" class="w-100">
+            <el-select v-model="courseForm.term" class="w-100">
               <el-option label="2019-2020" value="2019-2020"></el-option>
               <el-option label="2019-2021" value="2019-2021"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="班级说明" prop="clazzExplain">
-            <el-input type="textarea" v-model="clazzForm.clazzExplain"></el-input>
+          <el-form-item label="班级说明" prop="synopsis">
+            <el-input type="textarea" v-model="courseForm.synopsis"></el-input>
           </el-form-item>
           <div class="form-group-btn">
-            <el-button type="primary" class="mb-2" @click="submitForm('clazzForm')">立即创建</el-button>
-            <el-button @click="resetForm('clazzForm')">重置</el-button>
+            <el-button type="primary" class="mb-2" @click="submitForm('courseForm')">立即创建</el-button>
+            <el-button @click="resetForm('courseForm')">重置</el-button>
           </div>
         </el-form>
       </div>
@@ -38,18 +38,18 @@
 </template>
 
 <script>
-import { createCourse } from '@/api/course'
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'vuex'
+
 export default {
   name: 'CreateCourse',
   data () {
     return {
-      clazzForm: {
+      courseForm: {
         clazzName: '',
         courseName: '',
         term: '',
-        clazzExplain: '',
-        teaId: this.$store.state.userInfo.userId
+        synopsis: '',
+        teacherId: ''
       },
       rules: {
         clazzName: [
@@ -67,21 +67,17 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userId', 'userInfo']),
-    ...mapGetters(['getUserId'])
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
   },
   methods: {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 提交表单
-          this.$log.info('create/form', this.clazzForm)
-          createCourse(this.clazzForm).then(res => {
-            this.$log.info('create/result', res)
-            if (res.code === 0) { // 班级创建成功
-              this.$router.push('/course')
-              this.$message({type: 'success', message: res.message})
-            }
-          })
+          this.courseForm.teacherId = this.userInfo.userId
+          this.$log.info('create/form', this.courseForm)
+          this.$store.dispatch('course/createCourse', this.courseForm)
         } else {
           this.$log.info('create/form', 'error submit!!')
           return false

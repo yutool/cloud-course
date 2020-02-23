@@ -1,93 +1,80 @@
 package com.anko.coursems.controller;
 
 import com.anko.coursems.common.result.ResultCode;
-import com.anko.coursems.entity.ClazzMember;
+import com.anko.coursems.common.utils.FileUploadUtils;
+import com.anko.coursems.common.utils.JsonUtils;
+import com.anko.coursems.entity.Course;
+import com.anko.coursems.entity.Member;
 import com.anko.coursems.entity.Notice;
 import com.anko.coursems.entity.Resource;
-import com.anko.coursems.model.ClazzDetail;
+import com.anko.coursems.model.ClazzDto;
 import com.anko.coursems.common.result.Result;
-import com.anko.coursems.model.MemberDetail;
-import com.anko.coursems.model.ResourceDetail;
+import com.anko.coursems.model.ResourceDto;
 import com.anko.coursems.service.impl.ClazzService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.util.Date;
 
+@Slf4j
 @RequestMapping("/api/v1/classes")
 @RestController
+/**
+ * 班级控制器：包括（成员，资源，通知，评分）
+ */
 public class ClazzController {
-    private Logger log = LoggerFactory.getLogger(ClazzController.class);
     @Autowired
     private ClazzService clazzService;
 
     @GetMapping("/{id}")
-    public Result getClazzDetail(@PathVariable String id) {
-        log.info(id);
-        ClazzDetail clazzDetail = clazzService.getClazzDetail(id);
+    public Result getClazz(@PathVariable String id) {
+        log.info("获取班级详细信息: " + id);
+        ClazzDto clazzDetail = clazzService.getClazzDetail(id);
         return Result.success(clazzDetail);
     }
 
-    @GetMapping("members/{id}")
-    public Result getClazzMembers(@PathVariable String id) {
-        log.info(id);
-        List<MemberDetail> data = clazzService.getClazzMembers(id);
-        return Result.success(data);
+    @DeleteMapping("/{id}")
+    public Result deleteClazz(@PathVariable String id) {
+        log.info("解散班级: " + id);
+        clazzService.deleteClazz(id);
+        return Result.success();
     }
 
-    @GetMapping("/notices/{id}")
-    public Result getClazzNotices(@PathVariable String id) {
-        log.info(id);
-        List<Notice> notices = clazzService.getClazzNotices(id);
-        return Result.success(notices);
-    }
-
-    @GetMapping("/resources/{id}")
-    public Result getClazzResources(@PathVariable String id) {
-        log.info(id);
-        List<ResourceDetail> resources = clazzService.getClazzResources(id);
-        return Result.success(resources);
+    @PostMapping("/members")
+    public Result joinCourse(@RequestBody Member member) {
+        log.info("添加成员: " + member);
+        ResultCode code = clazzService.addMember(member);
+        return Result.builder().build().setResultCode(code);
     }
 
     @DeleteMapping("/members")
-    public Result deleteMember(ClazzMember clazzMember) {
-        log.info(clazzMember.toString());
-        int res = clazzService.deleteMember(clazzMember);
+    public Result deleteMember(@RequestBody Member form) {
+        log.info("删除成员: " + form);
+        int res = clazzService.deleteMember(form);
         if( res < 1) {
             return Result.error(ResultCode.INTERFACE_REQUEST_TIMEOUT);
         }
         return Result.success();
     }
 
-    @PostMapping("/notices")
-    public Result sendNotice(@RequestBody Notice noticeForm) {
-        log.info(noticeForm.toString());
-        Notice notice = clazzService.sendNotice(noticeForm);
-        return Result.success(notice);
-    }
-
-    @DeleteMapping("/notices/{id}")
-    public Result deleteNotice(@PathVariable String id) {
-        log.info(id);
-        int res = clazzService.deleteNotice(id);
-        if( res < 1) {
-            return Result.error(ResultCode.SYSTEM_INNER_ERROR);
-        }
-        return Result.success();
-    }
-
     @PostMapping("/resources")
-    public Result uploadResource(@RequestBody Resource resourceForm) {
-        log.info(resourceForm.toString());
-        Resource resource =  clazzService.uploadResource(resourceForm);
-        return Result.success(resource);
+    public Result uploadResource(@RequestParam("info") String resourceForm , @RequestParam("file") MultipartFile file) {
+        Resource resource = JsonUtils.toBean(resourceForm, Resource.class);
+        log.info("发布资源: " + resource + file.getOriginalFilename());
+        String fileName = FileUploadUtils.storeFile(file, FileUploadUtils.STORE_RESOURCE);
+        String downLink = FileUploadUtils.DOWN_LINK_PR + fileName;
+        resource.setDownLink(downLink);
+        resource.setResSize(String.valueOf(file.getSize()));
+        resource.setUploadTime(new Date());
+        resource =  clazzService.uploadResource(resource);
+        return Result.success(ResourceDto.builder().build().convertFor(resource));
     }
 
     @DeleteMapping("/resources/{id}")
     public Result deleteResource(@PathVariable String id) {
-        log.info(id);
+        log.info("删除资源: " + id);
         int res = clazzService.deleteResource(id);
         if( res < 1) {
             return Result.error(ResultCode.SYSTEM_INNER_ERROR);
@@ -95,23 +82,31 @@ public class ClazzController {
         return  Result.success();
     }
 
-    @PutMapping("/grades")
-    public Result gradeStudent(@RequestBody ClazzMember scoreForm) {
-        log.info(scoreForm.toString());
-        int res = clazzService.gradeStudent(scoreForm);
-        if( res < 1) {
-            return Result.error(ResultCode.SYSTEM_INNER_ERROR);
-        }
-        return  Result.success();
+    @PostMapping("/notices")
+    public Result sendNotice(@RequestBody Notice noticeForm) {
+        log.info("发布通知: " + noticeForm);
+        Notice notice = clazzService.sendNotice(noticeForm);
+        return Result.success(notice);
     }
 
-    @PutMapping("/enableAppraise")
-    public Result enableAppraise(@RequestBody ClazzDetail clazzDetail) {
-        log.info(clazzDetail.toString());
-        int res = clazzService.enableAppraise(clazzDetail);
+    @DeleteMapping("/notices/{id}")
+    public Result deleteNotice(@PathVariable String id) {
+        log.info("删除通知: " + id);
+        int res = clazzService.deleteNotice(id);
         if( res < 1) {
             return Result.error(ResultCode.SYSTEM_INNER_ERROR);
         }
-        return  Result.success();
+        return Result.success();
     }
+
+    @PutMapping("/grades")
+    public Result gradeStudent(@RequestBody Member from) {
+        log.info("评分: " + from);
+        int res = clazzService.gradeStudent(from);
+        if( res < 1) {
+            return Result.error(ResultCode.SYSTEM_INNER_ERROR);
+        }
+        return  Result.success(from);
+    }
+
 }

@@ -8,9 +8,9 @@ import java.util.Date;
 public class Resource {
     private String resId;
     private String resName;
-    private String resPath;
+    private String downLink;
     private Date uploadTime;
     private String resSize;
     private int experience;
-    private String clazzId;
+    private String courseId;
 }

@@ -1,28 +1,9 @@
 import request from '@/utils/request'
 
-export function getAllCourse (userId) {
+export function getCourses (userId) {
   return request({
-    url: `v1/students/${userId}/courses`,
+    url: `v1/${userId}/courses`,
     method: 'get'
-  })
-}
-
-export function joinCourse (joinClazzForm) {
-  return request({
-    url: 'v1/students/courses',
-    method: 'post',
-    data: JSON.stringify(joinClazzForm)
-  })
-}
-
-export function quitCourse (clazzId, userId) {
-  return request({
-    url: 'v1/students/courses',
-    method: 'delete',
-    params: {
-      clazzId: clazzId,
-      userId: userId
-    }
   })
 }
 
@@ -34,6 +15,13 @@ export function createCourse (clazzForm) {
   })
 }
 
+export function toggleAppraise (id) {
+  return request({
+    url: `v1/courses/appraise/${id}`,
+    method: 'put'
+  })
+}
+
 export function searchCourse (clazzNum) {
   return request({
     url: `v1/courses/${clazzNum}`,
@@ -41,9 +29,13 @@ export function searchCourse (clazzNum) {
   })
 }
 
-export function dissolveCourse (clazzId) {
+export function uploadPhoto (id, data) {
   return request({
-    url: `v1/courses/${clazzId}`,
-    method: 'delete'
+    url: `v1/courses/photo/${id}`,
+    header: {
+      'Content-Type': 'multipart/form-data'
+    },
+    method: 'post',
+    data
   })
 }

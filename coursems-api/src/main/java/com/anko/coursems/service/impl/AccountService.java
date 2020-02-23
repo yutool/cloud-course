@@ -4,6 +4,7 @@ import com.anko.coursems.common.result.Result;
 import com.anko.coursems.common.result.ResultCode;
 import com.anko.coursems.dao.AccountMapper;
 import com.anko.coursems.entity.UserInfo;
+import com.anko.coursems.model.LoginForm;
 import com.anko.coursems.service.IAccountService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class AccountService implements IAccountService {
 
     // 登录
     @Override
-    public UserInfo login(UserInfo loginForm) {
+    public UserInfo login(LoginForm loginForm) {
         return accountMapper.login(loginForm);
     }
 

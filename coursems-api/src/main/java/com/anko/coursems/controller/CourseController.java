@@ -1,45 +1,64 @@
 package com.anko.coursems.controller;
 
 import com.anko.coursems.common.result.ResultCode;
-import com.anko.coursems.entity.ClazzInfo;
-import com.anko.coursems.entity.ClazzMember;
+import com.anko.coursems.common.utils.FileUploadUtils;
+import com.anko.coursems.common.utils.UrlUtils;
+import com.anko.coursems.entity.Course;
 import com.anko.coursems.common.result.Result;
-import com.anko.coursems.model.ClazzDetail;
-import com.anko.coursems.model.UserCourse;
+import com.anko.coursems.model.CourseDto;
 import com.anko.coursems.service.impl.CourseService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-@RequestMapping("/api/v1/courses")
+import java.util.List;
+
+@Slf4j
+@RequestMapping("/api/v1")
 @RestController
 public class CourseController {
-    private Logger log = LoggerFactory.getLogger(CourseController.class);
     @Autowired
     private CourseService courseService;
 
-    @PostMapping
-    public Result createCourse(@RequestBody ClazzInfo clazzForm) {
-        log.info(clazzForm.toString());
-        ResultCode code = courseService.createCourse(clazzForm);
-        return Result.builder().build().setResultCode(code);
+    @GetMapping("/{userId}/courses")
+    public Result getAllCourses(@PathVariable String userId) {
+        log.info("获取所有课程: " + userId);
+        List<CourseDto> courses = courseService.getAllCourses(userId);
+        return Result.success(courses);
     }
 
-    @GetMapping("/{num}")
+    @GetMapping("/courses/{num}")
     public Result searchCourse(@PathVariable String num) {
-        log.info(num);
-        ClazzDetail clazzDetail = courseService.searchCourse(num);
-        if(clazzDetail == null) {
+        log.info("按班号查询课程: " + num);
+        CourseDto courseDto = courseService.searchCourse(num);
+        if(courseDto == null) {
             return Result.error(ResultCode.RESULE_DATA_NONE);
         }
-        return Result.success(clazzDetail);
+        return Result.success(courseDto);
     }
 
-    @DeleteMapping("/{id}")
-    public Result dissolveCourse(@PathVariable String id) {
-        log.info(id);
-        ResultCode code = courseService.dissolveCourse(id);
-        return Result.builder().build().setResultCode(code);
+    @PostMapping("/courses")
+    public Result createCourse(@RequestBody Course form) {
+        log.info("创建班级: " + form);
+        Course course = courseService.createCourse(form);
+        return Result.success(course);
+    }
+
+    @PutMapping("/courses/appraise/{id}")
+    public Result toggleAppraise(@PathVariable String id) {
+        log.info("开启评分: " + id);
+        Course course = courseService.getCourseById(id);
+        boolean appraise = courseService.toggleAppraise(course);
+        return  Result.success(appraise);
+    }
+
+    @PostMapping("/courses/photo/{id}")
+    public Result uploadPhoto(@PathVariable String id, @RequestParam("file") MultipartFile file) {
+        log.info("上传图片: " + id);
+        String fileName = FileUploadUtils.storeFile(file, FileUploadUtils.STORE_AVATAR);
+        final String relativePath = FileUploadUtils.USER_AVATAR_PR + fileName;
+        courseService.savePhoto(id, relativePath);
+        return Result.success(UrlUtils.toServerUrl(relativePath));
     }
 }

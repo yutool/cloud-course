@@ -2,7 +2,7 @@ const ERROR = 1
 const WARN = 2
 const INFO = 3
 const DEBUG = 4
-const TYPE = 0
+const TYPE = INFO
 
 const logger = {
   error (page, msg) {

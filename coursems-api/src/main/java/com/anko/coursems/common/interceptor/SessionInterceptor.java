@@ -18,8 +18,7 @@ public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
-        log.info("sessionId为：" + session.getId());
-
+        // log.info("sessionId为：" + session.getId());
         // 获取用户信息，如果没有用户信息直接返回提示信息
         Object userInfo = session.getAttribute("userInfo");
         if (userInfo == null) {
@@ -28,8 +27,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             response.getWriter().write("Please Login In");
             return false;
         }
-
-        // log.info("已经登录过啦：" + session.getAttribute("userInfo"));
+        // log.info("当前用户" + userInfo);
         return true;
     }
 

@@ -11,5 +11,5 @@ public class Notice {
     private Date releaseTime;
     private String author;
     private int type;
-    private String clazzId;
+    private String courseId;
 }

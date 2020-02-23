@@ -5,13 +5,14 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
-@ToString(exclude = {"signature","birthday", "gender", "nickname"})
+@ToString(exclude = {"signature", "gender"})
 @Data
 public class UserInfo implements Serializable {
     private String userId;
     private String userName;
     private String email;
-    private String userPwd;
+    private String password;
+    private String avatar;
     private String nickname;
     private String stuNum;
     private String gender;

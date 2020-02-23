@@ -30,7 +30,7 @@
         <ul class="navbar-nav navbar-right">
           <li v-if="userInfo" class="nav-item">
             <router-link class="nav-link user-info" to="/account">
-              <img src="https://public-cdn-oss.mosoteach.cn/avatar/2018/64/da4d5a3ac1116812b46b863c46108a7b.png?v=1572946753&amp;x-oss-process=style/s200x200" width="30" class="user-photo">
+              <img :src="userInfo.avatar" width="30" class="user-photo">
               <span class="user-name">{{userInfo.userName}}</span>
             </router-link>
           </li>
@@ -49,24 +49,19 @@
 
 <script>
 import { mapState } from 'vuex'
-import { logout } from '@/api/account'
 
 export default {
   name: 'Navbar',
   data: () => ({
   }),
   computed: {
-    ...mapState(['userInfo'])
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
   },
   methods: {
     logout () {
-      logout().then(res => {
-        if (res.code === 0) {
-          this.$store.dispatch('clearState')
-          this.$router.push('/login')
-          this.$message({type: 'success', message: res.message})
-        }
-      })
+      this.$store.dispatch('user/logout')
     }
   }
 }

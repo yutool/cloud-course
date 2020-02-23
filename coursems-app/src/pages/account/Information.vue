@@ -9,9 +9,15 @@
         <div class="row">
           <!-- 头像 -->
           <div class="col-md-3 text-center">
-            <img src="@/assets/1.jpeg" class="wpx-150" alt="">
-            <div class="hpx-10"></div>
-            <a href="#" class="btn btn-primary">设置头像</a>
+            <img :src="userInfo.avatar" class="wpx-150" alt="">
+            <el-upload
+              class="upload-demo mt-2"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :show-file-list="false"
+              :before-upload="beforeAvatarUpload">
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
+            <cropper-dialog :visible="cdVisible" :url="avatarUrl" @confirm="confirmUpload" @close="cancelUpload" />
             <div class="hpx-10"></div>
           </div>
           <div class="col-md-1"></div>
@@ -50,11 +56,13 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { updateUserInfo } from '@/api/user'
+
 export default {
   name: 'Information',
   data () {
     return {
+      cdVisible: false,
+      avatarUrl: '',
       rules: {
         userName: [
           { required: true, message: '请输入姓名', trigger: 'change' },
@@ -78,7 +86,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userInfo'])
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
   },
   methods: {
     ...mapActions(['setUserInfo']),
@@ -86,17 +96,35 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$log.info('info/form', this.userInfo)
-          updateUserInfo(this.userInfo).then(res => {
-            if (res.code === 0) {
-              this.setUserInfo(this.userInfo)
-              this.$message({ message: '更新信息成功', type: 'success' })
-            }
+          this.$store.dispatch('user/updateInfo', this.userInfo).then(res => {
+            this.$notify({ title: '成功', message: '更新信息成功', type: 'success' })
           })
         } else {
           this.$log.info('info/form', 'error submit!!')
           return false
         }
       })
+    },
+    beforeAvatarUpload (file) {
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      this.cdVisible = true
+      this.avatarUrl = window.URL.createObjectURL(file)
+      return false // 取消默认上传
+    },
+    confirmUpload (file) {
+      console.log(file.type)
+      let data = new FormData()
+      data.append('file', file)
+      this.$store.dispatch('user/uploadAvatar', {id: this.userInfo.userId, data: data}).then(res => {
+        this.$notify({ title: '成功', message: '更新头像成功', type: 'success' })
+      })
+      this.cdVisible = false
+    },
+    cancelUpload () {
+      this.cdVisible = false
     }
   }
 }

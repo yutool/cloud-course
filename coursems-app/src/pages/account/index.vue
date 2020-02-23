@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-3">
+  <div class="container p-3" v-loading.fullscreen.lock="fullscreenLoading">
     <div class="row">
       <!-- 选项卡 -->
       <div class="col-md-2">
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'Account',
   data: () => ({
@@ -29,6 +31,9 @@ export default {
       if (this.$route.path === this.activeName) return
       this.$router.push({path: this.activeName})
     }
+  },
+  computed: {
+    ...mapState(['fullscreenLoading'])
   },
   mounted  () {
     var _this = this

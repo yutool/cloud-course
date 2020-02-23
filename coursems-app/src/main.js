@@ -6,8 +6,10 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
-import Popconfirm from '@/components'
+import VueCropper from 'vue-cropper'
 import elementUI from 'element-ui'
+
+import Components from '@/components'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -15,8 +17,9 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import './styles/style.css'
 import logger from './utils/logger.js'
 
+Vue.use(VueCropper)
 Vue.use(elementUI)
-Vue.use(Popconfirm)
+Vue.use(Components)
 Vue.prototype.$log = logger
 Vue.prototype.$http = axios
 Vue.config.productionTip = false

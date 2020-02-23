@@ -70,7 +70,7 @@ const router = new Router({
 })
 
 router.beforeEach(async (to, from, next) => {
-  const { data } = await store.dispatch('getCurrentUser')
+  const { data } = await store.dispatch('user/getCurrentUser')
   if (data) {
     if (to.path === '/login') {
       next({ path: '/' })

@@ -3,71 +3,72 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.anko.coursems.dao.ClazzMapper">
-    <resultMap id="clazzDetail" type="clazzDetail">
-        <id property="clazzId" column="clazz_id" />
-        <result property="clazzNum" column="clazz_num" />
-        <result property="clazzName" column="clazz_name" />
-        <result property="courseName" column="course_name" />
-        <result property="clazzPhoto" column="clazz_photo" />
-        <result property="clazzExplain" column="clazz_explain" />
-        <result property="term" column="term" />
-        <result property="arriveNum" column="arrive_num" />
-        <result property="resourceNum" column="resource_num" />
-        <result property="experience" column="experience" />
-        <result property="teaId" column="tea_id" />
-        <result property="teaName" column="tea_name" />
-        <result property="enAppraise" column="en_appraise" />
-        <collection property="members" column="clazz_id"
+    <resultMap id="clazzDto" type="clazzDto">
+        <id property="course.courseId" column="course_id" />
+        <result property="course.courseNum" column="course_num" />
+        <result property="course.courseName" column="course_name" />
+        <result property="course.coursePic" column="course_pic" />
+        <result property="course.clazzName" column="clazz_name" />
+        <result property="course.term" column="term" />
+        <result property="course.synopsis" column="synopsis" />
+        <result property="course.arrives" column="arrives" />
+        <result property="course.resources" column="resources" />
+        <result property="course.experiences" column="experiences" />
+        <result property="course.appraise" column="appraise" />
+        <result property="course.teacherId" column="teacher_id" />
+        <result property="course.teacherName" column="teacher_name" />
+        <collection property="members" column="course_id"
                     select="com.anko.coursems.dao.ClazzMapper.getClazzMembers" />
-        <collection property="resources" column="clazz_id"
+        <collection property="resources" column="course_id"
                     select="com.anko.coursems.dao.ClazzMapper.getClazzResources" />
-        <collection property="notices" column="clazz_id"
+        <collection property="notices" column="course_id"
                     select="com.anko.coursems.dao.ClazzMapper.getClazzNotices" />
     </resultMap>
 
-    <select id="getClazzDetail" parameterType="string" resultMap="clazzDetail">
-        select c.*, u.user_name tea_name
-        from t_clazz c, t_user u
-        where c.clazz_id = #{clazzId}
-        and u.user_id = c.tea_id
+    <select id="getClazzDetail" parameterType="string" resultMap="clazzDto">
+        select c.*, u.user_name teacher_name
+        from t_course c, t_user u
+        where u.user_id = c.teacher_id
+        and c.course_id = #{userId}
     </select>
 
-    <select id="getClazzMembers" parameterType="string" resultType="memberDetail">
-        select u.user_id, u.user_name stuName, u.stu_num, u.signature, m.experience, m.arrive, score, remark
-        from t_clamember m, t_user u
-        where clazz_id = #{clazzId}
+    <select id="getClazzMembers" parameterType="string" resultType="memberDto">
+        select u.user_id, m.course_id, u.user_name stuName, u.stu_num, u.avatar, u.signature, m.experience, m.arrive, score, remark
+        from t_member m, t_user u
+        where course_id = #{courseId}
         and m.user_id = u.user_id
     </select>
 
-    <delete id="deleteMember" parameterType="clazzDetail">
-        delete from t_clamember
-        where clazz_id = #{clazzId}
+    <select id="findMemberById" parameterType="member" resultType="member">
+        select * from t_member
+        where course_id = #{courseId}
+        and user_id = #{userId}
+    </select>
+
+    <insert id="addMember" parameterType="member">
+        insert into t_member(course_id, user_id)
+        values(#{courseId}, #{userId})
+    </insert>
+
+    <delete id="deleteMember" parameterType="clazzDto">
+        delete from t_member
+        where course_id = #{courseId}
         and user_id = #{userId}
     </delete>
 
-    <select id="getClazzNotices" parameterType="string" resultType="notice">
-        select * from t_notice
-        where clazz_id = #{clazzId}
-    </select>
-
-    <insert id="sendNotice" parameterType="notice">
-        insert into t_notice(notice_id, content, release_time, author, `type`, clazz_id)
-        values(#{noticeId}, #{content}, #{releaseTime}, #{author}, #{type}, #{clazzId})
-    </insert>
-
-    <delete id="deleteNotice" parameterType="string">
-        delete from t_notice
-        where notice_id = #{noticeId}
+    <delete id="deleteMembers" parameterType="string">
+        delete from t_member
+        where course_id = #{courseId}
     </delete>
 
-    <select id="getClazzResources" parameterType="string" resultType="resourceDetail">
+    <select id="getClazzResources" parameterType="string" resultType="resourceDto">
         select * from t_resource
-        where clazz_id = #{clazzId}
+        where course_id = #{courseId}
     </select>
 
     <insert id="uploadResource" parameterType="resource">
-        insert into t_resource(res_id, res_name, res_path, upload_time, res_size, experience, clazz_id)
-        values(#{resId}, #{resName}, #{resPath}, #{uploadTime}, #{resSize}, #{experience}, #{clazzId})
+        insert into t_resource(res_id, res_name, down_link, upload_time, res_size, experience, course_id)
+        values(#{resId}, #{resName}, #{downLink}, #{uploadTime}, #{resSize}, #{experience}, #{courseId})
     </insert>
 
     <delete id="deleteResource" parameterType="string">
@@ -75,16 +76,36 @@
         where res_id = #{redId}
     </delete>
 
-    <update id="gradeStudent" parameterType="clazzMember">
-        update t_clamember
+    <delete id="deleteResources" parameterType="string">
+        delete from t_resource
+        where course_id = #{courseId}
+    </delete>
+
+    <select id="getClazzNotices" parameterType="string" resultType="notice">
+        select * from t_notice
+        where course_id = #{courseId}
+    </select>
+
+    <insert id="sendNotice" parameterType="notice">
+        insert into t_notice(notice_id, content, release_time, author, `type`, course_id)
+        values(#{noticeId}, #{content}, #{releaseTime}, #{author}, #{type}, #{courseId})
+    </insert>
+
+    <delete id="deleteNotice" parameterType="string">
+        delete from t_notice
+        where notice_id = #{noticeId}
+    </delete>
+
+    <delete id="deleteNotices" parameterType="string">
+        delete from t_notice
+        where course_id = #{courseId}
+    </delete>
+
+    <update id="gradeStudent" parameterType="member">
+        update t_member
         set score = #{score}, remark = #{remark}
-        where clazz_id=#{clazzId}
+        where course_id=#{courseId}
         and user_id=#{userId}
     </update>
 
-    <update id="enableAppraise" parameterType="clazzDetail">
-        update t_clazz
-        set en_appraise=#{enAppraise}
-        where clazz_id=#{clazzId}
-    </update>
 </mapper>

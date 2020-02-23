@@ -1,17 +1,12 @@
 package com.anko.coursems.service.impl;
 
-import com.anko.coursems.common.result.Result;
-import com.anko.coursems.common.result.ResultCode;
 import com.anko.coursems.dao.CourseMapper;
-import com.anko.coursems.entity.ClazzInfo;
-import com.anko.coursems.entity.ClazzMember;
-import com.anko.coursems.model.ClazzDetail;
-import com.anko.coursems.model.UserCourse;
+import com.anko.coursems.entity.Course;
+import com.anko.coursems.model.CourseDto;
 import com.anko.coursems.service.ICourseService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,55 +15,38 @@ public class CourseService implements ICourseService {
     @Autowired
     private CourseMapper courseMapper;
 
-    public UserCourse getAllCourse(String userId) {
-        List<ClazzDetail> joinCourse = courseMapper.getJoinCourses(userId);
-        List<ClazzDetail> createCourse = courseMapper.getCreateCourses(userId);
-        return new UserCourse(joinCourse, createCourse);
+    public List<CourseDto> getAllCourses(String userId) {
+        return courseMapper.getAllCourses(userId);
     }
 
-    public ResultCode createCourse(ClazzInfo clazzInfo) {
-        String clazzId = "c" + RandomStringUtils.randomAlphanumeric(19);
-        clazzInfo.setClazzId(clazzId);
-        String clazzNum = RandomStringUtils.randomNumeric(6);
-        clazzInfo.setClazzNum(clazzNum);
-        int res = courseMapper.createCourse(clazzInfo);
+    public Course createCourse(Course course) {
+        course.setCourseId(RandomStringUtils.randomAlphanumeric(19));
+        course.setCourseNum(RandomStringUtils.randomNumeric(6));
+        course.setCoursePic("users/upload_avatars/065d41e4-60da-45d1-bfe4-903ed6d80376.png");
+        int res = courseMapper.createCourse(course);
         if(res < 1) {
-            return ResultCode.SYSTEM_INNER_ERROR;
+            return null;
         }
-        return ResultCode.SUCCESS;
+        return course;
     }
 
-    public ClazzDetail searchCourse(String clazzNum) {
+    public CourseDto searchCourse(String clazzNum) {
         return courseMapper.searchCourse(clazzNum);
     }
 
-    public ResultCode joinCourse(ClazzMember joinForm) {
-        if (courseMapper.findClazzMemberById(joinForm) != null) {
-            return ResultCode.DATA_ALREADY_EXISTED;
-        }
-        int res = courseMapper.joinCourse(joinForm);
-        if(res < 1) {
-            return ResultCode.SYSTEM_INNER_ERROR;
-        }
-        return ResultCode.SUCCESS;
+
+    public Course getCourseById(String id) {
+        return courseMapper.getCourseById(id);
     }
 
-    public ResultCode quitCourse(ClazzMember clazzMember) {
-        int res = courseMapper.quitCourse(clazzMember);
-        if(res < 1) {
-            return ResultCode.SYSTEM_INNER_ERROR;
-        }
-        return ResultCode.SUCCESS;
+    public boolean toggleAppraise(Course course) {
+        course.setAppraise(!course.isAppraise());
+        courseMapper.toggleAppraise(course);
+        return course.isAppraise();
     }
-    // 解散班级
-    @Transactional
-    public ResultCode dissolveCourse(String clazzId) {
-        courseMapper.deleteClazzResource(clazzId);
-        courseMapper.deleteClazzMember(clazzId);
-        courseMapper.deleteClazzNotice(clazzId);
-        if(courseMapper.dissolveCourse(clazzId) < 1) {
-            return ResultCode.SYSTEM_INNER_ERROR;
-        }
-        return ResultCode.SUCCESS;
+
+    public int savePhoto(String id, String relativePath) {
+        return courseMapper.savePhoto(id, relativePath);
     }
+
 }

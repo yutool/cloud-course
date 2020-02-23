@@ -7,14 +7,19 @@ export function getClazzDetail (clazzId) {
   })
 }
 
-export function deleteMember (clazzId, userId) {
+export function addMember (member) {
+  return request({
+    url: 'v1/classes/members',
+    method: 'post',
+    data: JSON.stringify(member)
+  })
+}
+
+export function deleteMember (member) {
   return request({
     url: 'v1/classes/members',
     method: 'delete',
-    params: {
-      clazzId: clazzId,
-      userId: userId
-    }
+    data: JSON.stringify(member)
   })
 }
 
@@ -33,11 +38,14 @@ export function deleteNotice (noticeId) {
   })
 }
 
-export function uploadResource (resourceForm) {
+export function uploadResource (data) {
   return request({
     url: 'v1/classes/resources',
+    header: {
+      'Content-Type': 'multipart/form-data'
+    },
     method: 'post',
-    data: JSON.stringify(resourceForm)
+    data
   })
 }
 
@@ -56,10 +64,9 @@ export function gradeStudent (scoreForm) {
   })
 }
 
-export function enableAppraise (clazzDetail) {
+export function dissolveCourse (clazzId) {
   return request({
-    url: 'v1/classes/enableAppraise',
-    method: 'put',
-    data: JSON.stringify(clazzDetail)
+    url: `v1/classes/${clazzId}`,
+    method: 'delete'
   })
 }

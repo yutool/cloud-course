@@ -9,16 +9,6 @@
         where user_id=#{userId}
     </select>
 
-    <select id="login" parameterType="userInfo" resultType="userInfo">
-        select * from t_user
-        where user_pwd = #{userPwd}
-        and (email=#{email} or phone_num=#{phoneNum})
-    </select>
-
-    <insert id="register" parameterType="userInfo">
-        insert into t_user(user_id, user_name, nickname, user_pwd, email)
-        values(#{userId}, #{userName}, #{nickname}, #{userPwd}, #{email})
-    </insert>
     <update id="updateUserInfo" parameterType="userInfo">
         update t_user
         set user_name=#{userName}, nickname=#{nickname},
@@ -26,20 +16,26 @@
             birthday=#{birthday}, signature=#{signature}
         where user_id = #{userId}
     </update>
-
-    <update id="updatePassword" parameterType="userInfo">
+    
+    <update id="updateAvatar">
         update t_user
-        set user_pwd = #{userPwd}
+        set avatar = #{avatar}
         where user_id = #{userId}
     </update>
 
-    <update id="bindEmail" parameterType="userInfo">
+    <update id="updatePassword" parameterType="userInfo">
+        update t_user
+        set password = #{password}
+        where user_id = #{userId}
+    </update>
+
+    <update id="bindEmail">
         update t_user
         set email = #{email}
         where user_id = #{userId}
     </update>
 
-    <update id="bindPhone" parameterType="userInfo">
+    <update id="bindPhone">
         update t_user
         set phone_num = #{phoneNum}
         where user_id = #{userId}

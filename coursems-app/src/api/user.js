@@ -7,14 +7,6 @@ export function getCurrentUser () {
   })
 }
 
-export function resetPassWord (userForm) {
-  return request({
-    url: 'v1/users/password',
-    method: 'put',
-    data: JSON.stringify(userForm)
-  })
-}
-
 export function updateUserInfo (userInfo) {
   return request({
     url: 'v1/users',
@@ -23,18 +15,35 @@ export function updateUserInfo (userInfo) {
   })
 }
 
-export function bindEmail (emailForm) {
+export function uploadAvatar (id, data) {
   return request({
-    url: 'v1/users/email',
-    method: 'put',
-    data: JSON.stringify(emailForm)
+    url: `v1/users/avatar/${id}`,
+    header: {
+      'Content-Type': 'multipart/form-data'
+    },
+    method: 'post',
+    data
   })
 }
 
-export function bindPhone (phoneForm) {
+export function bindEmail (id, email) {
   return request({
-    url: 'v1/users/phone',
+    url: `v1/users/email/${id}/${email}`,
+    method: 'put'
+  })
+}
+
+export function bindPhone (id, phone) {
+  return request({
+    url: `v1/users/phone/${id}/${phone}`,
+    method: 'put'
+  })
+}
+
+export function resetPassWord (userForm) {
+  return request({
+    url: 'v1/users/password',
     method: 'put',
-    data: JSON.stringify(phoneForm)
+    data: JSON.stringify(userForm)
   })
 }

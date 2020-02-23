@@ -13,28 +13,28 @@
           <div class="col-md-2"></div>
           <div class="col-md-8">
             <!-- 输入框 -->
-            <el-input placeholder="请输入班课号" prefix-icon="el-icon-search" v-model.trim="serachNum" @keyup.enter.native="submit">
+            <el-input placeholder="请输入班课号" prefix-icon="el-icon-search" v-model.trim="courseNum" @keyup.enter.native="submit">
             </el-input>
             <!-- 班级存在 -->
-            <el-row v-if="clazzInfo" :gutter="20" class="pt-5">
+            <el-row v-if="JSON.stringify(course) !== '{}'" :gutter="20" class="pt-5">
               <el-col :md="9" :sm="9" :xs="24" class="text-center">
-                <img src="@/assets/1.jpeg" class="wpx-150 mt-2" alt="">
+                <img :src="course.coursePic" class="wpx-150 mt-2" alt="">
                 <div class="text-center pt-3 pb-3">
                   <el-button type="primary" class="btn-flat" @click="goJoinCourse">加入班级</el-button>
                 </div>
               </el-col>
               <el-col :md="15" :sm="15" :xs="24" class="text-center">
                 <div class="hpx-10"></div>
-                <p>教师名：{{clazzInfo.teaName}}</p>
-                <p>班课号：{{clazzInfo.clazzNum}}</p>
-                <p>学期：{{clazzInfo.term}}</p>
+                <p>教师名：{{course.teacherName}}</p>
+                <p>班课号：{{course.courseNum}}</p>
+                <p>学期：{{course.term}}</p>
                 <div class="hpx-10"></div>
-                <p>课程名：{{clazzInfo.courseName}}</p>
-                <p>班级名：{{clazzInfo.clazzName}}</p>
+                <p>课程名：{{course.courseName}}</p>
+                <p>班级名：{{course.clazzName}}</p>
               </el-col>
             </el-row>
             <!-- 班级不存在 -->
-            <div v-if="!clazzInfo" class="hint text-center pt-5">
+            <div v-else class="hint text-center pt-5">
               {{hint}}
             </div>
           </div>
@@ -47,48 +47,35 @@
 </template>
 
 <script>
-import { searchCourse, joinCourse } from '@/api/course'
+import { searchCourse } from '@/api/course'
 import { mapState } from 'vuex'
+
 export default {
   name: 'JoinCourse',
   data: () => ({
-    serachNum: '',
-    clazzInfo: null,
+    courseNum: '',
+    course: {},
     hint: '输入班课号搜索'
   }),
   computed: {
-    ...mapState(['userInfo'])
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    })
   },
   methods: {
     submit () {
-      searchCourse(this.serachNum).then(res => {
+      searchCourse(this.courseNum).then(res => {
         if (res.code === 0) {
-          this.clazzInfo = res.data
+          this.course = res.data
         } else {
-          this.clazzInfo = null
+          this.course = {}
           this.hint = res.message
         }
         this.$log.info('searchCourse', res)
       })
     },
     goJoinCourse () {
-      if (this.userInfo.userId === this.clazzInfo.teaId) {
-        this.$message({type: 'error', message: '不用加入自己班级哦！'})
-        return
-      }
-      var joinForm = {
-        clazzId: this.clazzInfo.clazzId,
-        userId: this.$store.state.userInfo.userId
-      }
-      joinCourse(joinForm).then(res => {
-        if (res.code === 0) {
-          this.$log.info('join/result', res)
-          this.$router.push('/course')
-          this.$message({type: 'success', message: res.message})
-        } else {
-          this.$message({type: 'error', message: res.message})
-        }
-      })
+      this.$store.dispatch('course/joinCourse', {courseId: this.course.courseId, userId: this.userInfo.userId})
     }
   },
   mounted () {
