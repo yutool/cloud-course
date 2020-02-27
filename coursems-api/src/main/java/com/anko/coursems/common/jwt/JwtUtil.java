@@ -1,6 +1,6 @@
 package com.anko.coursems.common.jwt;
 
-import com.anko.coursems.entity.UserInfo;
+import com.anko.coursems.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JwtUtil {
-    public static String getToken(UserInfo user, long ttlMillis) {
+    public static String getToken(User user, long ttlMillis) {
         long time = System.currentTimeMillis();
         // 生成JWT的时间
         Date date = new Date(time);

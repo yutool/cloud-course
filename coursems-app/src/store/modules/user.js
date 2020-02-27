@@ -82,9 +82,10 @@ const actions = {
     })
   },
   // user bind email
-  bindEmail ({ commit }, { id, email }) {
+  bindEmail ({ commit }, user) {
+    console.log(user)
     return new Promise((resolve, reject) => {
-      bindEmail(id, email).then(res => {
+      bindEmail(user).then(res => {
         const { code, data } = res
         if (code === 0) {
           commit('SET_USERINFO', data)
@@ -96,9 +97,9 @@ const actions = {
     })
   },
   // user bind phone
-  bindPhone ({ commit }, { id, phone }) {
+  bindPhone ({ commit }, user) {
     return new Promise((resolve, reject) => {
-      bindPhone(id, phone).then(res => {
+      bindPhone(user).then(res => {
         const { code, data } = res
         if (code === 0) {
           commit('SET_USERINFO', data)

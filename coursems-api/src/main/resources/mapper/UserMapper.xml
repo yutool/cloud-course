@@ -4,12 +4,29 @@
 
 <mapper namespace="com.anko.coursems.dao.UserMapper">
 
-    <select id="findUserById" parameterType="string" resultType="userInfo">
+    <select id="findUserByAccount" parameterType="string" resultType="user">
+        select * from t_user
+        where email = #{account}
+        or phone_num = #{account}
+    </select>
+
+    <insert id="register" parameterType="user">
+        insert into t_user(user_id, user_name, nickname, password, email)
+        values(#{userId}, #{userName}, #{nickname}, #{password}, #{email})
+    </insert>
+
+    <update id="resetPassword" parameterType="user">
+        update t_user
+        set password = #{password}
+        where email = #{email}
+    </update>
+
+    <select id="findUserById" parameterType="string" resultType="user">
         select * from t_user
         where user_id=#{userId}
     </select>
 
-    <update id="updateUserInfo" parameterType="userInfo">
+    <update id="updateUserInfo" parameterType="user">
         update t_user
         set user_name=#{userName}, nickname=#{nickname},
             stu_num=#{stuNum}, gender=#{gender},
@@ -23,30 +40,30 @@
         where user_id = #{userId}
     </update>
 
-    <update id="updatePassword" parameterType="userInfo">
+    <update id="updatePassword" parameterType="user">
         update t_user
         set password = #{password}
         where user_id = #{userId}
     </update>
 
-    <update id="bindEmail">
+    <update id="bindEmail" parameterType="user">
         update t_user
         set email = #{email}
         where user_id = #{userId}
     </update>
 
-    <update id="bindPhone">
+    <update id="bindPhone" parameterType="user">
         update t_user
         set phone_num = #{phoneNum}
         where user_id = #{userId}
     </update>
 
-    <select id="emailIsExist" parameterType="string" resultType="userInfo">
+    <select id="emailIsExist" parameterType="string" resultType="user">
         select * from t_user
         where email = #{email}
     </select>
 
-    <select id="phoneIsExist" parameterType="string" resultType="userInfo">
+    <select id="phoneIsExist" parameterType="string" resultType="user">
         select * from t_user
         where phone_num = #{phoneNum}
     </select>

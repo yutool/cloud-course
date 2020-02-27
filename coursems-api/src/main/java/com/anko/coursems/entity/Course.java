@@ -4,9 +4,10 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.List;
 
-@ToString(exclude = {"clazzPhoto","clazzExplain","term", "arrives"})
 @Data
+@ToString(exclude = {"synopsis","teacher", "members", "resources", "notices"})
 public class Course implements Serializable {
     private String courseId;
     private String courseNum;
@@ -15,9 +16,12 @@ public class Course implements Serializable {
     private String clazzName;
     private String synopsis;
     private String term;
-    private int arrives;
-    private int resources;
-    private int experiences;
+    private int arrivesNum;
+    private int resourcesNum;
+    private int experiencesNum;
     private boolean appraise;
-    private String teacherId;
+    private User teacher;
+    private List<Member> members;
+    private List<Resource> resources;
+    private List<Notice> notices;
 }

@@ -1,17 +1,14 @@
 package com.anko.coursems.model;
 
+import com.anko.coursems.common.utils.FileUrlUtils;
 import com.anko.coursems.entity.Resource;
-import com.anko.coursems.entity.UserInfo;
 import com.google.common.base.Converter;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Date;
 
 @Data
-@Builder
 public class ResourceDto {
     private String resId;
     private String resName;
@@ -23,12 +20,10 @@ public class ResourceDto {
 
     // 获取服务器下载地址
     public String getDownLink() {
-        if(downLink.startsWith("http"))
-            return downLink;
-        return ServletUriComponentsBuilder.fromCurrentContextPath().path("files/"+downLink).toUriString();
+        return FileUrlUtils.toDownloadUrl(downLink);
     }
 
-    public Resource convertToUser(){
+    public Resource convertToResource(){
         ResourceConverter converter = new ResourceConverter();
         Resource resource = converter.convert(this);
         return resource;
@@ -52,7 +47,7 @@ public class ResourceDto {
 
         @Override
         protected ResourceDto doBackward(Resource resource) {
-            ResourceDto resourceDto = ResourceDto.builder().build();
+            ResourceDto resourceDto = new ResourceDto();
             BeanUtils.copyProperties(resource, resourceDto);
             return resourceDto;
         }

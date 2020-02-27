@@ -31,6 +31,7 @@
 
 <script>
 import { resetPassWord } from '@/api/user'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'PasswordCard',
@@ -71,11 +72,14 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['getUserId'])
+  },
   methods: {
     submitPwd (formName) { // 重置密码
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          resetPassWord({userId: this.userInfo.userId, password: this.pwdForm.pass}).then(res => {
+          resetPassWord({userId: this.getUserId, password: this.pwdForm.pass}).then(res => {
             if (res.code === 0) {
               this.$notify({ title: '成功', message: '修改密码成功', type: 'success' })
               this.$refs[formName].resetFields()

@@ -50,10 +50,14 @@ public class FileContentTypeUtils {
     }
 
     public static String getImgType(String contentType) {
-        if(contentType.startsWith("image")) {
+        if(isImage(contentType)) {
             return contentType.substring("image".length()+1);
         }
         return null;
+    }
+
+    public static boolean isImage(String contentType) {
+        return contentType.startsWith("image");
     }
 
     public static String getFileType(String fileName) {

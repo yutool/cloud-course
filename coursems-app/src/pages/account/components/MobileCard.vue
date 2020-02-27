@@ -66,7 +66,7 @@ export default {
     submitPhone (formName) { // 绑定手机
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$store.dispatch('user/bindPhone', { id: this.userInfo.userId, phone: this.phoneForm.phone }).then(res => {
+          this.$store.dispatch('user/bindPhone', { userId: this.userInfo.userId, phoneNum: this.phoneForm.phone }).then(res => {
             this.$notify({ title: '成功', message: '绑定手机成功', type: 'success' })
             this.$refs[formName].resetFields()
             this.enPhone = false

@@ -26,7 +26,7 @@ const actions = {
   getCourses ({ commit }, userId) {
     getCourses(userId).then(res => {
       const { code, data } = res
-      console.log('返回的班级', res)
+      console.log('返回的班级', data)
       if (code === 0 && data != null) {
         commit('SET_JOIN_COURSES', data.filter(c => c.teacherId !== userId))
         commit('SET_CREATE_COURSES', data.filter(c => c.teacherId === userId))

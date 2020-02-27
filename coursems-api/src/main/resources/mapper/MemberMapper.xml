@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.anko.coursems.dao.MemberMapper">
+
+    <resultMap id="memberMap" type="member">
+        <id property="user.userId" column="user_id" />
+        <result property="courseId" column="course_id" />
+        <result property="experience" column="experience" />
+        <result property="arrive" column="arrive" />
+        <result property="score" column="score" />
+        <result property="remark" column="remark" />
+        <result property="user.userName" column="user_name" />
+        <result property="user.userNum" column="user_num" />
+        <result property="user.avatar" column="avatar" />
+        <result property="user.signature" column="signature" />
+    </resultMap>
+
+    <select id="getMembersByCourseId" parameterType="string" resultMap="memberMap">
+        select u.user_id, m.course_id, u.user_name, u.stu_num, u.avatar, u.signature, m.experience, m.arrive, score, remark
+        from t_member m, t_user u
+        where course_id = #{courseId}
+        and m.user_id = u.user_id
+    </select>
+
+    <select id="select" parameterType="member" resultType="member">
+        select * from t_member
+        where course_id = #{courseId}
+        and user_id = #{user.userId}
+    </select>
+
+    <insert id="add" parameterType="member">
+        insert into t_member(course_id, user_id)
+        values(#{courseId}, #{user.userId})
+    </insert>
+
+    <delete id="delete" parameterType="member">
+        delete from t_member
+        where course_id = #{courseId}
+        and user_id = #{user.userId}
+    </delete>
+
+    <delete id="deleteMembersByCourseId" parameterType="string">
+        delete from t_member
+        where course_id = #{courseId}
+    </delete>
+
+    <update id="grade" parameterType="member">
+        update t_member
+        set score = #{score}, remark = #{remark}
+        where course_id = #{courseId}
+        and user_id = #{user.userId}
+    </update>
+
+</mapper>

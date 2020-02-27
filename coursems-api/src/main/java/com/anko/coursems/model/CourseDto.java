@@ -1,8 +1,10 @@
 package com.anko.coursems.model;
 
-import com.anko.coursems.common.utils.UrlUtils;
-import lombok.Builder;
+import com.anko.coursems.common.utils.FileUrlUtils;
+import com.anko.coursems.entity.Course;
+import com.google.common.base.Converter;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 @Data
 public class CourseDto {
@@ -22,6 +24,39 @@ public class CourseDto {
 
     // 需要获取服务器绝对地址
     public String getCoursePic() {
-        return UrlUtils.toServerUrl(coursePic);
+        return FileUrlUtils.toServerUrl(coursePic);
+    }
+
+    public Course convertToCourse(){
+        CourseConverter courseConverter = new CourseConverter();
+        Course course = courseConverter.convert(this);
+        return course;
+    }
+
+    public CourseDto convertFor(Course course){
+        CourseConverter courseConverter = new CourseConverter();
+        CourseDto courseDto = courseConverter.reverse().convert(course);
+        return courseDto;
+    }
+
+
+    private static class CourseConverter extends Converter<CourseDto, Course> {
+        @Override
+        protected Course doForward(CourseDto courseDto) {
+            Course course = new Course();
+            // 使用BeanCopier也可以
+            BeanUtils.copyProperties(courseDto, course);
+            return course;
+        }
+
+        @Override
+        protected CourseDto doBackward(Course course) {
+            CourseDto courseDto = new CourseDto();
+            BeanUtils.copyProperties(course, courseDto);
+            courseDto.teacherId = course.getTeacher().getUserId();
+            courseDto.teacherName = course.getTeacher().getUserName();
+            return courseDto;
+        }
+
     }
 }

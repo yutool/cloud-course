@@ -1,6 +1,6 @@
 package com.anko.coursems.model;
 
-import com.anko.coursems.entity.UserInfo;
+import com.anko.coursems.entity.User;
 import com.google.common.base.Converter;
 import lombok.Builder;
 import lombok.Data;
@@ -30,30 +30,30 @@ public class UserDto {
         return ServletUriComponentsBuilder.fromCurrentContextPath().path(avatar).toUriString();
     }
 
-    public UserInfo convertToUser(){
+    public User convertToUser(){
         UserConverter userConverter = new UserConverter();
-        UserInfo user = userConverter.convert(this);
+        User user = userConverter.convert(this);
         return user;
     }
 
-    public UserDto convertFor(UserInfo user){
+    public UserDto convertFor(User user){
         UserConverter userConverter = new UserConverter();
         UserDto userDto = userConverter.reverse().convert(user);
         return userDto;
     }
 
 
-    private static class UserConverter extends Converter<UserDto, UserInfo> {
+    private static class UserConverter extends Converter<UserDto, User> {
         @Override
-        protected UserInfo doForward(UserDto userDto) {
-            UserInfo user = new UserInfo();
+        protected User doForward(UserDto userDto) {
+            User user = new User();
             // 使用BeanCopier也可以
             BeanUtils.copyProperties(userDto, user);
             return user;
         }
 
         @Override
-        protected UserDto doBackward(UserInfo user) {
+        protected UserDto doBackward(User user) {
             UserDto userDto = UserDto.builder().build();
             BeanUtils.copyProperties(user, userDto);
             return userDto;

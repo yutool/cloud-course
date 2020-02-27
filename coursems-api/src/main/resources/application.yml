@@ -1,0 +1,13 @@
+spring:
+  # redis 配置
+  redis:
+    host: ankoye.com
+    password: redis.160123
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://www.ankoye.com:3306/coursems?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+    username: anko
+    password: anko.160123
+# 文件存储位置
+file:
+  upload-path: "D:/WorkSpace/Example/course-management/coursems-api/uploads/"

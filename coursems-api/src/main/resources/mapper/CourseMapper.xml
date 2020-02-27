@@ -4,11 +4,54 @@
 
 <mapper namespace="com.anko.coursems.dao.CourseMapper">
 
-    <select id="getAllCourses" parameterType="string" resultType="courseDto">
-        select c.*, u.user_name teacher_name
-        from t_course c
-        join t_user u on u.user_id = c.teacher_id
-        join t_member m on c.course_id=m.course_id
+    <resultMap id="courseMap" type="course">
+        <id property="courseId" column="course_id" />
+        <result property="courseNum" column="course_num" />
+        <result property="courseName" column="course_name" />
+        <result property="coursePic" column="course_pic" />
+        <result property="clazzName" column="clazz_name" />
+        <result property="synopsis" column="synopsis" />
+        <result property="term" column="term" />
+        <result property="arrivesNum" column="arrivesNum" />
+        <result property="resourcesNum" column="resourcesNum" />
+        <result property="experiencesNum" column="experiencesNum" />
+        <result property="appraise" column="appraise" />
+        <association property="teacher" column="teacher_id"
+                     select="com.anko.coursems.dao.UserMapper.findUserById" />
+    </resultMap>
+
+    <resultMap id="courseDetailMap" type="course">
+        <id property="courseId" column="course_id" />
+        <result property="courseNum" column="course_num" />
+        <result property="courseName" column="course_name" />
+        <result property="coursePic" column="course_pic" />
+        <result property="clazzName" column="clazz_name" />
+        <result property="synopsis" column="synopsis" />
+        <result property="term" column="term" />
+        <result property="arrivesNum" column="arrivesNum" />
+        <result property="resourcesNum" column="resourcesNum" />
+        <result property="experiencesNum" column="experiencesNum" />
+        <result property="appraise" column="appraise" />
+        <result property="teacher.userId" column="teacher_id" />
+        <result property="teacher.userName" column="user_name" />
+        <collection property="members" column="course_id"
+                    select="com.anko.coursems.dao.MemberMapper.getMembersByCourseId" />
+        <collection property="resources" column="course_id"
+                    select="com.anko.coursems.dao.ResourceMapper.getResourcesByCourseId" />
+        <collection property="notices" column="course_id"
+                    select="com.anko.coursems.dao.NoticeMapper.getNoticesByCourseId" />
+    </resultMap>
+
+    <select id="getCourseDetail" parameterType="string" resultMap="courseDetailMap">
+        select c.*, u.user_name
+        from t_course c, t_user u
+        where u.user_id = c.teacher_id
+        and c.course_id = #{userId}
+    </select>
+
+    <select id="getAllCourses" parameterType="string" resultMap="courseMap">
+        select c.* from t_course c
+        join t_member m on c.course_id = m.course_id
         where c.teacher_id = #{userId}
         or m.user_id = #{userId}
         GROUP BY c.course_id
@@ -42,7 +85,7 @@
         where course_id=#{courseId}
     </update>
 
-    <update id="savePhoto">
+    <update id="uploadPic">
         update  t_course
         set course_pic = #{coursePic}
         where course_id = #{courseId}

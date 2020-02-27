@@ -23,7 +23,8 @@ public enum ResultCode {
     USER_UPDATE_ERROR(20007, "修改用户信息错误"),
 
     /* 业务错误：30001-39999 */
-    SPECIFIED_QUESTIONED_USER_NOT_EXIST(30001, "某业务出现问题"),
+    SERVICE_ERROR(30001, "某业务出现问题"),
+    SPECIFIED_QUESTIONED_USER_NOT_EXIST(30002, "某业务出现问题"),
 
     /* 系统错误：40001-49999 */
     SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),
@@ -40,6 +41,7 @@ public enum ResultCode {
     INTERFACE_ADDRESS_INVALID(60004, "接口地址无效"),
     INTERFACE_REQUEST_TIMEOUT(60005, "接口请求超时"),
     INTERFACE_EXCEED_LOAD(60006, "接口负载过高"),
+    INTERFACE_UNSUPPORTED_METHOD(60007, "请求类型不支持"),
 
     /* 权限错误：70001-79999 */
     PERMISSION_NO_ACCESS(70001, "无访问权限"),

@@ -4,8 +4,9 @@ import lombok.Data;
 
 @Data
 public class Member {
+    private User user;
+//    private String userId;
     private String courseId;
-    private String userId;
     private int experience;
     private int arrive;
     private int score;

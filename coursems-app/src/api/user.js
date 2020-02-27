@@ -26,17 +26,19 @@ export function uploadAvatar (id, data) {
   })
 }
 
-export function bindEmail (id, email) {
+export function bindEmail (user) {
   return request({
-    url: `v1/users/email/${id}/${email}`,
-    method: 'put'
+    url: `v1/users/email`,
+    method: 'put',
+    data: JSON.stringify(user)
   })
 }
 
-export function bindPhone (id, phone) {
+export function bindPhone (user) {
   return request({
-    url: `v1/users/phone/${id}/${phone}`,
-    method: 'put'
+    url: `v1/users/phone`,
+    method: 'put',
+    data: JSON.stringify(user)
   })
 }
 

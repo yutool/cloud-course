@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 @ToString(exclude = {"signature", "gender"})
 @Data
-public class UserInfo implements Serializable {
+public class User implements Serializable {
     private String userId;
     private String userName;
     private String email;
@@ -19,4 +19,5 @@ public class UserInfo implements Serializable {
     private Date birthday;
     private String phoneNum;
     private String signature;
+    private String role;
 }

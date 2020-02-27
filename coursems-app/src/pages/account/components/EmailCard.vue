@@ -66,7 +66,7 @@ export default {
     submitEmail (formName) { // 绑定邮箱
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$store.dispatch('user/bindEmail', {id: this.userInfo.userId, email: this.emailForm.email}).then(res => {
+          this.$store.dispatch('user/bindEmail', {userId: this.userInfo.userId, email: this.emailForm.email}).then(res => {
             this.$notify({ title: '成功', message: '绑定邮箱成功', type: 'success' })
             this.$refs[formName].resetFields()
             this.enEmail = false

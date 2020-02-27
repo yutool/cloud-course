@@ -57,9 +57,9 @@ const actions = {
   // get clazz detail
   getClazz ({ commit }, clazzId) {
     getClazzDetail(clazzId).then(res => {
-      const { course, members, resources, notices } = res.data
+      const { members, resources, notices } = res.data
       console.log('查询班级', res)
-      commit('SET_COURSE', course)
+      commit('SET_COURSE', res.data)
       commit('SET_MEMBERS', members)
       commit('SET_RESOURCES', resources)
       commit('SET_NOTICES', notices)

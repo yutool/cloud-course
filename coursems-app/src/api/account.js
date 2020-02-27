@@ -10,7 +10,7 @@ export function login (loginForm) {
 
 export function logout () {
   return request({
-    url: 'v1/logout',
+    url: 'logout',
     method: 'post'
   })
 }

@@ -1,85 +1,85 @@
 package com.anko.coursems.controller;
 
+import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.ResultCode;
-import com.anko.coursems.common.utils.FileUploadUtils;
-import com.anko.coursems.entity.UserInfo;
+import com.anko.coursems.common.utils.UserUtils;
+import com.anko.coursems.entity.User;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.UserDto;
-import com.anko.coursems.service.impl.UserService;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.anko.coursems.service.IUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Slf4j
-@SessionAttributes(value = "userInfo", types = {UserInfo.class})
+@Api(tags = "用户模块")
 @RequestMapping("/api/v1/users")
 @RestController
 public class UserController {
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
+    @ApiOperation(value = "获取当前用户")
     @GetMapping("/current")
-    public Result getCurrentUser(@SessionAttribute("userInfo") UserInfo user) {
-        log.info("当前用户：" + user);
+    public Result getCurrentUser() {
+        User user = UserUtils.getCurrentUser();
         return Result.success(UserDto.builder().build().convertFor(user));
     }
 
+    @ApiOperation(value = "更新用户信息")
+    @LogAnnotation(operation = "更新用户信息")
     @PutMapping
-    public Result updateUserInfo(@SessionAttribute("userInfo") UserInfo user, @RequestBody UserInfo userInfo, ModelMap model) {
-        log.info("更新用户信息: " + userInfo);
-        ResultCode code = userService.updateUserInfo(userInfo);
-        user.setUserName(userInfo.getUserName());
-        user.setNickname(userInfo.getNickname());
-        user.setStuNum(userInfo.getStuNum());
-        user.setGender(userInfo.getGender());
-        user.setBirthday(userInfo.getBirthday());
-        user.setSignature(userInfo.getSignature());
-        model.put("userInfo", user);
+    public Result updateUserInfo(@RequestBody User form) {
+        if(form.getUserId() == null) {
+            return Result.error(ResultCode.PARAM_IS_INVALID);
+        }
+        User user = userService.updateUserInfo(form);
+        UserUtils.setCurrentUser(user);
         return Result.success(UserDto.builder().build().convertFor(user));
     }
 
+    @ApiOperation(value = "更新用户头像")
+    @LogAnnotation(operation = "更新用户头像")
     @PostMapping("/avatar/{id}")
-    public Result updateAvatar(
-            @SessionAttribute("userInfo") UserInfo user, @PathVariable String id,
-            @RequestParam("file") MultipartFile file, ModelMap model) {
-        log.info("更新头像: " + file.getOriginalFilename());
-        String fileName = FileUploadUtils.storeFile(file, FileUploadUtils.STORE_AVATAR);
-        final String relativePath = FileUploadUtils.USER_AVATAR_PR + fileName;
-        userService.updateAvatar(id, relativePath);
-        user.setAvatar(relativePath);
-        model.put("userInfo", user);
+    public Result updateAvatar(@PathVariable String id, @RequestParam("file") MultipartFile file) {
+//        if(FileContentTypeUtils.isImage(file.getContentType())) {
+//            return Result.error(ResultCode.PARAM_IS_INVALID);
+//        }
+        User user = userService.updateAvatar(id, file);
+        UserUtils.setCurrentUser(user);
         return Result.success(UserDto.builder().build().convertFor(user));
     }
 
-    @PutMapping("/email/{id}/{email}")
-    public Result bindEmail(@PathVariable String id, @PathVariable String email,
-                            @SessionAttribute("userInfo") UserInfo user, ModelMap model) {
-        log.info("修改邮箱: " + email);
-        ResultCode code = userService.bindEmail(id, email);
-        user.setEmail(email);
-        model.put("userInfo", user);
-        return Result.success(user);
+    @ApiOperation(value = "绑定邮箱")
+    @LogAnnotation(operation = "绑定邮箱")
+    @PutMapping("/email")
+    public Result bindEmail(@RequestBody User form) {
+        if(form.getUserId() == null) {
+            return Result.error(ResultCode.PARAM_IS_INVALID);
+        }
+        User user = userService.bindEmail(form);
+        UserUtils.setCurrentUser(user);
+        return Result.success(UserDto.builder().build().convertFor(user));
     }
 
-    @PutMapping("/phone/{id}/{phone}")
-    public Result bindPhone(@PathVariable String id, @PathVariable String phone,
-                            @SessionAttribute("userInfo") UserInfo user, ModelMap model) {
-        log.info("修改手机: " + phone);
-        ResultCode code = userService.bindPhone(id, phone);
-        user.setPhoneNum(phone);
-        model.put("userInfo", user);
-        return Result.success(user);
+    @ApiOperation(value = "绑定手机")
+    @LogAnnotation(operation = "绑定手机")
+    @PutMapping("/phone")
+    public Result bindPhone(@RequestBody User form) {
+        if(form.getUserId() == null) {
+            return Result.error(ResultCode.PARAM_IS_INVALID);
+        }
+        User user = userService.bindPhone(form);
+        UserUtils.setCurrentUser(user);
+        return Result.success(UserDto.builder().build().convertFor(user));
     }
 
+    @ApiOperation(value = "修改密码")
+    @LogAnnotation(operation = "修改密码")
     @PutMapping("/password")
-    public Result updatePassword(@RequestBody UserInfo userInfo) {
-        log.info("修改密码: " + userInfo);
-        ResultCode code = userService.updatePassword(userInfo);
-        return Result.builder().build().setResultCode(code);
+    public Result updatePassword(@RequestBody User form) {
+        userService.updatePassword(form);
+        return Result.success();
     }
 }

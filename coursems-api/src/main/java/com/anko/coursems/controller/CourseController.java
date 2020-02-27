@@ -1,64 +1,66 @@
 package com.anko.coursems.controller;
 
-import com.anko.coursems.common.result.ResultCode;
-import com.anko.coursems.common.utils.FileUploadUtils;
-import com.anko.coursems.common.utils.UrlUtils;
+import com.anko.coursems.common.annotation.LogAnnotation;
+import com.anko.coursems.common.utils.FileUrlUtils;
 import com.anko.coursems.entity.Course;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.CourseDto;
-import com.anko.coursems.service.impl.CourseService;
-import lombok.extern.slf4j.Slf4j;
+import com.anko.coursems.service.ICourseService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.LinkedList;
 import java.util.List;
 
-@Slf4j
+@Api(tags = "课程管理")
 @RequestMapping("/api/v1")
 @RestController
 public class CourseController {
     @Autowired
-    private CourseService courseService;
+    private ICourseService courseService;
 
+    @ApiOperation(value = "获取用户所有课程")
     @GetMapping("/{userId}/courses")
     public Result getAllCourses(@PathVariable String userId) {
-        log.info("获取所有课程: " + userId);
-        List<CourseDto> courses = courseService.getAllCourses(userId);
-        return Result.success(courses);
-    }
-
-    @GetMapping("/courses/{num}")
-    public Result searchCourse(@PathVariable String num) {
-        log.info("按班号查询课程: " + num);
-        CourseDto courseDto = courseService.searchCourse(num);
-        if(courseDto == null) {
-            return Result.error(ResultCode.RESULE_DATA_NONE);
-        }
+        List<Course> courses = courseService.getAllCourses(userId);
+        List<CourseDto> courseDto = new LinkedList<>();
+        for(Course course : courses)
+            courseDto.add(new CourseDto().convertFor(course));
         return Result.success(courseDto);
     }
 
+    @ApiOperation(value = "按班课搜索课程")
+    @LogAnnotation(operation = "按班课搜索课程")
+    @GetMapping("/courses/{num}")
+    public Result searchCourse(@PathVariable String num) {
+        CourseDto courseDto = courseService.searchCourse(num);
+        return Result.success(courseDto);
+    }
+
+    @ApiOperation(value = "创建课程")
+    @LogAnnotation(operation = "创建课程")
     @PostMapping("/courses")
     public Result createCourse(@RequestBody Course form) {
-        log.info("创建班级: " + form);
         Course course = courseService.createCourse(form);
         return Result.success(course);
     }
 
+    @ApiOperation(value = "开启/关闭评分")
+    @LogAnnotation(operation = "开启/关闭评分")
     @PutMapping("/courses/appraise/{id}")
     public Result toggleAppraise(@PathVariable String id) {
-        log.info("开启评分: " + id);
-        Course course = courseService.getCourseById(id);
-        boolean appraise = courseService.toggleAppraise(course);
+        boolean appraise = courseService.toggleAppraise(id);
         return  Result.success(appraise);
     }
 
+    @ApiOperation(value = "更换班级图片")
+    @LogAnnotation(operation = "更换班级图片")
     @PostMapping("/courses/photo/{id}")
-    public Result uploadPhoto(@PathVariable String id, @RequestParam("file") MultipartFile file) {
-        log.info("上传图片: " + id);
-        String fileName = FileUploadUtils.storeFile(file, FileUploadUtils.STORE_AVATAR);
-        final String relativePath = FileUploadUtils.USER_AVATAR_PR + fileName;
-        courseService.savePhoto(id, relativePath);
-        return Result.success(UrlUtils.toServerUrl(relativePath));
+    public Result uploadPic(@PathVariable String id, @RequestParam("file") MultipartFile file) {
+        String path = courseService.uploadPic(id, file);
+        return Result.success(FileUrlUtils.toServerUrl(path));
     }
 }

@@ -1,25 +1,31 @@
 package com.anko.coursems.dao;
 
-import com.anko.coursems.entity.UserInfo;
+import com.anko.coursems.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserMapper {
-    // 查找用户
-    UserInfo findUserById(String userId);
-    // 更新用户信息
-    int updateUserInfo(UserInfo userInfo);
-    // 更新头像
+
+    User register(User registerForm);
+
+    int resetPassword(User passwordForm);
+
+    User findUserById(String userId);
+
+    int updateUserInfo(User user);
+
     int updateAvatar(@Param("userId") String id, @Param("avatar") String path);
-    // 绑定邮箱
-    int bindEmail(@Param("userId") String id, @Param("email") String email);
-    // 绑定手机号码
-    int bindPhone(@Param("userId") String id, @Param("phoneNum") String email);
-    // 重置密码
-    int updatePassword(UserInfo userInfo);
-    // 判断邮箱是否存在
-    UserInfo emailIsExist(String email);
-    // 判断手机号是否被使用
-    UserInfo phoneIsExist(String phoneNum);
+
+    int bindEmail(User user);
+
+    int bindPhone(User user);
+
+    int updatePassword(User user);
+
+    User emailIsExist(String email);
+
+    User phoneIsExist(String phoneNum);
+
+    User findUserByAccount(String account);
 }

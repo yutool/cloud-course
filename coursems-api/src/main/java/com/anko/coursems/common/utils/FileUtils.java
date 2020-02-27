@@ -18,26 +18,17 @@ import java.util.UUID;
 
 @Service
 @Slf4j
-public class FileUploadUtils {
-    public static final String USER_AVATAR_PR = "users/upload_avatars/";
-    public static final String USER_RESOURCE_PR = "users/upload_resource/";
-    public static final String DOWN_LINK_PR = "download/";
-    public static Path STORE_AVATAR;
-    public static Path STORE_RESOURCE;
+public class FileUtils {
+    public static final String USER_PR = "users/";
+    public static final String PUBLIC_PR = "public/";
+    private static Path UPLOAD_PATH;
 
-    public FileUploadUtils(@Value("${file.upload-path}") String path) {
-        STORE_AVATAR = Paths.get(path).resolve(USER_AVATAR_PR).normalize();
-        STORE_RESOURCE = Paths.get(path).resolve(USER_RESOURCE_PR).normalize();
-        if(!Files.exists(STORE_AVATAR)) {
+    public FileUtils(@Value("${file.upload-path}") String path) {
+        UPLOAD_PATH = Paths.get(path).normalize();
+        Path publicPath = Paths.get(path).resolve(PUBLIC_PR).normalize();
+        if(!Files.exists(publicPath)) {
             try {
-                Files.createDirectories(STORE_AVATAR);
-            } catch (Exception e) {
-                throw new FileException("Could not create the directory where the uploaded files will be stored.", e);
-            }
-        }
-        if(!Files.exists(STORE_RESOURCE)) {
-            try {
-                Files.createDirectories(STORE_RESOURCE);
+                Files.createDirectories(publicPath);
             } catch (Exception e) {
                 throw new FileException("Could not create the directory where the uploaded files will be stored.", e);
             }
@@ -56,7 +47,10 @@ public class FileUploadUtils {
             oldNamePrefix = oldNamePrefix.substring(0, oldNamePrefix.lastIndexOf("."));
         }
         String fileName = file.getOriginalFilename().replace(oldNamePrefix, UUID.randomUUID().toString());
-        log.info(fileName);
+        return storeFile(file, fileName, storePath);
+    }
+
+    public static String storeFile(MultipartFile file, String fileName, Path storePath) {
         try {
             // Check if the file's name contains invalid characters
             if(fileName.contains("..")) {
@@ -65,10 +59,12 @@ public class FileUploadUtils {
 
             // Copy file to the target location (Replacing existing file with the same name)
 
-            Path targetLocation = storePath.resolve(fileName);
+            Path targetLocation = UPLOAD_PATH.resolve(storePath).resolve(fileName).normalize();
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            return fileName;
+            String relative = storePath.resolve(fileName).toString().replaceAll("\\\\", "/");
+            log.info(relative);
+            return relative;
         } catch (IOException ex) {
             throw new FileException("Could not store file " + fileName + ". Please try again!", ex);
         }
@@ -76,22 +72,35 @@ public class FileUploadUtils {
 
     /**
      * 加载文件
-     * @param fileName
+     * @param path 文件相对路径
      * @return 文件
      */
-    public static Resource loadFileAsResource(String fileName) {
+    public static Resource loadFileAsResource(String path) {
         try {
-            Path filePath = STORE_RESOURCE.resolve(fileName).normalize();
+            // test value
+            Path filePath = UPLOAD_PATH.resolve(path).normalize();
 
             Resource resource = new UrlResource(filePath.toUri());
             if(resource.exists()) {
                 return resource;
             } else {
-                throw new FileException("File not found " + fileName);
+                throw new FileException("File not found " + path);
             }
         } catch (MalformedURLException ex) {
-            throw new FileException("File not found " + fileName, ex);
+            throw new FileException("File not found " + path, ex);
         }
+    }
+
+    public static Path getUserPath(String id) {
+        Path path = UPLOAD_PATH.resolve(USER_PR).resolve(id);
+        if(!Files.exists(path)) {
+            try {
+                Files.createDirectories(path);
+            } catch (Exception e) {
+                throw new FileException("Could not create the directory where the uploaded files will be stored.", e);
+            }
+        }
+        return Paths.get(USER_PR).resolve(id);
     }
 }
 
