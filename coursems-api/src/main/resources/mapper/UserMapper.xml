@@ -11,19 +11,13 @@
     </select>
 
     <insert id="register" parameterType="user">
-        insert into t_user(user_id, user_name, nickname, password, email)
-        values(#{userId}, #{userName}, #{nickname}, #{password}, #{email})
+        insert into t_user(user_id, user_name,email, password, nickname, avatar, salt, role)
+        values(#{userId}, #{userName}, #{email}, #{password}, #{nickname}, #{avatar}, #{salt}, #{role})
     </insert>
-
-    <update id="resetPassword" parameterType="user">
-        update t_user
-        set password = #{password}
-        where email = #{email}
-    </update>
 
     <select id="findUserById" parameterType="string" resultType="user">
         select * from t_user
-        where user_id=#{userId}
+        where user_id = #{userId}
     </select>
 
     <update id="updateUserInfo" parameterType="user">
@@ -42,8 +36,17 @@
 
     <update id="updatePassword" parameterType="user">
         update t_user
-        set password = #{password}
-        where user_id = #{userId}
+        set password = #{password}, salt = #{salt}
+        <where>
+            <choose>
+                <when test="email != null and email != ''">
+                    email = #{email}
+                </when>
+                <otherwise>
+                    user_id = #{userId}
+                </otherwise>
+            </choose>
+        </where>
     </update>
 
     <update id="bindEmail" parameterType="user">

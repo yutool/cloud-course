@@ -13,8 +13,8 @@
           <el-form-item label="邮 箱" prop="email">
             <el-input v-model="forgetFrom.email"></el-input>
           </el-form-item>
-          <el-form-item label="密 码" prop="userPwd">
-            <el-input type="password" v-model="forgetFrom.userPwd" autocomplete="off"></el-input>
+          <el-form-item label="密 码" prop="password">
+            <el-input type="password" v-model="forgetFrom.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="checkPass">
             <el-input type="password" v-model="forgetFrom.checkPass" autocomplete="off"></el-input>
@@ -54,7 +54,7 @@ export default {
     var validatePass2 = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'))
-      } else if (value !== this.forgetFrom.userPwd) {
+      } else if (value !== this.forgetFrom.password) {
         callback(new Error('两次输入密码不一致!'))
       } else {
         callback()
@@ -62,13 +62,13 @@ export default {
     }
     return {
       forgetFrom: {
-        userPwd: '',
+        password: '',
         checkPass: '',
         email: '',
         securityCode: ''
       },
       rules: {
-        userPwd: [
+        password: [
           { required: true, validator: validatePass, trigger: 'change' }
         ],
         checkPass: [
@@ -88,19 +88,11 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 提交表单
-          var userForm = {
-            email: this.forgetFrom.email,
-            userPwd: this.forgetFrom.userPwd
-          }
-          forgetPassWord(userForm).then(res => {
-            if (res.code === 0) {
-              this.$router.push('/login')
-              this.$message({ showClose: true, type: 'success', message: '重置密码成功' })
-            } else {
-              this.$message({ showClose: true, type: 'error', message: res.message })
-            }
-          })
           this.$log.info('resetPwd/form', this.forgetFrom)
+          forgetPassWord({email: this.forgetFrom.email, password: this.forgetFrom.password}).then(res => {
+            this.$router.push('/login')
+            this.$message({ showClose: true, type: 'success', message: '重置密码成功' })
+          })
         } else {
           this.$log.info('resetPwd/form', 'error submit!!')
           return false

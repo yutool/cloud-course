@@ -56,22 +56,6 @@ export default {
     ...mapGetters(['isTeacher'])
   },
   methods: {
-    submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          var scoreForm = {
-            courseId: this.course.courseId,
-            userId: this.selectedMember.userId,
-            score: this.selectedMember.score,
-            remark: this.selectedMember.remark
-          }
-          this.$store.dispatch('clazz/grade', scoreForm)
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
     toggleAppraise () {
       this.$store.dispatch('clazz/toggleAppraise', this.course.courseId)
     }

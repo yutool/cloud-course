@@ -25,12 +25,22 @@ instance.interceptors.request.use(config => {
 // 拦截响应
 instance.interceptors.response.use(response => {
   store.dispatch('app/setLoading', false)
+  // 全局统一处理 Session超时
+  if (response.headers['session_time_out'] === 'timeout') {
+    Message({ type: 'error', message: 'session_time_out' })
+  }
+  const { code, message } = response.data
+  // 处理请求错误
+  if (code !== 0) {
+    Message({ type: 'error', message: message })
+    return Promise.reject(message)
+  }
   return response.data
 }, error => {
   // 请求被拦截被跳到这里
   store.dispatch('app/setLoading', false)
   Message({ type: 'error', message: error.message })
-  Promise.reject(error)
+  return Promise.reject(error)
 })
 
 export default instance

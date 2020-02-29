@@ -2,6 +2,12 @@ package com.anko.coursems.common.aspect;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.constant.LogType;
+import com.anko.coursems.common.utils.IpUtils;
+import com.anko.coursems.common.utils.JsonUtils;
+import com.anko.coursems.common.utils.UserUtils;
+import com.anko.coursems.dao.LogMapper;
+import com.anko.coursems.entity.Log;
+import com.anko.coursems.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -13,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 @Aspect
 @Component
@@ -20,6 +27,8 @@ import java.lang.reflect.Method;
 public class RequestLogAspect {
     @Autowired
     HttpServletRequest request;
+    @Autowired
+    private LogMapper logMapper;
 
     @Pointcut("@annotation(com.anko.coursems.common.annotation.LogAnnotation)")
     public void logPointCut() {
@@ -27,11 +36,24 @@ public class RequestLogAspect {
 
     @Around("logPointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
+        long beginTime = System.currentTimeMillis();
         // 获取注解
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         LogAnnotation logAnnotation = method.getAnnotation(LogAnnotation.class);
-        // 排除忽略的
+        // 执行方法
+        Object result = point.proceed();
+        // 执行时长(毫秒)
+        long time = System.currentTimeMillis() - beginTime;
+        // 控制台输出
+        consoleLog(point, logAnnotation, result);
+        // 存储到数据库
+        // saveLog(point, logAnnotation, time);
+        return result;
+    }
+
+    private void consoleLog(ProceedingJoinPoint point, LogAnnotation logAnnotation, Object result) {
+        // 排除忽略
         boolean urlLogRequired = Boolean.TRUE;
         boolean requestLogRequired = Boolean.TRUE;
         boolean responseLogRequired = Boolean.TRUE;
@@ -63,60 +85,46 @@ public class RequestLogAspect {
         if (requestLogRequired) {
             log.info("{} - 请求参数: {}", logAnnotation.operation(), point.getArgs());
         }
-        //执行方法
-        Object result = point.proceed();
         //响应日志
         if (responseLogRequired) {
             log.info("请求结果: {}", result);
         }
 
-        //执行时长(毫秒)
-        // long time = System.currentTimeMillis() - beginTime;
-        //保存日志
-        // saveLog(point, time);
-        return result;
     }
 
-//    private void saveLog(ProceedingJoinPoint joinPoint, long time) {
-//        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-//        Method method = signature.getMethod();
-//        Log log = new Log();
-//        LogAnnotation logAnnotation = method.getAnnotation(LogAnnotation.class);
-//
-//        if (log != null) {
-//            log.setModule(logAnnotation.module());
-//            log.setOperation(logAnnotation.operation());
-//        }
-//
-//        //请求的方法名
-//        String className = joinPoint.getTarget().getClass().getName();
-//        String methodName = signature.getName();
-//        log.setMethod(className + "." + methodName + "()");
-//
-////        //请求的参数
-////        Object[] args = joinPoint.getArgs();
-////        String params = JSON.toJSONString(args[0]);
-////        log.setParams(params);
-//
-//        //获取request 设置IP地址
-//        HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
-//        log.setIp(IpUtils.getIpAddr(request));
-//
-////        //用户名
-////        User user = UserUtils.getCurrentUser();
-////
-////        if (null != user) {
-////            log.setUserId(user.getId());
-////            log.setNickname(user.getNickname());
-////        } else {
-////            log.setUserId(-1L);
-////            log.setNickname("获取用户信息为空");
-////        }
-//
-//        log.setTime(time);
-//        log.setCreateDate(new Date());
-//
-//        logService.saveLog(log);
-//    }
+    private void saveLog(ProceedingJoinPoint point, LogAnnotation logAnnotation, long time) {
+        Log log = new Log();
+
+        log.setModule(logAnnotation.module());
+        log.setOperation(logAnnotation.operation());
+
+        // 请求的方法名
+        String className = point.getTarget().getClass().getName();
+        String methodName = point.getSignature().getName();
+        log.setMethod(className + "." + methodName + "()");
+
+        // 请求的参数
+        // Object[] args = point.getArgs();
+        // String params = JsonUtils.toString(args[0]);
+        // log.setParams(params);
+
+        // 获取request 设置IP地址
+        log.setIp(IpUtils.getIpAddr(request));
+
+        // 用户
+        User user = UserUtils.getCurrentUser();
+        if (null != user) {
+            log.setUserId(user.getUserId());
+            log.setUserName(user.getUserName());
+        } else {
+            log.setUserId("-1");
+            log.setUserName("获取用户信息为空");
+        }
+
+        log.setTime(time);
+        log.setCreateTime(new Date());
+
+        logMapper.save(log);
+    }
 
 }

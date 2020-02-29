@@ -11,5 +11,5 @@ public interface NoticeMapper {
 
     int delete(String noticeId);
 
-    int deleteNoticeByCourseId(String courseId);
+    int deleteNoticesByCourseId(String courseId);
 }

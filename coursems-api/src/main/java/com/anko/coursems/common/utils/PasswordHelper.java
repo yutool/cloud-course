@@ -15,12 +15,12 @@ public class PasswordHelper {
 
     public static void encryptPassword(User user) {
 
-        String salt = randomNumberGenerator.nextBytes().toHex();
+        user.setSalt(randomNumberGenerator.nextBytes().toHex());
 
         String newPassword = new SimpleHash(
                 algorithmName,
                 user.getPassword(),
-                ByteSource.Util.bytes(salt),
+                ByteSource.Util.bytes(user.getSalt()),
                 hashIterations).toHex();
 
         user.setPassword(newPassword);

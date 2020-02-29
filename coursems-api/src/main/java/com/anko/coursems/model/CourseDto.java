@@ -2,6 +2,7 @@ package com.anko.coursems.model;
 
 import com.anko.coursems.common.utils.FileUrlUtils;
 import com.anko.coursems.entity.Course;
+import com.anko.coursems.entity.User;
 import com.google.common.base.Converter;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -44,8 +45,10 @@ public class CourseDto {
         @Override
         protected Course doForward(CourseDto courseDto) {
             Course course = new Course();
-            // 使用BeanCopier也可以
+            User user = new User();
+            user.setUserId(courseDto.getTeacherId());
             BeanUtils.copyProperties(courseDto, course);
+            course.setTeacher(user);
             return course;
         }
 

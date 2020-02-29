@@ -1,6 +1,5 @@
 import router from '@/router'
 import { getCourses, createCourse } from '@/api/course'
-import { addMember } from '@/api/clazz'
 
 const state = {
   joinCourses: [],
@@ -25,30 +24,22 @@ const mutations = {
 const actions = {
   getCourses ({ commit }, userId) {
     getCourses(userId).then(res => {
-      const { code, data } = res
-      console.log('返回的班级', data)
-      if (code === 0 && data != null) {
+      const { data } = res
+      if (data != null) {
         commit('SET_JOIN_COURSES', data.filter(c => c.teacherId !== userId))
         commit('SET_CREATE_COURSES', data.filter(c => c.teacherId === userId))
       }
     })
   },
-  joinCourse ({ commit }, member) {
-    addMember(member).then(res => {
-      const { code, data } = res
-      if (code === 0) { // 班级创建成功
-        commit('ADD_JOIN_COURSE', data)
-        router.push('/course')
-      }
-    })
-  },
   createCourse ({ commit }, course) {
-    createCourse(course).then(res => {
-      const { code, data } = res
-      if (code === 0) { // 班级创建成功
-        commit('ADD_CREATE_COURSE', data)
+    return new Promise((resolve, reject) => {
+      createCourse(course).then(res => {
+        commit('ADD_CREATE_COURSE', res.data)
         router.push('/course')
-      }
+        resolve(res)
+      }).catch(error => {
+        reject(error)
+      })
     })
   }
 }

@@ -1,5 +1,7 @@
 coursems-api/HELP.md
 coursems-api/target/
+coursems-api/uploads/
+**/application.yml # 配置了敏感信息
 !coursems-api/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**

@@ -65,7 +65,7 @@ export default {
     }
   },
   mounted () {
-    this.$log.info('fdsfsdfadsfadsfas', this.selectedMember)
+    this.$log.info('选中的成员', this.selectedMember)
   }
 }
 </script>

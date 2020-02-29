@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'GradeForm',
   props: ['member'],
@@ -30,8 +32,28 @@ export default {
       }
     }
   },
-  components: {
-
+  computed: {
+    ...mapGetters(['getCourseId'])
+  },
+  methods: {
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          var scoreForm = {
+            courseId: this.getCourseId,
+            userId: this.member.userId,
+            score: this.member.score,
+            remark: this.member.remark
+          }
+          this.$store.dispatch('clazz/grade', scoreForm).then(res => {
+            this.$notify({ title: '成功', message: '评分成功', type: 'success' })
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    }
   }
 }
 </script>

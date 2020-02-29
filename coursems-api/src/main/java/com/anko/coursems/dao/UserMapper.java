@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper {
 
-    User register(User registerForm);
-
-    int resetPassword(User passwordForm);
+    int register(User registerForm);
 
     User findUserById(String userId);
 

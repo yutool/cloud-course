@@ -60,7 +60,12 @@ public class ShiroConfig {
         // 配置退出 过滤器
         filterChainDefinitionMap.put("/api/logout", "logout");
 
+        // 配置不需要验证的请求
         filterChainDefinitionMap.put("/api/v1/login", "anon");
+        filterChainDefinitionMap.put("/api/v1/register", "anon");
+        filterChainDefinitionMap.put("/api/v1/reset-password", "anon");
+
+        // 其他全部需要验证
         filterChainDefinitionMap.put("/**", "authc");
 
         // 登录接口，返回json数据，由前端跳转
@@ -86,7 +91,7 @@ public class ShiroConfig {
     public AuthRealm authRealm(){
         AuthRealm authRealm = new AuthRealm();
         // 密码加密
-        // authRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        authRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return authRealm;
     }
 

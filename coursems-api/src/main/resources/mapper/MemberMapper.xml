@@ -24,7 +24,7 @@
         and m.user_id = u.user_id
     </select>
 
-    <select id="select" parameterType="member" resultType="member">
+    <select id="select" parameterType="member" resultMap="memberMap">
         select * from t_member
         where course_id = #{courseId}
         and user_id = #{user.userId}

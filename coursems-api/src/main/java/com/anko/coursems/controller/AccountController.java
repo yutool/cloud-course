@@ -6,6 +6,7 @@ import com.anko.coursems.common.utils.UserUtils;
 import com.anko.coursems.entity.User;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.LoginForm;
+import com.anko.coursems.model.UserDto;
 import com.anko.coursems.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,9 +37,8 @@ public class AccountController {
             subject.login(token);
 
             User currentUser = userService.findUserByAccount(loginForm.getAccount());
-//            subject.getSession().setAttribute("currentUser", currentUser);
             UserUtils.setCurrentUser(currentUser);
-            r.setResultCode(ResultCode.SUCCESS).setData(currentUser);
+            r.setResultCode(ResultCode.SUCCESS).setData(UserDto.builder().build().convertFor(currentUser));
         } catch (UnknownAccountException e) {
             r.setResultCode(ResultCode.USER_NOT_EXIST);
         } catch (LockedAccountException e) {
@@ -59,12 +59,12 @@ public class AccountController {
             return Result.error(ResultCode.USER_HAS_EXISTED);
         }
         User user = userService.register(form);
-        return Result.success(user);
+        return Result.success(UserDto.builder().build().convertFor(user));
     }
 
     @ApiOperation(value = "忘记密码")
     @LogAnnotation(operation = "忘记密码")
-    @PostMapping("/reset-password")
+    @PutMapping("/reset-password")
     public Result resetPassword(@RequestBody User form) {
         userService.resetPassword(form);
         return Result.success();

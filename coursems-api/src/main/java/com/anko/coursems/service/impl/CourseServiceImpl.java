@@ -31,40 +31,40 @@ public class CourseServiceImpl implements ICourseService {
     private ResourceMapper resourceMapper;
 
     public List<Course> getAllCourses(String userId) {
-        return courseMapper.getAllCourses(userId);
+        return courseMapper.selectList(userId);
     }
 
     public Course getCourseById(String id) {
-        return courseMapper.getCourseById(id);
+        return courseMapper.findById(id);
     }
 
     public Course getCourseDetail(String clazzId) {
         return courseMapper.getCourseDetail(clazzId);
     }
 
-    public CourseDto searchCourse(String clazzNum) {
-        return courseMapper.searchCourse(clazzNum);
+    public Course searchCourse(String clazzNum) {
+        return courseMapper.findByNum(clazzNum);
     }
 
     public Course createCourse(Course course) {
         course.setCourseId(RandomStringUtils.randomAlphanumeric(20));
         course.setCourseNum(RandomStringUtils.randomNumeric(6));
         course.setCoursePic("public/pic_default.jpeg");
-        courseMapper.createCourse(course);
+        courseMapper.add(course);
         return course;
     }
 
     @Transactional
     public void deleteCourse(String id) {
-        memberMapper.deleteMemberByCourseId(id);
+        memberMapper.deleteMembersByCourseId(id);
         resourceMapper.deleteResourcesByCourseId(id);
-        noticeMapper.deleteNoticeByCourseId(id);
-        courseMapper.deleteCourse(id);
+        noticeMapper.deleteNoticesByCourseId(id);
+        courseMapper.delete(id);
     }
 
     @Transactional
     public boolean toggleAppraise(String id) {
-        Course course = courseMapper.getCourseById(id);
+        Course course = courseMapper.findById(id);
         course.setAppraise(!course.isAppraise());
         courseMapper.toggleAppraise(course);
         return course.isAppraise();

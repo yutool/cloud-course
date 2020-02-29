@@ -10,7 +10,7 @@ import org.springframework.beans.BeanUtils;
 @Data
 public class MemberDto {
     private String userId;
-    private String clazzId;
+    private String courseId;
     private String stuName;
     private String stuNum;
     private String avatar;

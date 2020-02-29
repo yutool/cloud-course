@@ -32,6 +32,11 @@ export default {
   }),
   computed: {
     ...mapGetters(['isTeacher'])
+  },
+  methods: {
+    removeResource (resource) {
+      this.$store.dispatch('clazz/deleteResource', resource)
+    }
   }
 }
 </script>

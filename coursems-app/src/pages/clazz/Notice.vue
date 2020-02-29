@@ -85,9 +85,6 @@ export default {
         this.content = ''
       })
     },
-    removeNotice (notice) { // 删除通知
-      this.$store.dispatch('clazz/deleteNotice', notice)
-    },
     closeDialog () {
       this.dialogVisible = false
     }

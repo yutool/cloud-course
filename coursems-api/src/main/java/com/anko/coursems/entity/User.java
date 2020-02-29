@@ -19,5 +19,6 @@ public class User implements Serializable {
     private Date birthday;
     private String phoneNum;
     private String signature;
+    private String salt;
     private String role;
 }

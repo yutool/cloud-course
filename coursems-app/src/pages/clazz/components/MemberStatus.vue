@@ -44,10 +44,7 @@ export default {
   props: ['member', 'course'],
   data: () => ({
 
-  }),
-  components: {
-
-  }
+  })
 }
 </script>
 

@@ -20,7 +20,7 @@
               <el-col :md="9" :sm="9" :xs="24" class="text-center">
                 <img :src="course.coursePic" class="wpx-150 mt-2" alt="">
                 <div class="text-center pt-3 pb-3">
-                  <el-button type="primary" class="btn-flat" @click="goJoinCourse">加入班级</el-button>
+                  <el-button type="primary" class="btn-flat" @click="confirm">加入班级</el-button>
                 </div>
               </el-col>
               <el-col :md="15" :sm="15" :xs="24" class="text-center">
@@ -48,6 +48,7 @@
 
 <script>
 import { searchCourse } from '@/api/course'
+import { addMember } from '@/api/clazz'
 import { mapState } from 'vuex'
 
 export default {
@@ -65,17 +66,21 @@ export default {
   methods: {
     submit () {
       searchCourse(this.courseNum).then(res => {
-        if (res.code === 0) {
+        if (res.data !== null) {
           this.course = res.data
         } else {
           this.course = {}
-          this.hint = res.message
+          this.hint = '课程不存在'
         }
         this.$log.info('searchCourse', res)
       })
     },
-    goJoinCourse () {
-      this.$store.dispatch('course/joinCourse', {courseId: this.course.courseId, userId: this.userInfo.userId})
+    confirm () {
+      addMember({courseId: this.course.courseId, userId: this.userInfo.userId}).then(res => {
+        if (res.code === 0) {
+          this.$router.push('/course')
+        }
+      })
     }
   },
   mounted () {

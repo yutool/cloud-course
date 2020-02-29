@@ -23,10 +23,7 @@ export default {
   props: ['member'],
   data: () => ({
 
-  }),
-  components: {
-
-  }
+  })
 }
 </script>
 

@@ -48,8 +48,8 @@ const mutations = {
   SET_MEMBER (state, index, member) {
     state.notices.splice(index, 1, member)
   },
-  SET_COURSE_PHOTO (state, photo) {
-    state.course.clazzPhoto = photo
+  SET_COURSE_PHOTO (state, path) {
+    state.course.coursePic = path
   }
 }
 
@@ -58,7 +58,6 @@ const actions = {
   getClazz ({ commit }, clazzId) {
     getClazzDetail(clazzId).then(res => {
       const { members, resources, notices } = res.data
-      console.log('查询班级', res)
       commit('SET_COURSE', res.data)
       commit('SET_MEMBERS', members)
       commit('SET_RESOURCES', resources)
@@ -72,90 +71,111 @@ const actions = {
   },
   // delete selected member
   deleteMember ({ commit, state }, member) {
-    deleteMember(member).then(res => {
-      if (res.code === 0) {
+    return new Promise((resolve, reject) => {
+      deleteMember(member).then(res => {
         for (let i = 0; i < state.members.length; i++) {
           if (state.members[i] === member) {
             commit('REMOVE_MEMBER', i)
+            commit('SET_SELECTED_MEMBER', state.members[0])
             break
           }
         }
-        commit('SET_SELECTED_MEMBER', state.members[0])
-      }
+        resolve(res)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
   // upload resource
   uploadResource ({ commit }, resource) {
-    uploadResource(resource).then(res => {
-      if (res.code === 0) {
+    return new Promise((resolve, reject) => {
+      uploadResource(resource).then(res => {
         commit('ADD_RESOURCE', res.data)
-      }
+        resolve(res)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
   // delete resource
   deleteResource ({ commit, state }, resource) {
-    deleteResource(resource.resId).then(res => {
-      if (res.code === 0) {
+    return new Promise((resolve, reject) => {
+      deleteResource(resource.resId).then(res => {
         for (let i = 0; i < state.resources.length; i++) {
           if (resource === state.resources[i]) {
             commit('REMOVE_RESOURCE', i)
             break
           }
         }
-      }
+        resolve(res)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
   // send notice
   sendNotice ({ commit }, notice) {
-    sendNotice(notice).then(res => { // 发送通知
-      if (res.code === 0) {
+    return new Promise((resolve, reject) => {
+      sendNotice(notice).then(res => { // 发送通知
         commit('ADD_NOTICE', res.data)
-      }
+        resolve(res)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
   // delete notice
   deleteNotice ({ commit, state }, notice) {
-    deleteNotice(notice.noticeId).then(res => {
-      if (res.code === 0) {
+    return new Promise((resolve, reject) => {
+      deleteNotice(notice.noticeId).then(res => {
         for (let i = 0; i < state.notices.length; i++) {
           if (notice === state.notices[i]) {
             commit('REMOVE_NOTICE', i)
             break
           }
         }
-      }
+        resolve(res)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
   // open class grading
   toggleAppraise ({ commit }, id) {
-    toggleAppraise(id).then(res => {
-      const { code, data } = res
-      if (code === 0) {
-        commit('SET_APPRAISE', data)
-      }
+    return new Promise((resolve, reject) => {
+      toggleAppraise(id).then(res => {
+        commit('SET_APPRAISE', res.data)
+        resolve(res)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
   // grade a student
   grade ({ commit, state }, member) {
-    gradeStudent(member).then(res => {
-      const { code, data } = res
-      if (code === 0) {
+    return new Promise((resolve, reject) => {
+      gradeStudent(member).then(res => {
         for (let i = 0; i < state.members.length; i++) {
           if (member === state.members[i]) {
-            commit('SET_MEMBER', i, data)
+            commit('SET_MEMBER', i, res.data)
             break
           }
         }
-      }
+        resolve(res)
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
   // upload clazz photo
   uploadPhoto ({ commit }, {id, data}) {
-    uploadPhoto(id, data).then(res => {
-      const { code, data } = res
-      if (code === 0) {
-        commit('SET_COURSE_PHOTO', data)
-      }
+    return new Promise((resolve, reject) => {
+      uploadPhoto(id, data).then(res => {
+        commit('SET_COURSE_PHOTO', res.data)
+        resolve(res)
+      }).catch(error => {
+        reject(error)
+      })
     })
   }
 }

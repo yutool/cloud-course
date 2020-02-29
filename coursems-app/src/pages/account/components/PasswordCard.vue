@@ -80,11 +80,9 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           resetPassWord({userId: this.getUserId, password: this.pwdForm.pass}).then(res => {
-            if (res.code === 0) {
-              this.$notify({ title: '成功', message: '修改密码成功', type: 'success' })
-              this.$refs[formName].resetFields()
-              this.enRestPwd = false
-            }
+            this.$notify({ title: '成功', message: '修改密码成功', type: 'success' })
+            this.$refs[formName].resetFields()
+            this.enRestPwd = false
           })
         } else {
           this.$log.error('security', 'errorsubmit!')

@@ -17,5 +17,5 @@ public interface IMemberService {
     /**
      * 给学生评分
      */
-    int gradeStudent(Member scoreForm);
+    Member gradeStudent(Member scoreForm);
 }

@@ -2,6 +2,7 @@ package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.Result;
+import com.anko.coursems.entity.Member;
 import com.anko.coursems.model.MemberDto;
 import com.anko.coursems.service.IMemberService;
 import io.swagger.annotations.Api;
@@ -34,9 +35,9 @@ public class MemberController {
 
     @ApiOperation(value = "结课评分")
     @LogAnnotation(operation = "结课评分")
-    @PutMapping("/grades")
+    @PutMapping("/grade")
     public Result gradeStudent(@RequestBody MemberDto form) {
-        memberService.gradeStudent(form.convertToMember());
-        return  Result.success();
+        Member member = memberService.gradeStudent(form.convertToMember());
+        return  Result.success(new MemberDto().convertFor(member));
     }
 }

@@ -1,6 +1,7 @@
 package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
+import com.anko.coursems.common.constant.LogType;
 import com.anko.coursems.common.utils.FileUrlUtils;
 import com.anko.coursems.entity.Course;
 import com.anko.coursems.common.result.Result;
@@ -23,29 +24,30 @@ public class CourseController {
     private ICourseService courseService;
 
     @ApiOperation(value = "获取用户所有课程")
+    @LogAnnotation(operation = "获取用户所有课程", exclude = {LogType.URL, LogType.RESPONSE})
     @GetMapping("/{userId}/courses")
     public Result getAllCourses(@PathVariable String userId) {
         List<Course> courses = courseService.getAllCourses(userId);
-        List<CourseDto> courseDto = new LinkedList<>();
+        List<CourseDto> courseList = new LinkedList<>();
         for(Course course : courses)
-            courseDto.add(new CourseDto().convertFor(course));
-        return Result.success(courseDto);
+            courseList.add(new CourseDto().convertFor(course));
+        return Result.success(courseList);
     }
 
     @ApiOperation(value = "按班课搜索课程")
     @LogAnnotation(operation = "按班课搜索课程")
     @GetMapping("/courses/{num}")
     public Result searchCourse(@PathVariable String num) {
-        CourseDto courseDto = courseService.searchCourse(num);
-        return Result.success(courseDto);
+        Course course = courseService.searchCourse(num);
+        return Result.success(new CourseDto().convertFor(course));
     }
 
     @ApiOperation(value = "创建课程")
     @LogAnnotation(operation = "创建课程")
     @PostMapping("/courses")
-    public Result createCourse(@RequestBody Course form) {
-        Course course = courseService.createCourse(form);
-        return Result.success(course);
+    public Result createCourse(@RequestBody CourseDto form) {
+        Course course = courseService.createCourse(form.convertToCourse());
+        return Result.success(new CourseDto().convertFor(course));
     }
 
     @ApiOperation(value = "开启/关闭评分")

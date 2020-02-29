@@ -6,6 +6,7 @@ import com.anko.coursems.entity.Member;
 import com.anko.coursems.service.IMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MemberServiceImpl implements IMemberService {
@@ -23,8 +24,10 @@ public class MemberServiceImpl implements IMemberService {
         return memberMapper.delete(member);
     }
 
-    public int gradeStudent(Member scoreForm) {
-        return memberMapper.grade(scoreForm);
+    @Transactional
+    public Member gradeStudent(Member member) {
+        memberMapper.grade(member);
+        return memberMapper.select(member);
     }
 
 }

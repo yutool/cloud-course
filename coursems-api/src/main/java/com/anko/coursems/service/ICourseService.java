@@ -30,7 +30,7 @@ public interface ICourseService {
      * 按班号搜索课程
      * @param clazzNum
      */
-    CourseDto searchCourse(String clazzNum);
+    Course searchCourse(String clazzNum);
 
     /**
      * 创建课程

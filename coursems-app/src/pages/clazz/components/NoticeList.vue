@@ -24,6 +24,11 @@ export default {
   props: ['notices'],
   computed: {
     ...mapGetters(['isTeacher'])
+  },
+  methods: {
+    removeNotice (notice) { // 删除通知
+      this.$store.dispatch('clazz/deleteNotice', notice)
+    }
   }
 }
 </script>

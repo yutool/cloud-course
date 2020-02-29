@@ -11,19 +11,20 @@ import java.util.List;
 @Repository
 public interface CourseMapper {
 
-    List<Course> getAllCourses(String userId);
+    List<Course> selectList(String userId);
 
     Course getCourseDetail(String clazzId);
 
-    CourseDto searchCourse(String num);
+    Course findByNum(String num);
 
-    Course getCourseById(String id);
+    Course findById(String id);
 
-    int createCourse(Course course);
+    int add(Course course);
+
+    int delete(String id);
 
     int toggleAppraise(Course course);
 
     int updatePic(@Param("courseId") String id, @Param("coursePic") String relativePath);
 
-    int deleteCourse(String id);
 }

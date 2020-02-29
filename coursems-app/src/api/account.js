@@ -25,7 +25,7 @@ export function register (registerForm) {
 
 export function forgetPassWord (userForm) {
   return request({
-    url: 'v1/forget-password',
+    url: 'v1/reset-password',
     method: 'put',
     data: JSON.stringify(userForm)
   })

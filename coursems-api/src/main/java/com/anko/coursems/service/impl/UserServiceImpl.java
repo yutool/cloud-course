@@ -31,13 +31,17 @@ public class UserServiceImpl implements IUserService {
 
     public User register(User user) {
         PasswordHelper.encryptPassword(user);
-        String userId = "u"+ RandomStringUtils.randomAlphanumeric(19);
-        user.setUserId(userId);
-        return userMapper.register(user);
+        user.setUserId(RandomStringUtils.randomAlphanumeric(16));
+        user.setAvatar("/public/avatar_default.jpeg");
+        user.setNickname(user.getUserName());
+        user.setRole("user");
+        userMapper.register(user);
+        return user;
     }
 
     public int resetPassword(User user) {
-        return userMapper.resetPassword(user);
+        PasswordHelper.encryptPassword(user);
+        return userMapper.updatePassword(user);
     }
 
     @Transactional
@@ -74,6 +78,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     public int updatePassword(User user) {
+        PasswordHelper.encryptPassword(user);
         return userMapper.updatePassword(user);
     }
 }

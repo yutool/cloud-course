@@ -66,16 +66,15 @@ export default {
   },
   methods: {
     quitClazz () {
-      this.$store.dispatch('clazz/deleteMember', {userId: this.getUserId, clazzId: this.course.courseId})
+      this.$store.dispatch('clazz/deleteMember', {userId: this.getUserId, courseId: this.course.courseId}).then(res => {
+        this.$router.push('/course')
+      })
     },
     dissolveClazz () {
       dissolveCourse(this.course.courseId).then(res => {
         this.$log.info('dissolveCourse', res)
-        if (res.code === 0) {
-          this.$router.push('/course')
-          this.$message({type: 'success', message: '成功解散班级'})
-          this.$log.info('dissolveCourse', res)
-        }
+        this.$router.push('/course')
+        this.$notify({ title: '成功', message: '解散班级成功', type: 'success' })
       })
     },
     beforePhotoUpload (file) {
@@ -87,7 +86,7 @@ export default {
       console.log(file.type)
       let data = new FormData()
       data.append('file', file)
-      this.$store.dispatch('clazz/uploadPhoto', {id: this.getCourseId, data: data}).then(res => {
+      this.$store.dispatch('clazz/uploadPhoto', {id: this.course.courseId, data: data}).then(res => {
         this.$notify({ title: '成功', message: '更换图片成功', type: 'success' })
       })
       this.cdVisible = false

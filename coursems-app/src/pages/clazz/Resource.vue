@@ -96,6 +96,8 @@ export default {
           this.$store.dispatch('clazz/uploadResource', data).then(res => {
             this.resetForm(formName)
             this.file = null
+            this.fileList = []
+            this.dialogVisible = false
           })
         } else {
           console.log('error submit!!')
@@ -105,25 +107,10 @@ export default {
     },
     beforeUpload (file) {
       this.file = file
-    },
-    removeResource (resource) {
-      this.$store.dispatch('clazz/deleteResource', resource)
+      return false
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
-    },
-    // 文件的函数，待修改
-    handleRemove (file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview (file) {
-      console.log(file)
-    },
-    handleExceed (files, fileList) {
-      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
-    },
-    beforeRemove (file, fileList) {
-      return this.$confirm(`确认移除${file.name}?`)
     },
     closeDialog () {
       this.dialogVisible = false
