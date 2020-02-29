@@ -35,8 +35,8 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link v-if="!userInfo" class="nav-link" to="/login">登录</router-link>
-            <a v-if="userInfo" class="nav-link pointer" @click="logout">退出</a>
+            <router-link v-if="JSON.stringify(userInfo) === '{}'" class="nav-link" to="/login">登录</router-link>
+            <a v-else class="nav-link pointer" @click="logout">退出</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">帮助</a>

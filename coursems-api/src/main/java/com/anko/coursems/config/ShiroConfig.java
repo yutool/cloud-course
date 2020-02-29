@@ -63,6 +63,7 @@ public class ShiroConfig {
         // 配置不需要验证的请求
         filterChainDefinitionMap.put("/api/v1/login", "anon");
         filterChainDefinitionMap.put("/api/v1/register", "anon");
+        filterChainDefinitionMap.put("/api/v1/users/current", "anon");
         filterChainDefinitionMap.put("/api/v1/reset-password", "anon");
 
         // 其他全部需要验证

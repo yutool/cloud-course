@@ -30,7 +30,8 @@ const actions = {
   getCurrentUser ({ commit }) {
     return new Promise((resolve, reject) => {
       getCurrentUser().then(res => {
-        commit('SET_USERINFO', res.data)
+        const { data } = res
+        if (data !== null) commit('SET_USERINFO', data)
         resolve(res)
       }).catch(error => {
         reject(error)
