@@ -86,8 +86,8 @@
           <img src="@/assets/1.jpeg" class="wpx-75 rounded-circle" >
           <div class="pt-2">
             <el-popover placement="bottom" width="200" trigger="click"
-              content="不懂就问他">
-              <p>不懂的就问他</p>
+              content="其他小伙伴">
+              <p>其他小伙伴</p>
               <a href="http://geekjoker.com/">他的作品</a>
               <el-button slot="reference" class="p-0 border-0">
                 <h3>Zheng Quan</h3>
