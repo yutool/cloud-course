@@ -9,6 +9,8 @@
         <result property="courseId" column="course_id" />
         <result property="experience" column="experience" />
         <result property="arrive" column="arrive" />
+        <result property="resource" column="resource" />
+        <result property="experience" column="experience" />
         <result property="score" column="score" />
         <result property="remark" column="remark" />
         <result property="user.userName" column="user_name" />

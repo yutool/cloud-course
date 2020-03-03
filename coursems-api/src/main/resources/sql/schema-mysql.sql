@@ -23,6 +23,8 @@ CREATE TABLE `t_member` (
 `user_id` char(30) NOT NULL,
 `course_id` char(30) NOT NULL,
 `arrive` int(11) NOT NULL DEFAULT 0,
+`resource` int(11) NOT NULL DEFAULT 0,
+`experience` int(11) NOT NULL DEFAULT 0,
 `score` int(11) NOT NULL DEFAULT 0,
 `remark` varchar(100) NULL,
 PRIMARY KEY (`user_id`, `course_id`)
@@ -43,7 +45,7 @@ DROP TABLE IF EXISTS `t_resource`;
 CREATE TABLE `t_resource` (
 `res_id` char(30) NOT NULL,
 `res_name` char(30) NOT NULL,
-`res_size` int NOT NULL,
+`res_size` bigint NOT NULL,
 `upload_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
 `down_link` char(90) NOT NULL,
 `experience` int NOT NULL,

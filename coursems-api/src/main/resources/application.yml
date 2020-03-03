@@ -11,3 +11,4 @@ spring:
 # 文件存储位置
 file:
   upload-path: D:/WorkSpace/Example/course-management/coursems-api/uploads/
+#  upload-path: /home/anko/coursems

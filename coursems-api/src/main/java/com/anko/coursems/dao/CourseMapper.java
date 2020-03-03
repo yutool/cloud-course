@@ -11,7 +11,9 @@ import java.util.List;
 @Repository
 public interface CourseMapper {
 
-    List<Course> selectList(String userId);
+    List<Course> joinList(String userId);
+
+    List<Course> createList(String userId);
 
     Course getCourseDetail(String clazzId);
 

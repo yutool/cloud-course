@@ -49,12 +49,15 @@
         and c.course_id = #{userId}
     </select>
 
-    <select id="selectList" parameterType="string" resultMap="courseMap">
+    <select id="joinList" parameterType="string" resultMap="courseMap">
+        select * from t_course
+        where teacher_id = #{userId}
+    </select>
+
+    <select id="createList" parameterType="string" resultMap="courseMap">
         select c.* from t_course c, t_member m
         where m.course_id = c.course_id
         and m.user_id = #{userId}
-        or c.teacher_id = #{userId}
-        group by c.course_id
     </select>
 
     <select id="findByNum" parameterType="string" resultMap="courseMap">

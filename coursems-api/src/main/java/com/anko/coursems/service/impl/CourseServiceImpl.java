@@ -30,8 +30,11 @@ public class CourseServiceImpl implements ICourseService {
     @Autowired
     private ResourceMapper resourceMapper;
 
+    @Transactional
     public List<Course> getAllCourses(String userId) {
-        return courseMapper.selectList(userId);
+        List<Course> joinList = courseMapper.joinList(userId);
+        joinList.addAll(courseMapper.createList(userId));
+        return joinList;
     }
 
     public Course getCourseById(String id) {

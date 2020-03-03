@@ -21,10 +21,10 @@ public class ResourceServiceImpl implements IResourceService {
     public Resource addResource(Resource resource, MultipartFile file) {
         String fileName = resource.getResName() + FileContentTypeUtils.getFileType(file.getOriginalFilename());
         String path = FileUtils.storeFile(file, fileName, FileUtils.getUserPath(resource.getCourseId()));
-        resource.setDownLink(path);
-        resource.setResSize(String.valueOf(file.getSize()));
-        resource.setUploadTime(new Date());
         resource.setResId(RandomStringUtils.randomAlphanumeric(20));
+        resource.setDownLink(path);
+        resource.setResSize(file.getSize());
+        resource.setUploadTime(new Date());
         resourceMapper.add(resource);
         return resource;
     }

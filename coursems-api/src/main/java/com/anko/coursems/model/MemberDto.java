@@ -16,7 +16,7 @@ public class MemberDto {
     private String avatar;
     private String signature;
     private int experience;
-    private int viewRes;
+    private int resource;
     private int arrive;
     private int score;
     private String remark;

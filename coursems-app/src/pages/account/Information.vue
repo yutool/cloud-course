@@ -115,7 +115,6 @@ export default {
       return false // 取消默认上传
     },
     confirmUpload (file) {
-      console.log(file.type)
       let data = new FormData()
       data.append('file', file)
       this.$store.dispatch('user/uploadAvatar', {id: this.userInfo.userId, data: data}).then(res => {

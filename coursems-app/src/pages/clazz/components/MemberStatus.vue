@@ -9,7 +9,7 @@
         <el-col :md="12" class="pt-2 text-truncate">
           <small>当前经验：{{member.experience}}</small>
           <div class="hpx-10"></div>
-          <small>总经验值：{{course.experiences}}</small>
+          <small>总经验值：{{course.experiencesNum}}</small>
         </el-col>
       </el-col>
       <el-col :span="8" class="text-center pt-4">
@@ -18,9 +18,9 @@
           <el-progress type="circle" :percentage="0" :width="90"></el-progress>
         </el-col>
         <el-col :md="12" class="pt-2 text-truncate">
-          <small>已查看：{{member.viewRes}}</small>
+          <small>已查看：{{member.resource}}</small>
           <div class="hpx-10"></div>
-          <small>当前发布：{{course.resourses}}</small>
+          <small>当前发布：{{course.resourcesNum}}</small>
         </el-col>
       </el-col>
       <el-col :span="8" class="text-center pt-4">
@@ -31,7 +31,7 @@
         <el-col :md="12" class="pt-2 text-truncate">
           <small>已签到：{{member.arrive}}</small>
           <div class="hpx-10"></div>
-          <small>签到总数：{{course.arrives}}</small>
+          <small>签到总数：{{course.arrivesNum}}</small>
         </el-col>
       </el-col>
     </el-row>

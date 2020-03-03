@@ -46,9 +46,9 @@ public class RequestLogAspect {
         // 执行时长(毫秒)
         long time = System.currentTimeMillis() - beginTime;
         // 控制台输出
-        consoleLog(point, logAnnotation, result);
+         consoleLog(point, logAnnotation, result);
         // 存储到数据库
-        // saveLog(point, logAnnotation, time);
+//        saveLog(point, logAnnotation, time);
         return result;
     }
 

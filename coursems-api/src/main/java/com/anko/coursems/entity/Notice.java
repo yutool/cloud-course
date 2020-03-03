@@ -8,8 +8,8 @@ import java.util.Date;
 public class Notice {
     private String noticeId;
     private String content;
-    private Date releaseTime;
     private String author;
+    private Date releaseTime;
     private int type;
     private String courseId;
 }

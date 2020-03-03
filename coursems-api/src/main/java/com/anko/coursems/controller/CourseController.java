@@ -24,7 +24,7 @@ public class CourseController {
     private ICourseService courseService;
 
     @ApiOperation(value = "获取用户所有课程")
-    @LogAnnotation(operation = "获取用户所有课程", exclude = {LogType.URL, LogType.RESPONSE})
+    @LogAnnotation(operation = "获取用户所有课程", exclude = {LogType.URL})
     @GetMapping("/{userId}/courses")
     public Result getAllCourses(@PathVariable String userId) {
         List<Course> courses = courseService.getAllCourses(userId);

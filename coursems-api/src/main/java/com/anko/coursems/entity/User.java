@@ -14,10 +14,10 @@ public class User implements Serializable {
     private String password;
     private String avatar;
     private String nickname;
-    private String stuNum;
     private String gender;
-    private Date birthday;
+    private String stuNum;
     private String phoneNum;
+    private Date birthday;
     private String signature;
     private String salt;
     private String role;

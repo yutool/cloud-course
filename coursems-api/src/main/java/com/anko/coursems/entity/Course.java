@@ -14,8 +14,8 @@ public class Course implements Serializable {
     private String courseName;
     private String coursePic;
     private String clazzName;
-    private String synopsis;
     private String term;
+    private String synopsis;
     private int arrivesNum;
     private int resourcesNum;
     private int experiencesNum;

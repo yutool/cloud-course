@@ -16,13 +16,4 @@ public class WebAppConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 
-    // 配置拦截器
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new LoginInterceptor())
-//                .addPathPatterns("/**")
-//                .excludePathPatterns("/api/v1/login", "/api/v1/register", "/api/v1/forget-password")
-//                .excludePathPatterns("/static/**","/webjars/**","/swagger-ui.html","/swagger-resources/**","/v2/**");
-//    }
-
 }
