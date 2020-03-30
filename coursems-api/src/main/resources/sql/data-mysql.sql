@@ -1,0 +1,2 @@
+-- 密码 123456
+INSERT INTO `t_user` VALUES ('aPJJ3qvi6dMij50w', 'admin', 'admin@qq.com', '637da201085eb7e74591b29320e5675f', '/public/avatar_default.jpeg', 'admin', '男', '1231231', '12312312312', NULL, NULL, '7ccf7c24b05892f149aaa76003f61f7b', 'admin');

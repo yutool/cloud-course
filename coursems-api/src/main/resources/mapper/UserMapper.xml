@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.anko.coursems.dao.UserMapper">
+
+    <select id="findUserByAccount" parameterType="string" resultType="user">
+        select * from t_user
+        where email = #{account}
+        or phone_num = #{account}
+    </select>
+
+    <insert id="register" parameterType="user">
+        insert into t_user(user_id, user_name,email, password, nickname, avatar, salt, role)
+        values(#{userId}, #{userName}, #{email}, #{password}, #{nickname}, #{avatar}, #{salt}, #{role})
+    </insert>
+
+    <select id="findUserById" parameterType="string" resultType="user">
+        select * from t_user
+        where user_id = #{userId}
+    </select>
+
+    <update id="updateUserInfo" parameterType="user">
+        update t_user
+        set user_name=#{userName}, nickname=#{nickname},
+            stu_num=#{stuNum}, gender=#{gender},
+            birthday=#{birthday}, signature=#{signature}
+        where user_id = #{userId}
+    </update>
+    
+    <update id="updateAvatar">
+        update t_user
+        set avatar = #{avatar}
+        where user_id = #{userId}
+    </update>
+
+    <update id="updatePassword" parameterType="user">
+        update t_user
+        set password = #{password}, salt = #{salt}
+        <where>
+            <choose>
+                <when test="email != null and email != ''">
+                    email = #{email}
+                </when>
+                <otherwise>
+                    user_id = #{userId}
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+
+    <update id="bindEmail" parameterType="user">
+        update t_user
+        set email = #{email}
+        where user_id = #{userId}
+    </update>
+
+    <update id="bindPhone" parameterType="user">
+        update t_user
+        set phone_num = #{phoneNum}
+        where user_id = #{userId}
+    </update>
+
+    <select id="emailIsExist" parameterType="string" resultType="user">
+        select * from t_user
+        where email = #{email}
+    </select>
+
+    <select id="phoneIsExist" parameterType="string" resultType="user">
+        select * from t_user
+        where phone_num = #{phoneNum}
+    </select>
+    
+</mapper>

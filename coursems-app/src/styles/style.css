@@ -1,0 +1,103 @@
+/* 取消点击按钮边框 */
+button {
+  outline: none !important;
+}
+
+.bg-info {
+    background: #eee !important;
+}
+
+.w-60 {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.w-70 {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.mg-auto {
+    margin: auto;
+}
+
+.wpx-30 {
+    width: 30px !important;
+}
+.wpx-40 {
+    width: 40px !important;
+}
+.wpx-60 {
+    width: 60px !important;
+}
+.wpx-75 {
+    width: 75px !important;
+}
+.wpx-90 {
+    width: 90px !important;
+}
+.wpx-150 {
+    width: 150px !important;
+}
+.wpx-160 {
+    width: 160px !important;
+}
+.wpx-500 {
+    width: 500px !important;
+}
+
+.hpx-10 {
+    height: 10px !important;
+}
+
+.vh-10 {
+    height: 10vh !important;
+}
+.vh-20 {
+    height: 20vh !important;
+}
+.vh-30 {
+    height: 30vh !important;
+}
+
+.plpx-60 {
+    padding-left: 60px !important;
+}
+.plpx-75 {
+    padding-left: 75px !important;
+}
+.plpx-90 {
+    padding-left: 90px !important;
+}
+.plpx-115 {
+    padding-left: 115px !important;
+}
+
+.fs-18 {
+    font-size: 18px;
+}
+
+.btn-flat {
+    padding: .3rem 1.2rem;
+}
+
+.form-group-btn > * {
+    margin-left: 9%;
+    width: 40%;
+}
+
+.text-right-sm {
+    float: right;
+    font-size: 14px;
+}
+
+.img-hover img {
+  transition: all 1s;
+}
+.img-hover:hover img{
+  transform: scale(1.1);
+}
+
+.pointer {
+    cursor: pointer;
+}
