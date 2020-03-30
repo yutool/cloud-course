@@ -1,12 +1,13 @@
 package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LimitIPRequest;
+import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.common.result.ResultCode;
 import com.anko.coursems.service.IUserService;
 import com.anko.coursems.service.impl.EmailService;
-import com.anko.coursems.service.impl.UserServiceImpl;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -29,6 +30,8 @@ public class VerifyController {
     @Autowired
     private IUserService userService;
 
+    @ApiOperation(value = "注册账号邮件")
+    @LogAnnotation(operation = "注册账号邮件")
     @GetMapping("/email/register/{toAddr}")
     public Result getRegisterEmail(@PathVariable String toAddr) {
         if(userService.findUserByAccount(toAddr) != null) {
@@ -40,6 +43,8 @@ public class VerifyController {
         return Result.success();
     }
 
+    @ApiOperation(value = "修改邮箱邮件")
+    @LogAnnotation(operation = "修改邮箱邮件")
     @GetMapping("/email/update/{toAddr}")
     public Result getUpdateEmail(@PathVariable String toAddr) {
         if(userService.findUserByAccount(toAddr) != null) {
@@ -51,6 +56,8 @@ public class VerifyController {
         return Result.success();
     }
 
+    @ApiOperation(value = "重置密码邮件")
+    @LogAnnotation(operation = "重置密码邮件")
     @GetMapping("/email/forget/{toAddr}")
     public Result getForgetEmail(@PathVariable String toAddr) {
         if(userService.findUserByAccount(toAddr) == null) {

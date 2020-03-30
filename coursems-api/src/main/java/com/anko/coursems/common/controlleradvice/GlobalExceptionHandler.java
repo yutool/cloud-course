@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -122,6 +123,16 @@ public class GlobalExceptionHandler {
     private Result fileExceptionHandler(FileException e) {
         logErrorRequest(e);
         return new Result(e.getCode(), e.getMessage());
+    }
+
+    /**
+     * 邮件发送异常
+     */
+    @ResponseBody
+    @ExceptionHandler(MessagingException.class)
+    private Result emailExceptionHandler(MessagingException e) {
+        logErrorRequest(e);
+        return new Result(1, "邮件发送失败，稍后重试");
     }
 
     /**

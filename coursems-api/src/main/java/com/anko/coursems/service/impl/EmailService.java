@@ -33,14 +33,8 @@ public class EmailService {
         message.setTo(toAddr);
         message.setSubject(title);
         message.setText(content);
-
-        try {
-            mailSender.send(message);
-            log.info("Text邮件已经发送。");
-        } catch (Exception e) {
-            log.error("发送Text邮件时发生异常！", e);
-        }
-
+        mailSender.send(message);
+        log.info("Text邮件已经发送。");
     }
 
     /**
