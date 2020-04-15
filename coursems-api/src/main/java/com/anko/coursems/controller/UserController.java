@@ -66,7 +66,7 @@ public class UserController {
     public Result bindEmail(@RequestBody RegisterForm form) {
         String verifyCode = stringRedisTemplate.opsForValue().get(form.getEmail());
         if(!form.getVerifyCode().equals(verifyCode)) {
-            return Result.error(ResultCode.EMAIL_ERROR);
+            return Result.error(ResultCode.VERIFY_CODE_ERROR);
         }
         User user = userService.bindEmail(form.convertToUser());
         UserUtils.setCurrentUser(user);

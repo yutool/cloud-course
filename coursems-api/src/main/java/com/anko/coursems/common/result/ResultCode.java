@@ -45,7 +45,7 @@ public enum ResultCode {
 
     /* 权限错误：70001-79999 */
     PERMISSION_NO_ACCESS(70001, "无访问权限"),
-    EMAIL_ERROR(70002, "请输入正确的邮箱"),
+    VERIFY_CODE_ERROR(7002, "验证码错误"),
 
     /* 文件上传 */
     UPLOAD_ERROR(80001, "上传失败"),

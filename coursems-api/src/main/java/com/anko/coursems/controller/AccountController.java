@@ -77,7 +77,7 @@ public class AccountController {
     public Result register(@RequestBody RegisterForm form) {
         String verityCode =  stringRedisTemplate.opsForValue().get(form.getEmail());
         if(!form.getVerifyCode().equals(verityCode)) {
-            return Result.error(ResultCode.EMAIL_ERROR);
+            return Result.error(ResultCode.VERIFY_CODE_ERROR);
         }
         User user = userService.register(form.convertToUser());
         return Result.success(UserDto.builder().build().convertFor(user));
@@ -89,7 +89,7 @@ public class AccountController {
     public Result resetPassword(@RequestBody RegisterForm form) {
         String verityCode =  stringRedisTemplate.opsForValue().get(form.getEmail());
         if(!form.getVerifyCode().equals(verityCode)) {
-            return Result.error(ResultCode.EMAIL_ERROR);
+            return Result.error(ResultCode.VERIFY_CODE_ERROR);
         }
         userService.resetPassword(form.convertToUser());
         return Result.success();
