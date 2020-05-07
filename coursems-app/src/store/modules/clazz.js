@@ -58,7 +58,6 @@ const actions = {
   getClazz ({ commit }, clazzId) {
     getClazzDetail(clazzId).then(res => {
       const { members, resources, notices } = res.data
-      console.log(res.data)
       commit('SET_COURSE', res.data)
       commit('SET_MEMBERS', members)
       commit('SET_RESOURCES', resources)
@@ -118,7 +117,6 @@ const actions = {
   sendNotice ({ commit }, notice) {
     return new Promise((resolve, reject) => {
       sendNotice(notice).then(res => { // 发送通知
-        console.log(res.data)
         commit('ADD_NOTICE', res.data)
         resolve(res)
       }).catch(error => {
