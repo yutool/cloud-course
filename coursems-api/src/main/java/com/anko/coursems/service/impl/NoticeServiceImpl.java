@@ -7,6 +7,8 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class NoticeServiceImpl implements INoticeService {
     @Autowired
@@ -14,6 +16,7 @@ public class NoticeServiceImpl implements INoticeService {
 
     public Notice addNotice(Notice notice) {
         notice.setNoticeId(RandomStringUtils.randomAlphanumeric(20));
+        notice.setReleaseTime(new Date());
         noticeMapper.add(notice);
         return notice;
     }

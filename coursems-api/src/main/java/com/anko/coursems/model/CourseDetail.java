@@ -15,20 +15,35 @@ import java.util.List;
 @Data
 public class CourseDetail {
     private String courseId;
+
     private String courseNum;
+
     private String courseName;
+
     private String coursePic;
+
     private String clazzName;
+
     private String synopsis;
+
     private String term;
+
     private int arrivesNum;
+
     private int resourcesNum;
+
     private int experiencesNum;
+
     private boolean appraise;
+
     private String teacherId;
+
     private String teacherName;
+
     private List<MemberDto> members;
+
     private List<ResourceDto> resources;
+
     private List<NoticeDto> notices;
 
     public String getCoursePic() {

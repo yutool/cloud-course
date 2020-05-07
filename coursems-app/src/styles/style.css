@@ -3,6 +3,11 @@ button {
   outline: none !important;
 }
 
+/* 自定义el弹窗设置 */
+.m-dialog .el-dialog__body{
+  padding: 10px 20px;
+}
+
 .bg-info {
     background: #eee !important;
 }

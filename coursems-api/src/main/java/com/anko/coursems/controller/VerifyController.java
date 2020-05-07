@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.concurrent.TimeUnit;
 
 @RestController
+//@ApiIgnore
 @Api(tags = "邮箱管理")
 @RequestMapping("/api/v1")
 @LimitIPRequest(value = 2)
@@ -43,6 +45,7 @@ public class VerifyController {
         return Result.success();
     }
 
+    @ApiIgnore
     @ApiOperation(value = "修改邮箱邮件")
     @LogAnnotation(operation = "修改邮箱邮件")
     @GetMapping("/email/update/{toAddr}")
@@ -56,6 +59,7 @@ public class VerifyController {
         return Result.success();
     }
 
+    @ApiIgnore
     @ApiOperation(value = "重置密码邮件")
     @LogAnnotation(operation = "重置密码邮件")
     @GetMapping("/email/forget/{toAddr}")

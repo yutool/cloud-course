@@ -20,7 +20,7 @@
             <router-link to="/" class="nav-link">关于我们</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/feedback" class="nav-link">反馈</router-link>
+            <router-link to="/docs/coursems/swagger-ui.html" class="nav-link">接口文档</router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link" target="_blank" href="https://github.com/ankoye/course-management-system">GitHub地址</a>
@@ -39,7 +39,7 @@
             <a v-else class="nav-link pointer" @click="logout">退出</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">帮助</a>
+            <router-link to="/feedback" class="nav-link">反馈</router-link>
           </li>
         </ul>
       </div>

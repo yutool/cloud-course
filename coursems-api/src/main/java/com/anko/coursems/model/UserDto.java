@@ -13,14 +13,23 @@ import java.util.Date;
 @Builder
 public class UserDto {
     private String userId;
+
     private String userName;
+
     private String email;
+
     private String avatar;
+
     private String nickname;
+
     private String stuNum;
+
     private String gender;
+
     private Date birthday;
+
     private String phoneNum;
+
     private String signature;
 
     // 获取头像时，需要获取服务器绝对地址

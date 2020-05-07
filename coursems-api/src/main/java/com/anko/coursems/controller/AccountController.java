@@ -22,6 +22,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(tags = "帐号管理")
 @RequestMapping("/api/v1")
@@ -40,7 +41,7 @@ public class AccountController {
         return executeLogin(loginForm);
     }
 
-    @ApiOperation(value = "游客登录")
+    @ApiIgnore
     @LogAnnotation(operation = "游客登录")
     @PostMapping("/login/visitor")
     public Result visitorsLogin() {

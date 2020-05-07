@@ -11,11 +11,16 @@ import java.util.Date;
 @Data
 public class NoticeDto {
     private String noticeId;
+
     private String content;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date releaseTime;
+
     private String author;
+
     private int type;
+
     private String clazzId;
 
     public Notice convertToNotice(){

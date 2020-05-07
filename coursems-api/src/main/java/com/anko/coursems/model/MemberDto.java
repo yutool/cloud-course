@@ -10,14 +10,23 @@ import org.springframework.beans.BeanUtils;
 @Data
 public class MemberDto {
     private String userId;
+
     private String courseId;
+
     private String stuName;
+
     private String stuNum;
+
     private String avatar;
+
     private String signature;
+
     private int experience;
+
     private int resource;
+
     private int arrive;
+
     private int score;
     private String remark;
 

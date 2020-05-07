@@ -12,12 +12,18 @@ import java.util.Date;
 @Data
 public class ResourceDto {
     private String resId;
+
     private String resName;
+
     private Long resSize;
+
     private String downLink;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date uploadTime;
+
     private int experience;
+
     private String courseId;
 
     // 获取服务器下载地址

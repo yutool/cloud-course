@@ -38,7 +38,7 @@
       </el-col>
     </el-row>
     <!-- 新建通知弹窗 -->
-    <auto-dialog :title="'新建通知'" :visible="dialogVisible" :width="600" @close="closeDialog">
+    <auto-dialog :title="'新建通知'" :visible="dialogVisible" :width="600" @close="closeDialog" class="m-dialog">
       <el-form>
         <el-input type="textarea" v-model="content" :rows="6" placeholder="请输入通知内容"></el-input>
       </el-form>
@@ -75,7 +75,6 @@ export default {
     submitForm () {
       var noticeForm = {
         content: this.content,
-        releaseTime: new Date(),
         author: this.course.teacherName,
         type: 3, // 班级通知
         courseId: this.course.courseId
@@ -93,4 +92,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.dialog-footer {
+  padding: 10px 0;
+  text-align: right;
+}
 </style>

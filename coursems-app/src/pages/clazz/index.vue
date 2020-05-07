@@ -79,7 +79,7 @@ export default {
     },
     handleSelect (item) {
       this.courseList = ''
-      this.$router.push(`/clazz/${item.clazzId}`)
+      this.$router.push(`/clazz/${item.courseId}`)
       this.$store.dispatch('clazz/getClazz', item.courseId)
     },
     querySearchAsync (queryString, cb) {

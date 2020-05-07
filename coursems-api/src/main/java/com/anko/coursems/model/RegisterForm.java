@@ -8,9 +8,13 @@ import org.springframework.beans.BeanUtils;
 @Data
 public class RegisterForm {
     private String userId;
+
     private String userName;
+
     private String email;
+
     private String password;
+
     private String verifyCode;
 
     public User convertToUser(){
