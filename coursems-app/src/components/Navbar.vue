@@ -20,7 +20,7 @@
             <router-link to="/" class="nav-link">关于我们</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" target="_blank" href="http://www.ankoye.com/docs/coursems/swagger-ui.html">接口文档</a>
+            <a class="nav-link" target="_blank" href="http://www.course.ankoye.com/docs/swagger-ui.html">接口文档</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" target="_blank" href="https://github.com/ankoye/course-management-system">GitHub地址</a>

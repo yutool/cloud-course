@@ -19,7 +19,7 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .host("www.ankoye.com")
+                .host("www.course.ankoye.com")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.anko.coursems.controller"))
                 .paths(PathSelectors.any())
