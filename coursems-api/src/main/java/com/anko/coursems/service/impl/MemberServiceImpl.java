@@ -13,6 +13,7 @@ public class MemberServiceImpl implements IMemberService {
     @Autowired
     private MemberMapper memberMapper;
 
+    @Override
     public void addMember(Member member) {
         if (memberMapper.select(member) != null) {
             throw new ServiceException("成员已存在");
@@ -20,11 +21,12 @@ public class MemberServiceImpl implements IMemberService {
         memberMapper.add(member);
     }
 
+    @Override
     public int deleteMember(Member member) {
         return memberMapper.delete(member);
     }
 
-    @Transactional
+    @Override
     public Member gradeStudent(Member member) {
         memberMapper.grade(member);
         return memberMapper.select(member);

@@ -1,22 +1,15 @@
 package com.anko.coursems;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import sun.rmi.runtime.Log;
-
-import java.util.logging.Logger;
+import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
-class CoursemsApplicationTests {
-    Logger logger = Logger.getLogger("CoursemsApplicationTests");
-    @Test
-    void contextLoads() {
-    }
-    @Test
-    void testa() {
-        String filename = RandomStringUtils.randomAlphanumeric(10);
-        logger.info(filename);
-    }
+@RunWith(SpringRunner.class)
+public class CoursemsApplicationTests {
 
+    @Test
+    public void test() {
+    }
 }

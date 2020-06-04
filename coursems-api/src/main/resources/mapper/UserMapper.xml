@@ -70,5 +70,11 @@
         select * from t_user
         where phone_num = #{phoneNum}
     </select>
-    
+
+    <select id="login" resultType="user">
+        select * from t_user
+        where email = #{account} or phone_num = #{account}
+        and password = #{password}
+    </select>
+
 </mapper>

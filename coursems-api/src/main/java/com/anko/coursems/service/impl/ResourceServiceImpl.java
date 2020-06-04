@@ -18,6 +18,7 @@ public class ResourceServiceImpl implements IResourceService {
     @Autowired
     private ResourceMapper resourceMapper;
 
+    @Override
     public Resource addResource(Resource resource, MultipartFile file) {
         String fileName = resource.getResName() + FileContentTypeUtils.getFileType(file.getOriginalFilename());
         String path = FileUtils.storeFile(file, fileName, FileUtils.getUserPath(resource.getCourseId()));
@@ -29,6 +30,7 @@ public class ResourceServiceImpl implements IResourceService {
         return resource;
     }
 
+    @Override
     public int deleteResource(String resId) {
         return resourceMapper.delete(resId);
     }

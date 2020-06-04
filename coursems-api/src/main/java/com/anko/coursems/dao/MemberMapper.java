@@ -15,4 +15,5 @@ public interface MemberMapper {
     int grade(Member scoreForm);
 
     int deleteMembersByCourseId(String courseId);
+
 }

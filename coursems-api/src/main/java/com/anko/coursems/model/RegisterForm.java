@@ -5,14 +5,20 @@ import com.google.common.base.Converter;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
 @Data
 public class RegisterForm {
     private String userId;
 
+    @NotNull
     private String userName;
 
+    @Email
     private String email;
 
+    @NotNull
     private String password;
 
     private String verifyCode;

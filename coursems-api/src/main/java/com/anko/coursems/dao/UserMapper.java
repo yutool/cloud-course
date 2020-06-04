@@ -26,4 +26,6 @@ public interface UserMapper {
     User phoneIsExist(String phoneNum);
 
     User findUserByAccount(String account);
+
+    User login(@Param("account") String account, @Param("password") String password);
 }

@@ -30,25 +30,29 @@ public class CourseServiceImpl implements ICourseService {
     @Autowired
     private ResourceMapper resourceMapper;
 
-    @Transactional
+    @Override
     public List<Course> getAllCourses(String userId) {
         List<Course> joinList = courseMapper.joinList(userId);
         joinList.addAll(courseMapper.createList(userId));
         return joinList;
     }
 
+    @Override
     public Course getCourseById(String id) {
         return courseMapper.findById(id);
     }
 
+    @Override
     public Course getCourseDetail(String clazzId) {
         return courseMapper.getCourseDetail(clazzId);
     }
 
+    @Override
     public Course searchCourse(String clazzNum) {
         return courseMapper.findByNum(clazzNum);
     }
 
+    @Override
     public Course createCourse(Course course) {
         course.setCourseId(RandomStringUtils.randomAlphanumeric(20));
         course.setCourseNum(RandomStringUtils.randomNumeric(6));
@@ -57,7 +61,8 @@ public class CourseServiceImpl implements ICourseService {
         return course;
     }
 
-    @Transactional
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteCourse(String id) {
         memberMapper.deleteMembersByCourseId(id);
         resourceMapper.deleteResourcesByCourseId(id);
@@ -65,7 +70,7 @@ public class CourseServiceImpl implements ICourseService {
         courseMapper.delete(id);
     }
 
-    @Transactional
+    @Override
     public boolean toggleAppraise(String id) {
         Course course = courseMapper.findById(id);
         course.setAppraise(!course.isAppraise());
@@ -73,6 +78,7 @@ public class CourseServiceImpl implements ICourseService {
         return course.isAppraise();
     }
 
+    @Override
     public String uploadPic(String id, MultipartFile file) {
         DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
         String fileName = "pic_" + format.format(new Date()) + ".jpeg";

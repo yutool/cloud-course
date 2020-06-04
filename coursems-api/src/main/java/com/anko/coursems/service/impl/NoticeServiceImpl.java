@@ -14,6 +14,7 @@ public class NoticeServiceImpl implements INoticeService {
     @Autowired
     private NoticeMapper noticeMapper;
 
+    @Override
     public Notice addNotice(Notice notice) {
         notice.setNoticeId(RandomStringUtils.randomAlphanumeric(20));
         notice.setReleaseTime(new Date());
@@ -21,6 +22,7 @@ public class NoticeServiceImpl implements INoticeService {
         return notice;
     }
 
+    @Override
     public int deleteNotice(String id) {
         return noticeMapper.delete(id);
     }

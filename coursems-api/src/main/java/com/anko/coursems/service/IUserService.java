@@ -1,6 +1,7 @@
 package com.anko.coursems.service;
 
 import com.anko.coursems.entity.User;
+import com.anko.coursems.model.LoginForm;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IUserService {
@@ -52,4 +53,9 @@ public interface IUserService {
      * 修改密码
      */
     int updatePassword(User user);
+
+    /**
+     * 登录，并非真实登录接口
+     */
+    User login(LoginForm loginForm);
 }
