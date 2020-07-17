@@ -2,9 +2,10 @@ package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.Result;
+import com.anko.coursems.core.BaseController;
 import com.anko.coursems.entity.Member;
 import com.anko.coursems.model.MemberDto;
-import com.anko.coursems.service.IMemberService;
+import com.anko.coursems.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,24 +14,22 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "班级成员管理")
 @RestController
 @RequestMapping("/api/v1/members")
-public class MemberController {
+public class MemberController extends BaseController {
     @Autowired
-    private IMemberService memberService;
+    private MemberService memberService;
 
     @ApiOperation(value = "加入课程")
     @LogAnnotation(operation = "加入课程")
     @PostMapping
-    public Result addMember(@RequestBody MemberDto form) {
-        memberService.addMember(form.convertToMember());
-        return Result.success();
+    public Result addMember(@RequestBody Member form) {
+        return handleResult(memberService.addMember(form));
     }
 
     @ApiOperation(value = "退出课程/删除成员")
     @LogAnnotation(operation = "退出课程/删除成员")
     @DeleteMapping
     public Result deleteMember(@RequestBody MemberDto form) {
-        memberService.deleteMember(form.convertToMember());
-        return Result.success();
+        return handleResult(memberService.delete(form.convertToMember()));
     }
 
     @ApiOperation(value = "结课评分")

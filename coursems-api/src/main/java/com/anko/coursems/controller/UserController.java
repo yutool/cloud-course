@@ -3,11 +3,12 @@ package com.anko.coursems.controller;
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.ResultCode;
 import com.anko.coursems.common.utils.UserUtils;
+import com.anko.coursems.core.BaseController;
 import com.anko.coursems.entity.User;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.RegisterForm;
 import com.anko.coursems.model.UserDto;
-import com.anko.coursems.service.IUserService;
+import com.anko.coursems.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.Logical;
@@ -20,9 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(tags = "用户模块")
 @RequestMapping("/api/v1/users")
 @RestController
-public class UserController {
+public class UserController extends BaseController {
     @Autowired
-    private IUserService userService;
+    private UserService userService;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
@@ -91,7 +92,6 @@ public class UserController {
     @LogAnnotation(operation = "修改密码")
     @PutMapping("/password")
     public Result updatePassword(@RequestBody User form) {
-        userService.updatePassword(form);
-        return Result.success();
+        return handleResult(userService.updatePassword(form));
     }
 }

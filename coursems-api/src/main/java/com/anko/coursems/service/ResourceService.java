@@ -1,10 +1,10 @@
 package com.anko.coursems.service;
 
+import com.anko.coursems.core.IService;
 import com.anko.coursems.entity.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-
-public interface IResourceService {
+public interface ResourceService extends IService<Resource> {
 
     /**
      * 添加班级资源

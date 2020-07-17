@@ -57,6 +57,7 @@ const actions = {
   // get clazz detail
   getClazz ({ commit }, clazzId) {
     getClazzDetail(clazzId).then(res => {
+      console.log(res)
       const { members, resources, notices } = res.data
       commit('SET_COURSE', res.data)
       commit('SET_MEMBERS', members)

@@ -3,13 +3,13 @@ package com.anko.coursems.controller;
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.ResultCode;
 import com.anko.coursems.common.utils.UserUtils;
+import com.anko.coursems.core.BaseController;
 import com.anko.coursems.entity.User;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.LoginForm;
 import com.anko.coursems.model.RegisterForm;
 import com.anko.coursems.model.UserDto;
-import com.anko.coursems.service.IUserService;
-import com.anko.coursems.service.impl.EmailService;
+import com.anko.coursems.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +28,9 @@ import springfox.documentation.annotations.ApiIgnore;
 @RequestMapping("/api/v1")
 @RestController
 @Slf4j
-public class AccountController {
+public class AccountController extends BaseController {
     @Autowired
-    private IUserService userService;
+    private UserService userService;
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
@@ -92,8 +92,7 @@ public class AccountController {
         if(!form.getVerifyCode().equals(verityCode)) {
             return Result.error(ResultCode.VERIFY_CODE_ERROR);
         }
-        userService.resetPassword(form.convertToUser());
-        return Result.success();
+        return handleResult(userService.resetPassword(form.convertToUser()));
     }
 
 }

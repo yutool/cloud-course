@@ -10,30 +10,6 @@
         or phone_num = #{account}
     </select>
 
-    <insert id="register" parameterType="user">
-        insert into t_user(user_id, user_name,email, password, nickname, avatar, salt, role)
-        values(#{userId}, #{userName}, #{email}, #{password}, #{nickname}, #{avatar}, #{salt}, #{role})
-    </insert>
-
-    <select id="findUserById" parameterType="string" resultType="user">
-        select * from t_user
-        where user_id = #{userId}
-    </select>
-
-    <update id="updateUserInfo" parameterType="user">
-        update t_user
-        set user_name=#{userName}, nickname=#{nickname},
-            stu_num=#{stuNum}, gender=#{gender},
-            birthday=#{birthday}, signature=#{signature}
-        where user_id = #{userId}
-    </update>
-    
-    <update id="updateAvatar">
-        update t_user
-        set avatar = #{avatar}
-        where user_id = #{userId}
-    </update>
-
     <update id="updatePassword" parameterType="user">
         update t_user
         set password = #{password}, salt = #{salt}
@@ -48,28 +24,6 @@
             </choose>
         </where>
     </update>
-
-    <update id="bindEmail" parameterType="user">
-        update t_user
-        set email = #{email}
-        where user_id = #{userId}
-    </update>
-
-    <update id="bindPhone" parameterType="user">
-        update t_user
-        set phone_num = #{phoneNum}
-        where user_id = #{userId}
-    </update>
-
-    <select id="emailIsExist" parameterType="string" resultType="user">
-        select * from t_user
-        where email = #{email}
-    </select>
-
-    <select id="phoneIsExist" parameterType="string" resultType="user">
-        select * from t_user
-        where phone_num = #{phoneNum}
-    </select>
 
     <select id="login" resultType="user">
         select * from t_user

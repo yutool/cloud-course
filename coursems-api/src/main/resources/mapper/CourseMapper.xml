@@ -4,23 +4,23 @@
 
 <mapper namespace="com.anko.coursems.dao.CourseMapper">
 
-    <resultMap id="courseMap" type="course">
-        <id property="courseId" column="course_id" />
-        <result property="courseNum" column="course_num" />
-        <result property="courseName" column="course_name" />
-        <result property="coursePic" column="course_pic" />
-        <result property="clazzName" column="clazz_name" />
-        <result property="synopsis" column="synopsis" />
-        <result property="term" column="term" />
-        <result property="arrivesNum" column="arrive_num" />
-        <result property="resourcesNum" column="resource_num" />
-        <result property="experiencesNum" column="experience_num" />
-        <result property="appraise" column="appraise" />
-        <association property="teacher" column="teacher_id"
-                     select="com.anko.coursems.dao.UserMapper.findUserById" />
-    </resultMap>
+<!--    <resultMap id="courseMap" type="course">-->
+<!--        <id property="courseId" column="course_id" />-->
+<!--        <result property="courseNum" column="course_num" />-->
+<!--        <result property="courseName" column="course_name" />-->
+<!--        <result property="coursePic" column="course_pic" />-->
+<!--        <result property="clazzName" column="clazz_name" />-->
+<!--        <result property="synopsis" column="synopsis" />-->
+<!--        <result property="term" column="term" />-->
+<!--        <result property="arrivesNum" column="arrive_num" />-->
+<!--        <result property="resourcesNum" column="resource_num" />-->
+<!--        <result property="experiencesNum" column="experience_num" />-->
+<!--        <result property="appraise" column="appraise" />-->
+<!--        <association property="teacher" column="teacher_id"-->
+<!--                     select="com.anko.coursems.dao.UserMapper.selectById" />-->
+<!--    </resultMap>-->
 
-    <resultMap id="courseDetailMap" type="course">
+    <resultMap id="courseDetailMap" type="courseDto">
         <id property="courseId" column="course_id" />
         <result property="courseNum" column="course_num" />
         <result property="courseName" column="course_name" />
@@ -32,8 +32,8 @@
         <result property="resourcesNum" column="resourcesNum" />
         <result property="experiencesNum" column="experiencesNum" />
         <result property="appraise" column="appraise" />
-        <result property="teacher.userId" column="teacher_id" />
-        <result property="teacher.userName" column="user_name" />
+        <result property="teacherId" column="teacher_id" />
+        <result property="teacherName" column="user_name" />
         <collection property="members" column="course_id"
                     select="com.anko.coursems.dao.MemberMapper.getMembersByCourseId" />
         <collection property="resources" column="course_id"
@@ -49,47 +49,15 @@
         and c.course_id = #{userId}
     </select>
 
-    <select id="joinList" parameterType="string" resultMap="courseMap">
+    <select id="createList" parameterType="string" resultType="course">
         select * from t_course
         where teacher_id = #{userId}
     </select>
 
-    <select id="createList" parameterType="string" resultMap="courseMap">
+    <select id="joinList" parameterType="string" resultType="course">
         select c.* from t_course c, t_member m
         where m.course_id = c.course_id
         and m.user_id = #{userId}
     </select>
-
-    <select id="findByNum" parameterType="string" resultMap="courseMap">
-        select * from t_course
-        where course_num = #{courseNum}
-    </select>
-
-    <select id="findById" parameterType="string" resultType="course">
-        select * from t_course
-        where course_id = #{courseId}
-    </select>
-
-    <insert id="add" parameterType="course">
-        insert into t_course(course_id, course_num, clazz_name, course_name, term, synopsis, course_pic, teacher_id)
-        values(#{courseId}, #{courseNum}, #{clazzName}, #{courseName}, #{term}, #{synopsis}, #{coursePic}, #{teacher.userId})
-    </insert>
-
-    <delete id="delete" parameterType="string">
-        delete from t_course
-        where course_id = #{courseId}
-    </delete>
-
-    <update id="toggleAppraise" parameterType="course">
-        update t_course
-        set appraise = #{appraise}
-        where course_id=#{courseId}
-    </update>
-
-    <update id="updatePic">
-        update  t_course
-        set course_pic = #{coursePic}
-        where course_id = #{courseId}
-    </update>
 
 </mapper>

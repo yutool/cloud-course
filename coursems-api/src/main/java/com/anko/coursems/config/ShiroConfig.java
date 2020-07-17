@@ -68,7 +68,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/api/v1/reset-password", "anon");
         filterChainDefinitionMap.put("/api/v1/email/*/*", "anon");
         // test
-        filterChainDefinitionMap.put("/api/**", "anon");
+        filterChainDefinitionMap.put("/api/test/*", "anon");
         // druid
         filterChainDefinitionMap.put("/druid/**", "anon");
         // 其他全部需要验证

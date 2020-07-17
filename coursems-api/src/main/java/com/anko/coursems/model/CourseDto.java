@@ -1,11 +1,12 @@
 package com.anko.coursems.model;
 
 import com.anko.coursems.common.utils.FileUrlUtils;
-import com.anko.coursems.entity.Course;
-import com.anko.coursems.entity.User;
+import com.anko.coursems.entity.*;
 import com.google.common.base.Converter;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
+
+import java.util.List;
 
 @Data
 public class CourseDto {
@@ -23,17 +24,23 @@ public class CourseDto {
 
     private String term;
 
-    private int arrives;
+    private Integer arrivesNum;
 
-    private int resources;
+    private Integer resourcesNum;
 
-    private int experiences;
+    private Integer experiencesNum;
 
     private boolean appraise;
 
     private String teacherId;
 
     private String teacherName;
+
+    private List<Member> members;
+
+    private List<Resource> resources;
+
+    private List<Notice> notices;
 
     // 需要获取服务器绝对地址
     public String getCoursePic() {
@@ -57,10 +64,7 @@ public class CourseDto {
         @Override
         protected Course doForward(CourseDto courseDto) {
             Course course = new Course();
-            User user = new User();
-            user.setUserId(courseDto.getTeacherId());
             BeanUtils.copyProperties(courseDto, course);
-            course.setTeacher(user);
             return course;
         }
 
@@ -68,8 +72,6 @@ public class CourseDto {
         protected CourseDto doBackward(Course course) {
             CourseDto courseDto = new CourseDto();
             BeanUtils.copyProperties(course, courseDto);
-            courseDto.teacherId = course.getTeacher().getUserId();
-            courseDto.teacherName = course.getTeacher().getUserName();
             return courseDto;
         }
 

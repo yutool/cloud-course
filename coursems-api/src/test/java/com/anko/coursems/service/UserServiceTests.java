@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 public class UserServiceTests {
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     private BufferedWriter eWriter;
     private BufferedWriter pWriter;

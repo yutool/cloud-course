@@ -1,8 +1,9 @@
 package com.anko.coursems.service;
 
+import com.anko.coursems.core.IService;
 import com.anko.coursems.entity.Notice;
 
-public interface INoticeService {
+public interface NoticeService {
 
     /**
      * 添加班级通知

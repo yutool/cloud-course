@@ -2,9 +2,10 @@ package com.anko.coursems.service.impl;
 
 import com.anko.coursems.common.utils.FileContentTypeUtils;
 import com.anko.coursems.common.utils.FileUtils;
+import com.anko.coursems.core.BaseService;
 import com.anko.coursems.dao.ResourceMapper;
 import com.anko.coursems.entity.Resource;
-import com.anko.coursems.service.IResourceService;
+import com.anko.coursems.service.ResourceService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 
 @Service
-public class ResourceServiceImpl implements IResourceService {
+public class ResourceServiceImpl extends BaseService<Resource> implements ResourceService {
 
     @Autowired
     private ResourceMapper resourceMapper;
@@ -26,12 +27,12 @@ public class ResourceServiceImpl implements IResourceService {
         resource.setDownLink(path);
         resource.setResSize(file.getSize());
         resource.setUploadTime(new Date());
-        resourceMapper.add(resource);
+        resourceMapper.insert(resource);
         return resource;
     }
 
     @Override
     public int deleteResource(String resId) {
-        return resourceMapper.delete(resId);
+        return resourceMapper.deleteById(resId);
     }
 }

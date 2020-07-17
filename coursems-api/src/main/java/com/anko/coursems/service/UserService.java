@@ -1,22 +1,17 @@
 package com.anko.coursems.service;
 
+import com.anko.coursems.core.IService;
 import com.anko.coursems.entity.User;
 import com.anko.coursems.model.LoginForm;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface IUserService {
+public interface UserService {
 
     /**
      * 按账号获取用户
      * @param account 邮箱 or 手机号
      */
     User findUserByAccount(String account);
-
-    /**
-     * 获取用户
-     * @param id 用户id
-     */
-    User findUserById(String id);
 
     /**
      * 用户注册

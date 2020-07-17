@@ -1,20 +1,27 @@
 package com.anko.coursems.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 @Data
-public class Member {
-    private User user;
+@Accessors(chain = true)
+public class Member implements Serializable {
+
+    private Integer id;
+
+    private String userId;
 
     private String courseId;
 
-    private int arrive;
+    private Integer arrive;
 
-    private int resource;
+    private Integer resource;
 
-    private int experience;
+    private Integer experience;
 
-    private int score;
+    private Integer score;
 
     private String remark;
 }

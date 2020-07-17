@@ -2,7 +2,6 @@ package com.anko.coursems.service;
 
 import com.anko.coursems.entity.User;
 import com.anko.coursems.model.LoginForm;
-import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
@@ -19,7 +18,7 @@ import java.io.*;
 @Slf4j
 public class LoginServiceTests {
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     private BufferedWriter lWriter;
     private BufferedWriter rWriter;

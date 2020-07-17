@@ -4,24 +4,9 @@
 
 <mapper namespace="com.anko.coursems.dao.ResourceMapper">
 
+    <!-- 被其他mapper引用 -->
     <select id="getResourcesByCourseId" parameterType="string" resultType="resource">
         select * from t_resource
         where course_id = #{courseId}
     </select>
-
-    <insert id="add" parameterType="resource">
-        insert into t_resource(res_id, res_name, down_link, upload_time, res_size, experience, course_id)
-        values(#{resId}, #{resName}, #{downLink}, #{uploadTime}, #{resSize}, #{experience}, #{courseId})
-    </insert>
-
-    <delete id="delete" parameterType="string">
-        delete from t_resource
-        where res_id = #{redId}
-    </delete>
-
-    <delete id="deleteResourcesByCourseId" parameterType="string">
-        delete from t_resource
-        where course_id = #{courseId}
-    </delete>
-
 </mapper>

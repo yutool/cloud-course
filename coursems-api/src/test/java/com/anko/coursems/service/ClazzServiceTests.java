@@ -20,9 +20,9 @@ import java.io.*;
 public class ClazzServiceTests {
 
     @Autowired
-    private INoticeService noticeService;
+    private NoticeService noticeService;
     @Autowired
-    private IMemberService memberService;
+    private MemberService memberService;
 
     private BufferedWriter nWriter;
     private BufferedWriter mWriter;
@@ -108,7 +108,6 @@ public class ClazzServiceTests {
                     User user = new User();
                     member.setCourseId(c[1]);
                     user.setUserId(c[2]);
-                    member.setUser(user);
                     member.setScore(Integer.parseInt(c[3]));
                     member.setRemark(c[4]);
                     memberService.gradeStudent(member);
@@ -159,8 +158,7 @@ public class ClazzServiceTests {
                     member.setCourseId(c[1]);
                     User user = new User();
                     user.setUserId(c[2]);
-                    member.setUser(user);
-                    if(memberService.deleteMember(member) == 0 ) {
+                    if(memberService.delete(member) == 0 ) {
                         reality = "fail";
                     }
                 } catch (Exception e) {

@@ -4,11 +4,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
-@ToString(exclude = {"signature", "gender"})
+
 @Data
+@Accessors(chain = true)
+@ToString(exclude = {"signature", "gender"})
 @ApiModel("用户实体")
 public class User implements Serializable {
     @ApiModelProperty("用户id")

@@ -66,6 +66,7 @@ export default {
   methods: {
     submit () {
       searchCourse(this.courseNum).then(res => {
+        console.log(res)
         if (res.data !== null) {
           this.course = res.data
         } else {

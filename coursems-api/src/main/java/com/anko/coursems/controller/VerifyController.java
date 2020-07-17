@@ -4,7 +4,7 @@ import com.anko.coursems.common.annotation.LimitIPRequest;
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.common.result.ResultCode;
-import com.anko.coursems.service.IUserService;
+import com.anko.coursems.service.UserService;
 import com.anko.coursems.service.impl.EmailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +30,7 @@ public class VerifyController {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @ApiOperation(value = "注册账号邮件")
     @LogAnnotation(operation = "注册账号邮件")

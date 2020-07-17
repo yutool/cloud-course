@@ -20,9 +20,9 @@ import java.io.*;
 public class CourseServiceTests {
 
     @Autowired
-    private ICourseService courseService;
+    private CourseService courseService;
     @Autowired
-    private IMemberService memberService;
+    private MemberService memberService;
 
     private BufferedWriter cWriter;
     private BufferedWriter mWriter;
@@ -68,7 +68,6 @@ public class CourseServiceTests {
                     course.setSynopsis(c[4]);
                     User user = new User();
                     user.setUserId(c[5]);
-                    course.setTeacher(user);
                     courseService.createCourse(course);
                 } catch (Exception e) {
                     reality = "fail";
@@ -94,7 +93,6 @@ public class CourseServiceTests {
                     User user = new User();
                     member.setCourseId(c[1]);
                     user.setUserId(c[2]);
-                    member.setUser(user);
                     memberService.addMember(member);
                 } catch (Exception e) {
                     reality = "fail";

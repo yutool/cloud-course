@@ -3,10 +3,11 @@ package com.anko.coursems.controller;
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.constant.LogType;
 import com.anko.coursems.common.utils.FileUrlUtils;
+import com.anko.coursems.core.BaseController;
 import com.anko.coursems.entity.Course;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.CourseDto;
-import com.anko.coursems.service.ICourseService;
+import com.anko.coursems.service.CourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +20,16 @@ import java.util.List;
 @Api(tags = "课程管理")
 @RequestMapping("/api/v1")
 @RestController
-public class CourseController {
+public class CourseController extends BaseController {
     @Autowired
-    private ICourseService courseService;
+    private CourseService courseService;
 
     @ApiOperation(value = "获取用户所有课程")
     @LogAnnotation(operation = "获取用户所有课程", exclude = {LogType.URL})
     @GetMapping("/{userId}/courses")
     public Result getAllCourses(@PathVariable String userId) {
         List<Course> courses = courseService.getAllCourses(userId);
-        List<CourseDto> courseList = new LinkedList<>();
-        for(Course course : courses)
-            courseList.add(new CourseDto().convertFor(course));
-        return Result.success(courseList);
+        return Result.success(courses);
     }
 
     @ApiOperation(value = "按班课搜索课程")
@@ -39,7 +37,7 @@ public class CourseController {
     @GetMapping("/courses/{num}")
     public Result searchCourse(@PathVariable String num) {
         Course course = courseService.searchCourse(num);
-        return Result.success(new CourseDto().convertFor(course));
+        return Result.success(course);
     }
 
     @ApiOperation(value = "创建课程")
@@ -47,7 +45,7 @@ public class CourseController {
     @PostMapping("/courses")
     public Result createCourse(@RequestBody CourseDto form) {
         Course course = courseService.createCourse(form.convertToCourse());
-        return Result.success(new CourseDto().convertFor(course));
+        return handleResult(new CourseDto().convertFor(course));
     }
 
     @ApiOperation(value = "开启/关闭评分")

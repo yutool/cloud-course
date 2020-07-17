@@ -1,35 +1,30 @@
 package com.anko.coursems.service.impl;
 
 import com.anko.coursems.common.exception.ServiceException;
+import com.anko.coursems.core.BaseService;
 import com.anko.coursems.dao.MemberMapper;
 import com.anko.coursems.entity.Member;
-import com.anko.coursems.service.IMemberService;
+import com.anko.coursems.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class MemberServiceImpl implements IMemberService {
+public class MemberServiceImpl extends BaseService<Member> implements MemberService {
     @Autowired
     private MemberMapper memberMapper;
 
     @Override
-    public void addMember(Member member) {
-        if (memberMapper.select(member) != null) {
+    public int addMember(Member member) {
+        if (memberMapper.selectOne(member) != null) {
             throw new ServiceException("成员已存在");
         }
-        memberMapper.add(member);
-    }
-
-    @Override
-    public int deleteMember(Member member) {
-        return memberMapper.delete(member);
+        return memberMapper.insert(member);
     }
 
     @Override
     public Member gradeStudent(Member member) {
         memberMapper.grade(member);
-        return memberMapper.select(member);
+        return memberMapper.selectOne(member);
     }
 
 }

@@ -4,24 +4,9 @@
 
 <mapper namespace="com.anko.coursems.dao.NoticeMapper">
 
+    <!-- 被其他mapper引用 -->
     <select id="getNoticesByCourseId" parameterType="string" resultType="notice">
         select * from t_notice
         where course_id = #{courseId}
     </select>
-
-    <insert id="add" parameterType="notice">
-        insert into t_notice(notice_id, content, release_time, author, `type`, course_id)
-        values(#{noticeId}, #{content}, #{releaseTime}, #{author}, #{type}, #{courseId})
-    </insert>
-
-    <delete id="delete" parameterType="string">
-        delete from t_notice
-        where notice_id = #{noticeId}
-    </delete>
-
-    <delete id="deleteNoticesByCourseId" parameterType="string">
-        delete from t_notice
-        where course_id = #{courseId}
-    </delete>
-
 </mapper>

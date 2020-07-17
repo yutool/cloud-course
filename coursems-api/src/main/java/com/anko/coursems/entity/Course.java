@@ -2,13 +2,16 @@ package com.anko.coursems.entity;
 
 import lombok.Data;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Data
+@Accessors(chain = true)
 @ToString(exclude = {"synopsis","teacher", "members", "resources", "notices"})
 public class Course implements Serializable {
+
     private String courseId;
 
     private String courseNum;
@@ -23,19 +26,16 @@ public class Course implements Serializable {
 
     private String synopsis;
 
-    private int arrivesNum;
+    private Integer arrivesNum;
 
-    private int resourcesNum;
+    private Integer resourcesNum;
 
-    private int experiencesNum;
+    private Integer experiencesNum;
 
-    private boolean appraise;
+    private Boolean appraise;
 
-    private User teacher;
+    private String teacherId;
 
-    private List<Member> members;
+    private String teacherName;
 
-    private List<Resource> resources;
-
-    private List<Notice> notices;
 }

@@ -4,9 +4,10 @@ import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.common.result.ResultCode;
 import com.anko.coursems.common.utils.JsonUtils;
+import com.anko.coursems.core.BaseController;
 import com.anko.coursems.entity.Resource;
 import com.anko.coursems.model.ResourceDto;
-import com.anko.coursems.service.IResourceService;
+import com.anko.coursems.service.ResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(tags = "班级资源管理")
 @RestController
 @RequestMapping("/api/v1/resources")
-public class ResourceController {
+public class ResourceController extends BaseController {
     @Autowired
-    private IResourceService resourceService;
+    private ResourceService resourceService;
 
     @ApiOperation(value = "添加资源")
     @LogAnnotation(operation = "添加资源")
@@ -36,7 +37,6 @@ public class ResourceController {
     @LogAnnotation(operation = "删除资源")
     @DeleteMapping("/{id}")
     public Result deleteResource(@PathVariable String id) {
-        resourceService.deleteResource(id);
-        return Result.success();
+        return handleResult(resourceService.deleteResource(id));
     }
 }
