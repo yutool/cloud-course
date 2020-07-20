@@ -1,4 +1,4 @@
-package com.anko.coursems.common.utils;
+package com.anko.coursems.common.util;
 
 import com.anko.coursems.entity.User;
 import org.apache.shiro.SecurityUtils;

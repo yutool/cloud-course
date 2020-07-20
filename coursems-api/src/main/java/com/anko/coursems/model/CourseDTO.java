@@ -1,6 +1,6 @@
 package com.anko.coursems.model;
 
-import com.anko.coursems.common.utils.FileUrlUtils;
+import com.anko.coursems.common.util.FileUrlUtils;
 import com.anko.coursems.entity.*;
 import com.google.common.base.Converter;
 import lombok.Data;
@@ -9,7 +9,7 @@ import org.springframework.beans.BeanUtils;
 import java.util.List;
 
 @Data
-public class CourseDto {
+public class CourseDTO {
     private String courseId;
 
     private String courseNum;
@@ -53,24 +53,24 @@ public class CourseDto {
         return course;
     }
 
-    public CourseDto convertFor(Course course){
+    public CourseDTO convertFor(Course course){
         CourseConverter courseConverter = new CourseConverter();
-        CourseDto courseDto = courseConverter.reverse().convert(course);
+        CourseDTO courseDto = courseConverter.reverse().convert(course);
         return courseDto;
     }
 
 
-    private static class CourseConverter extends Converter<CourseDto, Course> {
+    private static class CourseConverter extends Converter<CourseDTO, Course> {
         @Override
-        protected Course doForward(CourseDto courseDto) {
+        protected Course doForward(CourseDTO courseDto) {
             Course course = new Course();
             BeanUtils.copyProperties(courseDto, course);
             return course;
         }
 
         @Override
-        protected CourseDto doBackward(Course course) {
-            CourseDto courseDto = new CourseDto();
+        protected CourseDTO doBackward(Course course) {
+            CourseDTO courseDto = new CourseDTO();
             BeanUtils.copyProperties(course, courseDto);
             return courseDto;
         }

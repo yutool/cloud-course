@@ -4,7 +4,7 @@ import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.core.BaseController;
 import com.anko.coursems.entity.Member;
-import com.anko.coursems.model.MemberDto;
+import com.anko.coursems.model.MemberDTO;
 import com.anko.coursems.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,15 +28,15 @@ public class MemberController extends BaseController {
     @ApiOperation(value = "退出课程/删除成员")
     @LogAnnotation(operation = "退出课程/删除成员")
     @DeleteMapping
-    public Result deleteMember(@RequestBody MemberDto form) {
+    public Result deleteMember(@RequestBody MemberDTO form) {
         return handleResult(memberService.delete(form.convertToMember()));
     }
 
     @ApiOperation(value = "结课评分")
     @LogAnnotation(operation = "结课评分")
     @PutMapping("/grade")
-    public Result gradeStudent(@RequestBody MemberDto form) {
+    public Result gradeStudent(@RequestBody MemberDTO form) {
         Member member = memberService.gradeStudent(form.convertToMember());
-        return  Result.success(new MemberDto().convertFor(member));
+        return  Result.success(new MemberDTO().convertFor(member));
     }
 }

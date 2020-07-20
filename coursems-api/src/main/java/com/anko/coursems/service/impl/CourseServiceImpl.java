@@ -1,6 +1,6 @@
 package com.anko.coursems.service.impl;
 
-import com.anko.coursems.common.utils.FileUtils;
+import com.anko.coursems.common.util.FileUtils;
 import com.anko.coursems.core.BaseService;
 import com.anko.coursems.dao.CourseMapper;
 import com.anko.coursems.dao.MemberMapper;
@@ -10,7 +10,7 @@ import com.anko.coursems.entity.Course;
 import com.anko.coursems.entity.Member;
 import com.anko.coursems.entity.Notice;
 import com.anko.coursems.entity.Resource;
-import com.anko.coursems.model.CourseDto;
+import com.anko.coursems.model.CourseDTO;
 import com.anko.coursems.service.CourseService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class CourseServiceImpl extends BaseService<Course> implements CourseServ
     }
 
     @Override
-    public CourseDto getCourseDetail(String clazzId) {
+    public CourseDTO getCourseDetail(String clazzId) {
         return courseMapper.getCourseDetail(clazzId);
     }
 

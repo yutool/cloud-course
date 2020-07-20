@@ -2,11 +2,11 @@ package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.constant.LogType;
-import com.anko.coursems.common.utils.FileUrlUtils;
+import com.anko.coursems.common.util.FileUrlUtils;
 import com.anko.coursems.core.BaseController;
 import com.anko.coursems.entity.Course;
 import com.anko.coursems.common.result.Result;
-import com.anko.coursems.model.CourseDto;
+import com.anko.coursems.model.CourseDTO;
 import com.anko.coursems.service.CourseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Api(tags = "课程管理")
@@ -43,9 +42,9 @@ public class CourseController extends BaseController {
     @ApiOperation(value = "创建课程")
     @LogAnnotation(operation = "创建课程")
     @PostMapping("/courses")
-    public Result createCourse(@RequestBody CourseDto form) {
+    public Result createCourse(@RequestBody CourseDTO form) {
         Course course = courseService.createCourse(form.convertToCourse());
-        return handleResult(new CourseDto().convertFor(course));
+        return handleResult(new CourseDTO().convertFor(course));
     }
 
     @ApiOperation(value = "开启/关闭评分")

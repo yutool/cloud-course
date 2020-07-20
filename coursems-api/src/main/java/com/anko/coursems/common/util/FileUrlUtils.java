@@ -1,4 +1,4 @@
-package com.anko.coursems.common.utils;
+package com.anko.coursems.common.util;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

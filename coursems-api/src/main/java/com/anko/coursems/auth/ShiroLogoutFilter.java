@@ -1,16 +1,12 @@
 package com.anko.coursems.auth;
 
 import com.anko.coursems.common.result.Result;
-import com.anko.coursems.common.utils.ResultUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.PrincipalCollection;
+import com.anko.coursems.common.util.ResultUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
-import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**

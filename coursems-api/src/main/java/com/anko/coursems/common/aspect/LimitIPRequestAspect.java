@@ -2,7 +2,7 @@ package com.anko.coursems.common.aspect;
 
 import com.anko.coursems.common.annotation.LimitIPRequest;
 import com.anko.coursems.common.exception.LimitIPRequestException;
-import com.anko.coursems.common.utils.IpUtils;
+import com.anko.coursems.common.util.IpUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;

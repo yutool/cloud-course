@@ -2,7 +2,7 @@ package com.anko.coursems.service;
 
 import com.anko.coursems.core.IService;
 import com.anko.coursems.entity.Course;
-import com.anko.coursems.model.CourseDto;
+import com.anko.coursems.model.CourseDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface CourseService extends IService<Course> {
      * 获取课程详情 包括课程里的资源等
      * @param id 课程号
      */
-    CourseDto getCourseDetail(String id);
+    CourseDTO getCourseDetail(String id);
 
     /**
      * 按班号搜索课程

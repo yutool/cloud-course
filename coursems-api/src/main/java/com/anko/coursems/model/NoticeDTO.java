@@ -9,7 +9,7 @@ import org.springframework.beans.BeanUtils;
 import java.util.Date;
 
 @Data
-public class NoticeDto {
+public class NoticeDTO {
     private String noticeId;
 
     private String content;
@@ -29,16 +29,16 @@ public class NoticeDto {
         return notice;
     }
 
-    public NoticeDto convertFor(Notice notice){
+    public NoticeDTO convertFor(Notice notice){
         NoticeConverter noticeConverter = new NoticeConverter();
-        NoticeDto noticeDto = noticeConverter.reverse().convert(notice);
+        NoticeDTO noticeDto = noticeConverter.reverse().convert(notice);
         return noticeDto;
     }
 
 
-    private static class NoticeConverter extends Converter<NoticeDto, Notice> {
+    private static class NoticeConverter extends Converter<NoticeDTO, Notice> {
         @Override
-        protected Notice doForward(NoticeDto noticeDto) {
+        protected Notice doForward(NoticeDTO noticeDto) {
             Notice notice = new Notice();
             // 使用BeanCopier也可以
             BeanUtils.copyProperties(noticeDto, notice);
@@ -46,8 +46,8 @@ public class NoticeDto {
         }
 
         @Override
-        protected NoticeDto doBackward(Notice notice) {
-            NoticeDto noticeDto = new NoticeDto();
+        protected NoticeDTO doBackward(Notice notice) {
+            NoticeDTO noticeDto = new NoticeDTO();
             BeanUtils.copyProperties(notice, noticeDto);
             return noticeDto;
         }

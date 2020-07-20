@@ -1,8 +1,33 @@
 <template>
   <div class="shadow p-3 rounded mb-5">
     <div class="clearfix p-2">
-      <el-switch v-model="unread" active-text="只看未读"></el-switch>
-      <el-button v-if="isTeacher" type="primary" class="float-right btn-flat" @click="dialogVisible=true">发布资源</el-button>
+      <el-row>
+        <el-col :md="12" class="mb-2">
+          <div class="upload-btn">
+            <img src="@/assets/res-file.png" alt="...">
+            <a href="javascript:;" @click="dialogVisible=true">
+              发布资源
+            </a>
+          </div>
+          <div class="upload-btn">
+            <img src="@/assets/res-link.png" alt="...">
+            <a href="javascript:;">
+              网页链接
+            </a>
+          </div>
+          <div class="upload-btn">
+            <img src="@/assets/res-import.png" alt="...">
+            <a href="javascript:;">
+              资源库导入
+            </a>
+          </div>
+        </el-col>
+        <el-col :md="12">
+          <el-input placeholder="根据资源名搜索">
+            <el-button slot="append" icon="el-icon-search"></el-button>
+          </el-input>
+        </el-col>
+      </el-row>
     </div>
     <!-- 暂无资源 -->
     <div v-if="!resources.length" class="text-center p-5">
@@ -57,7 +82,6 @@ export default {
     ResourceList
   },
   data: () => ({
-    unread: false,
     dialogVisible: false,
     fileList: [],
     file: null,
@@ -120,12 +144,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .res-name {
-    font-size: 15px;
-    padding: 5px 0;
-  }
-  .res-describe {
+.upload-btn {
+  display: inline-block;
+  margin-right: 15px;
+  a {
+    text-decoration: none;
+    color: #333;
     font-size: 14px;
-    padding: 5px 0;
+    line-height: 20px;
   }
+}
+.res-name {
+  font-size: 15px;
+  padding: 5px 0;
+}
+.res-describe {
+  font-size: 14px;
+  padding: 5px 0;
+}
 </style>

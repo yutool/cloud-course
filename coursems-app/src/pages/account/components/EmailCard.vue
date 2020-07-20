@@ -3,7 +3,7 @@
     <el-row class="pb-4">
       <el-col :md="5" :sm="2">&emsp;</el-col>
       <el-col :md="3" :sm="6" :xs="24" class="text-center">
-        <img src="@/assets/1.jpeg" class="wpx-90 rounded-circle" alt="...">
+        <img src="@/assets/icon_mail.png" class="wpx-90 rounded-circle" alt="...">
       </el-col>
       <el-col :md="13 " :sm="16" :xs="24" class="text-center pt-2">
         <a href="javascript:void(0);" class="pointer" @click="enEmail = !enEmail">关联邮箱：{{userInfo.email}}</a>

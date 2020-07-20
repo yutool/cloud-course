@@ -2,7 +2,7 @@ package com.anko.coursems.auth;
 
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.common.result.ResultCode;
-import com.anko.coursems.common.utils.ResultUtils;
+import com.anko.coursems.common.util.ResultUtils;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
 import javax.servlet.ServletRequest;

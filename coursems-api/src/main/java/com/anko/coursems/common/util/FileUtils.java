@@ -1,4 +1,4 @@
-package com.anko.coursems.common.utils;
+package com.anko.coursems.common.util;
 
 import com.anko.coursems.common.exception.FileException;
 import lombok.extern.slf4j.Slf4j;

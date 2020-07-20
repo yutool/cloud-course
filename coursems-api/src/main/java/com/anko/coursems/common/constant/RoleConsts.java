@@ -1,6 +1,6 @@
 package com.anko.coursems.common.constant;
 
-public class Role {
+public class RoleConsts {
 
     public static final String ROLE_ADMIN = "admin";
 

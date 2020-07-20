@@ -2,13 +2,13 @@ package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.ResultCode;
-import com.anko.coursems.common.utils.UserUtils;
+import com.anko.coursems.common.util.UserUtils;
 import com.anko.coursems.core.BaseController;
 import com.anko.coursems.entity.User;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.LoginForm;
 import com.anko.coursems.model.RegisterForm;
-import com.anko.coursems.model.UserDto;
+import com.anko.coursems.model.UserDTO;
 import com.anko.coursems.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -59,7 +59,7 @@ public class AccountController extends BaseController {
             subject.login(token);
             User currentUser = userService.findUserByAccount(loginForm.getAccount());
             UserUtils.setCurrentUser(currentUser);
-            r.setResultCode(ResultCode.SUCCESS).setData(UserDto.builder().build().convertFor(currentUser));
+            r.setResultCode(ResultCode.SUCCESS).setData(UserDTO.builder().build().convertFor(currentUser));
         } catch (UnknownAccountException e) {
             r.setResultCode(ResultCode.USER_NOT_EXIST);
         } catch (LockedAccountException e) {
@@ -81,7 +81,7 @@ public class AccountController extends BaseController {
             return Result.error(ResultCode.VERIFY_CODE_ERROR);
         }
         User user = userService.register(form.convertToUser());
-        return Result.success(UserDto.builder().build().convertFor(user));
+        return Result.success(UserDTO.builder().build().convertFor(user));
     }
 
     @ApiOperation(value = "忘记密码")

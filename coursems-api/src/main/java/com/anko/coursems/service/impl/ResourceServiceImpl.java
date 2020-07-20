@@ -1,7 +1,7 @@
 package com.anko.coursems.service.impl;
 
-import com.anko.coursems.common.utils.FileContentTypeUtils;
-import com.anko.coursems.common.utils.FileUtils;
+import com.anko.coursems.common.util.FileContentTypeUtils;
+import com.anko.coursems.common.util.FileUtils;
 import com.anko.coursems.core.BaseService;
 import com.anko.coursems.dao.ResourceMapper;
 import com.anko.coursems.entity.Resource;

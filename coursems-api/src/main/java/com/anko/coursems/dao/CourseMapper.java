@@ -2,7 +2,7 @@ package com.anko.coursems.dao;
 
 import com.anko.coursems.core.BaseMapper;
 import com.anko.coursems.entity.Course;
-import com.anko.coursems.model.CourseDto;
+import com.anko.coursems.model.CourseDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface CourseMapper extends BaseMapper<Course> {
 
     List<Course> createList(String userId);
 
-    CourseDto getCourseDetail(String clazzId);
+    CourseDTO getCourseDetail(String clazzId);
 
 
 //    @Select("select * from t_course" +

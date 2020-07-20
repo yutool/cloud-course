@@ -2,9 +2,8 @@ package com.anko.coursems.common.aspect;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.constant.LogType;
-import com.anko.coursems.common.utils.IpUtils;
-import com.anko.coursems.common.utils.JsonUtils;
-import com.anko.coursems.common.utils.UserUtils;
+import com.anko.coursems.common.util.IpUtils;
+import com.anko.coursems.common.util.UserUtils;
 import com.anko.coursems.dao.LogMapper;
 import com.anko.coursems.entity.Log;
 import com.anko.coursems.entity.User;

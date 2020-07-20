@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Data
 @Builder
-public class UserDto {
+public class UserDTO {
     private String userId;
 
     private String userName;
@@ -45,16 +45,16 @@ public class UserDto {
         return user;
     }
 
-    public UserDto convertFor(User user){
+    public UserDTO convertFor(User user){
         UserConverter userConverter = new UserConverter();
-        UserDto userDto = userConverter.reverse().convert(user);
+        UserDTO userDto = userConverter.reverse().convert(user);
         return userDto;
     }
 
 
-    private static class UserConverter extends Converter<UserDto, User> {
+    private static class UserConverter extends Converter<UserDTO, User> {
         @Override
-        protected User doForward(UserDto userDto) {
+        protected User doForward(UserDTO userDto) {
             User user = new User();
             // 使用BeanCopier也可以
             BeanUtils.copyProperties(userDto, user);
@@ -62,8 +62,8 @@ public class UserDto {
         }
 
         @Override
-        protected UserDto doBackward(User user) {
-            UserDto userDto = UserDto.builder().build();
+        protected UserDTO doBackward(User user) {
+            UserDTO userDto = UserDTO.builder().build();
             BeanUtils.copyProperties(user, userDto);
             return userDto;
         }

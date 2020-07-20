@@ -2,7 +2,7 @@ package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.constant.LogType;
-import com.anko.coursems.common.utils.FileUtils;
+import com.anko.coursems.common.util.FileUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

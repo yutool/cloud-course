@@ -1,6 +1,6 @@
 package com.anko.coursems.model;
 
-import com.anko.coursems.common.utils.FileUrlUtils;
+import com.anko.coursems.common.util.FileUrlUtils;
 import com.anko.coursems.entity.Resource;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.base.Converter;
@@ -10,7 +10,7 @@ import org.springframework.beans.BeanUtils;
 import java.util.Date;
 
 @Data
-public class ResourceDto {
+public class ResourceDTO {
     private String resId;
 
     private String resName;
@@ -37,16 +37,16 @@ public class ResourceDto {
         return resource;
     }
 
-    public ResourceDto convertFor(Resource resource){
+    public ResourceDTO convertFor(Resource resource){
         ResourceConverter converter = new ResourceConverter();
-        ResourceDto resourceDto = converter.reverse().convert(resource);
+        ResourceDTO resourceDto = converter.reverse().convert(resource);
         return resourceDto;
     }
 
 
-    private static class ResourceConverter extends Converter<ResourceDto, Resource> {
+    private static class ResourceConverter extends Converter<ResourceDTO, Resource> {
         @Override
-        protected Resource doForward(ResourceDto resourceDto) {
+        protected Resource doForward(ResourceDTO resourceDto) {
             Resource resource = new Resource();
             // 使用BeanCopier也可以
             BeanUtils.copyProperties(resourceDto, resource);
@@ -54,8 +54,8 @@ public class ResourceDto {
         }
 
         @Override
-        protected ResourceDto doBackward(Resource resource) {
-            ResourceDto resourceDto = new ResourceDto();
+        protected ResourceDTO doBackward(Resource resource) {
+            ResourceDTO resourceDto = new ResourceDTO();
             BeanUtils.copyProperties(resource, resourceDto);
             return resourceDto;
         }

@@ -2,12 +2,12 @@ package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.ResultCode;
-import com.anko.coursems.common.utils.UserUtils;
+import com.anko.coursems.common.util.UserUtils;
 import com.anko.coursems.core.BaseController;
 import com.anko.coursems.entity.User;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.RegisterForm;
-import com.anko.coursems.model.UserDto;
+import com.anko.coursems.model.UserDTO;
 import com.anko.coursems.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +31,7 @@ public class UserController extends BaseController {
     @GetMapping("/current")
     public Result getCurrentUser() {
         User user = UserUtils.getCurrentUser();
-        return Result.success(UserDto.builder().build().convertFor(user));
+        return Result.success(UserDTO.builder().build().convertFor(user));
     }
 
     @RequiresRoles(value={"user","admin"},logical= Logical.OR)
@@ -44,7 +44,7 @@ public class UserController extends BaseController {
         }
         User user = userService.updateUserInfo(form);
         UserUtils.setCurrentUser(user);
-        return Result.success(UserDto.builder().build().convertFor(user));
+        return Result.success(UserDTO.builder().build().convertFor(user));
     }
 
     @RequiresRoles(value={"user","admin"},logical=Logical.OR)
@@ -57,7 +57,7 @@ public class UserController extends BaseController {
 //        }
         User user = userService.updateAvatar(id, file);
         UserUtils.setCurrentUser(user);
-        return Result.success(UserDto.builder().build().convertFor(user));
+        return Result.success(UserDTO.builder().build().convertFor(user));
     }
 
     @RequiresRoles(value={"user","admin"},logical=Logical.OR)
@@ -71,7 +71,7 @@ public class UserController extends BaseController {
         }
         User user = userService.bindEmail(form.convertToUser());
         UserUtils.setCurrentUser(user);
-        return Result.success(UserDto.builder().build().convertFor(user));
+        return Result.success(UserDTO.builder().build().convertFor(user));
     }
 
     @RequiresRoles(value={"user","admin"},logical=Logical.OR)
@@ -84,7 +84,7 @@ public class UserController extends BaseController {
         }
         User user = userService.bindPhone(form);
         UserUtils.setCurrentUser(user);
-        return Result.success(UserDto.builder().build().convertFor(user));
+        return Result.success(UserDTO.builder().build().convertFor(user));
     }
 
     @RequiresRoles(value={"user","admin"},logical=Logical.OR)

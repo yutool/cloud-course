@@ -1,42 +1,33 @@
 <template>
   <div class="shadow p-3 rounded mb-5">
-    <div class="clearfix p-2">
-      <el-switch v-model="unread" active-text="只看未读"></el-switch>
-      <el-button v-if="isTeacher" type="primary" class="float-right btn-flat" @click="dialogVisible=true">发布通知
-      </el-button>
-    </div>
-    <el-row :gutter="20">
-      <!-- 班级通知 -->
-      <el-col :md="16" :sm="12" :xs="24">
-        <div v-if="!notices.length" class="text-center pt-5">
-          暂无班级通知
+    <!-- 内容 -->
+    <el-row>
+      <el-col :md="6" :xs="24" class="notice-nav">
+        <div class="nav-item" :class="{active: navIndex==0}" @click="navIndex = 0">
+          <div class="nav-icon icon-inform"></div>
+          <div class="nav-title">班课通知</div>
+          <div class="nav-last-msg">暂无消息</div>
         </div>
-        <notice-list v-else :notices="notices" />
+        <div class="nav-item" :class="{active: navIndex==1}" @click="navIndex = 1">
+          <div class="nav-icon icon-advices"></div>
+          <div class="nav-title">系统通知</div>
+          <div class="nav-last-msg">暂无消息</div>
+        </div>
       </el-col>
-      <!-- 系统通知 -->
-      <el-col :md="8" :sm="12" :xs="0">
-        <el-card class="box-card mt-2" :body-style="{padding:'0px'}">
-          <div class="border-bottom p-1 text-center">
-            <span>班级公告</span>
+      <el-col :md="18" :xs="24">
+        <div v-if="navIndex == 0">
+          <div class="clearfix">
+            <el-button v-if="isTeacher" type="primary" class="float-right btn-flat mr-3" @click="dialogVisible=true">发布通知
+            </el-button>
           </div>
-          <div class="card-body ">
-            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi nam porro nobis dolorum facilis hic repellendus architecto, deserunt, asperiores voluptates, odio minima dolore corrupti natus. Quam consequuntur deserunt vero sint.</span>
-            <div class="hpx-10"></div>
-            <small>2019-09-09 14:01:08</small>
+          <notice-list v-if="notices.length" :notices="notices" />
+          <div v-else class="text-center pt-5">
+            暂无班级通知
           </div>
-        </el-card>
-        <el-card class="box-card mt-2" :body-style="{padding:'0px'}">
-          <div class="border-bottom p-1 text-center">
-            <span>系统消息</span>
-          </div>
-          <div class="card-body ">
-            <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi nam porro nobis dolorum facilis hic repellendus architecto, deserunt, asperiores voluptates, odio minima dolore corrupti natus. Quam consequuntur deserunt vero sint.</span>
-            <div class="hpx-10"></div>
-            <small>2019-09-09 14:01:08</small>
-          </div>
-        </el-card>
+        </div>
       </el-col>
     </el-row>
+
     <!-- 新建通知弹窗 -->
     <auto-dialog :title="'新建通知'" :visible="dialogVisible" :width="600" @close="closeDialog" class="m-dialog">
       <el-form>
@@ -60,7 +51,7 @@ export default {
     NoticeList
   },
   data: () => ({
-    unread: false,
+    navIndex: 0,
     dialogVisible: false,
     content: ''
   }),
@@ -92,6 +83,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.notice-nav {
+  border-right: 1px solid #E1E1E1;
+  .nav-item {
+    padding: 20px;
+    cursor: pointer;
+  }
+  .nav-icon {
+    position: relative;
+    float: left;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  .icon-inform {
+    background-image: url("../../assets/icon_inform.png")
+  }
+  .icon-advices {
+    background-image: url("../../assets/icon_advices.png")
+  }
+  .nav-title {
+    font-size: 14px;
+    color: #333;
+  }
+  .nav-last-msg {
+    font-size: 14px;
+    color: #666;
+  }
+  .active {
+    border-left: 2px solid #0Bd;
+  }
+}
 .dialog-footer {
   padding: 10px 0;
   text-align: right;

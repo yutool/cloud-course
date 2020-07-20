@@ -1,4 +1,4 @@
-package com.anko.coursems.common.utils;
+package com.anko.coursems.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

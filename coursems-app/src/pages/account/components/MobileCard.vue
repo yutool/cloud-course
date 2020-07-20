@@ -3,7 +3,7 @@
     <el-row class="pb-4">
       <el-col :md="5" :sm="2">&emsp;</el-col>
       <el-col :md="3" :sm="6" :xs="24" class="text-center">
-        <img src="@/assets/1.jpeg" class="wpx-90 rounded-circle" alt="...">
+        <img src="@/assets/icon_phone.png" class="wpx-90 rounded-circle" alt="...">
       </el-col>
       <el-col :md="13" :sm="16" :xs="24" class="text-center pt-2">
         <a href="javascript:void(0);" class="pointer" @click="enPhone = !enPhone">关联手机：{{userInfo.phoneNum || '未绑定'}}</a>

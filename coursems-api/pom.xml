@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.anko</groupId>
-    <artifactId>coursems</artifactId>
+    <artifactId>coursems-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>coursems</name>
     <description>Demo project for Spring Boot</description>

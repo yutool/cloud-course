@@ -1,6 +1,6 @@
 package com.anko.coursems.controller;
 
-import com.anko.coursems.common.utils.JsonUtils;
+import com.anko.coursems.common.util.JsonUtils;
 import com.anko.coursems.model.LoginForm;
 import com.anko.coursems.model.RegisterForm;
 import org.apache.shiro.util.ThreadContext;

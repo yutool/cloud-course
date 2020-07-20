@@ -3,10 +3,10 @@ package com.anko.coursems.controller;
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.common.result.ResultCode;
-import com.anko.coursems.common.utils.JsonUtils;
+import com.anko.coursems.common.util.JsonUtils;
 import com.anko.coursems.core.BaseController;
 import com.anko.coursems.entity.Resource;
-import com.anko.coursems.model.ResourceDto;
+import com.anko.coursems.model.ResourceDTO;
 import com.anko.coursems.service.ResourceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +30,7 @@ public class ResourceController extends BaseController {
             return Result.error(ResultCode.PARAM_IS_INVALID);
         }
         resource =  resourceService.addResource(resource, file);
-        return Result.success(new ResourceDto().convertFor(resource));
+        return Result.success(new ResourceDTO().convertFor(resource));
     }
 
     @ApiOperation(value = "删除资源")

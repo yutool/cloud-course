@@ -1,7 +1,7 @@
 package com.anko.coursems.controller;
 
-import com.anko.coursems.common.utils.JsonUtils;
-import com.anko.coursems.model.CourseDto;
+import com.anko.coursems.common.util.JsonUtils;
+import com.anko.coursems.model.CourseDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +37,7 @@ public class CourseControllerTests {
 
     @Test
     public void testSuccess() throws Exception {
-        CourseDto course = new CourseDto();   // new 的类
+        CourseDTO course = new CourseDTO();   // new 的类
         course.setTeacherId("0b2GIyTjDBLT7mJX");
         course.setClazzName("计科1班");
         course.setCourseName("软件测试");// 需要的参数
@@ -59,7 +59,7 @@ public class CourseControllerTests {
 
     @Test
     public void testError() throws Exception {
-        CourseDto course = new CourseDto();   // new 的类
+        CourseDTO course = new CourseDTO();   // new 的类
         course.setTeacherId("");
         course.setClazzName("");
         course.setCourseName("");// 需要的参数
