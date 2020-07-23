@@ -1,8 +1,9 @@
 <template>
   <div class="shadow p-3 rounded mb-5">
+    <!-- 工具栏 -->
     <div class="clearfix p-2">
-      <el-row>
-        <el-col :md="12" class="mb-2">
+      <div class="row">
+        <div v-if="isTeacher" class="col-md-6 mb-2">
           <div class="upload-btn">
             <img src="@/assets/res-file.png" alt="...">
             <a href="javascript:;" @click="dialogVisible=true">
@@ -21,19 +22,21 @@
               资源库导入
             </a>
           </div>
-        </el-col>
-        <el-col :md="12">
-          <el-input placeholder="根据资源名搜索">
+        </div>
+        <div v-else class="col-md-6 mb-2">
+        </div>
+        <div class="col-md-6">
+          <el-input v-model="filterName" placeholder="根据资源名搜索">
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
-        </el-col>
-      </el-row>
+        </div>
+      </div>
     </div>
-    <!-- 暂无资源 -->
+    <!-- 资源列表 -->
     <div v-if="!resources.length" class="text-center p-5">
       暂未上传资源
     </div>
-    <resource-list v-else :resources="resources" />
+    <resource-list v-else :resources="resources" :filterName="filterName" />
     <!-- 新建资源弹窗 -->
     <auto-dialog :title="'上传资源'" :visible="dialogVisible" :width="600" @close="closeDialog" >
       <el-form :model="resourceForm" :rules="rules" ref="resourceForm" label-width="80px">
@@ -83,6 +86,7 @@ export default {
   },
   data: () => ({
     dialogVisible: false,
+    filterName: '',
     fileList: [],
     file: null,
     uploadType: '本地上传',

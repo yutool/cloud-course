@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-for="r in resources" :key="r.resId" class="res-card clearfix">
+    <div v-for="r in resources.filter(item => {
+                  return filterName === '' || item.resName.indexOf(filterName) !== -1
+                })" :key="r.resId" class="res-card clearfix">
       <img src="@/assets/res-default.png" class="wpx-60 float-left" alt="">
         <div class="plpx-75">
           <div class="res-name">
@@ -25,7 +27,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'ResourceList',
-  props: ['resources'],
+  props: ['resources', 'filterName'],
   data: () => ({
 
   }),

@@ -20,7 +20,8 @@
           <el-form-item label="学期区间" prop="term">
             <el-select v-model="courseForm.term" class="w-100">
               <el-option label="2019-2020" value="2019-2020"></el-option>
-              <el-option label="2019-2021" value="2019-2021"></el-option>
+              <el-option label="2020-2021" value="2020-2021"></el-option>
+              <el-option label="2021-2022" value="2021-2022"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="班级说明" prop="synopsis">
@@ -48,8 +49,7 @@ export default {
         clazzName: '',
         courseName: '',
         term: '',
-        synopsis: '',
-        teacherId: ''
+        synopsis: ''
       },
       rules: {
         clazzName: [
@@ -76,6 +76,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) { // 提交表单
           this.courseForm.teacherId = this.userInfo.userId
+          this.courseForm.teacherName = this.userInfo.userName
           this.$log.info('create/form', this.courseForm)
           this.$store.dispatch('course/createCourse', this.courseForm)
         } else {

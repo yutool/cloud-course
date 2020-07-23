@@ -1,12 +1,15 @@
 <template>
   <div class="shadow p-3 rounded mb-5">
-    <!-- 内容 -->
     <el-row>
+      <!-- 导航栏 -->
       <el-col :md="6" :xs="24" class="notice-nav">
         <div class="nav-item" :class="{active: navIndex==0}" @click="navIndex = 0">
           <div class="nav-icon icon-inform"></div>
           <div class="nav-title">班课通知</div>
-          <div class="nav-last-msg">暂无消息</div>
+          <div class="nav-last-msg">
+            <span v-if="notices.length">{{notices[0].content}}</span>
+            <span v-else>暂无消息</span>
+          </div>
         </div>
         <div class="nav-item" :class="{active: navIndex==1}" @click="navIndex = 1">
           <div class="nav-icon icon-advices"></div>
@@ -14,6 +17,7 @@
           <div class="nav-last-msg">暂无消息</div>
         </div>
       </el-col>
+      <!-- 消息 -->
       <el-col :md="18" :xs="24">
         <div v-if="navIndex == 0">
           <div class="clearfix">
@@ -23,6 +27,11 @@
           <notice-list v-if="notices.length" :notices="notices" />
           <div v-else class="text-center pt-5">
             暂无班级通知
+          </div>
+        </div>
+        <div v-if="navIndex == 1">
+          <div class="text-center pt-5">
+            暂无系统通知
           </div>
         </div>
       </el-col>
@@ -109,6 +118,8 @@ export default {
   .nav-last-msg {
     font-size: 14px;
     color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .active {
     border-left: 2px solid #0Bd;

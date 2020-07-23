@@ -27,9 +27,9 @@ public class MemberController extends BaseController {
 
     @ApiOperation(value = "退出课程/删除成员")
     @LogAnnotation(operation = "退出课程/删除成员")
-    @DeleteMapping
-    public Result deleteMember(@RequestBody MemberDTO form) {
-        return handleResult(memberService.delete(form.convertToMember()));
+    @DeleteMapping("/{id}")
+    public Result deleteMember(@PathVariable Integer id) {
+        return handleResult(memberService.deleteById(id));
     }
 
     @ApiOperation(value = "结课评分")

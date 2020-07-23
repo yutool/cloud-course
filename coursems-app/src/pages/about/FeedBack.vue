@@ -3,7 +3,7 @@
     <h1 class="display-4">敬请期待...</h1>
     <p class="lead">更多有趣的功能正在开发中哦！！！</p>
     <hr class="my-4">
-    <p>程序员小哥哥正在加班，如果你有什么好建议，请点击反馈。</p>
+    <p>如果你有什么好建议，请点击反馈。</p>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" @click="dialogFormVisible=true">
       点击反馈

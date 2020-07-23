@@ -11,7 +11,7 @@
         </router-link>
       </el-col>
       <el-col :md="12" :sm="15" :xs="24">
-        <el-input placeholder="输入课程名帅选" prefix-icon="el-icon-search"
+        <el-input placeholder="输入课程名筛选" prefix-icon="el-icon-search"
         v-model.trim="serachName" clearable></el-input>
       </el-col>
     </el-row>

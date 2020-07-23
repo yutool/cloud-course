@@ -5,8 +5,8 @@
       <div class="col-md-2">
          <el-tabs :tab-position="tabPosition" :stretch="true" v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="我的信息" name="/account/information"></el-tab-pane>
-          <el-tab-pane label="学习历程" name="/account/experience"></el-tab-pane>
           <el-tab-pane label="用户安全" name="/account/security"></el-tab-pane>
+          <el-tab-pane label="学习历程" name="/account/experience"></el-tab-pane>
         </el-tabs>
       </div>
       <!-- 内容，子路由 -->

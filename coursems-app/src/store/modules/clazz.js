@@ -72,8 +72,9 @@ const actions = {
   },
   // delete selected member
   deleteMember ({ commit, state }, member) {
+    const tmp = state.members.filter(item => item.userId === member.userId)[0]
     return new Promise((resolve, reject) => {
-      deleteMember(member).then(res => {
+      deleteMember(tmp.id).then(res => {
         for (let i = 0; i < state.members.length; i++) {
           if (state.members[i] === member) {
             commit('REMOVE_MEMBER', i)

@@ -1,17 +1,25 @@
 <template>
   <div class="container">
+    <el-alert
+      title="系统升级通知"
+      type="warning"
+      description="项目刚进行重构，尚未测试，可能存在些许BUG"
+      show-icon>
+    </el-alert>
+    <!-- 项目介绍 -->
     <el-row class="pb-5">
       <el-col :md="7" :sm="10" class="text-center">
           <img src="@/assets/computing-on-a-chart.png" width="200">
         </el-col>
       <el-col :md="17" :sm="14" class="pt-5">
-        <h2 class="pl-3">课程管理系统</h2>
-        <h6 class="pl-3">Course Management System</h6>
+        <h2 class="pl-3">云班课系统</h2>
+        <h6 class="pl-3">Cloud Course System</h6>
         <p class="text-muted">
-          &emsp;课程管理系统就是为课程建立网站，教师可以在其上发布课程大纲、教学计划、以及每堂课的教学内容、布置作业、批改作业、公布学生成绩等。课程管理系统往往还为课程提供一些通讯工具，如讨论组、聊天室,支持这门课程师生之间的交流。
+          &emsp;云班课系统就是为课程建立网站，教师可以在其上发布课程大纲、教学计划、教学资源、以及每堂课的教学内容、布置作业、批改作业、公布学生成绩等。云班课系统往往还为课程提供一些通讯工具，如讨论组、聊天室，支持这门课程师生之间的交流。
         </p>
       </el-col>
     </el-row>
+    <!-- 资料卡片 -->
     <el-row :gutter="30" class="pb-5">
       <el-col :md="8" :sm="12" class="pb-2">
         <el-card class="box-card text-center pt-3">
@@ -101,8 +109,9 @@
         </el-card>
       </el-col>
     </el-row>
+    <!-- 注册 -->
     <div class="text-center pb-5">
-      <h5 class="pb-3">Get started with here and build an era of cloud courses</h5>
+      <h5 class="pb-3">Get started with here and build an era of cloud course</h5>
       <router-link v-if="!this.$store.getters.getUserId" to="/register" class="btn btn-primary">Sign Up Free</router-link>
     </div>
   </div>

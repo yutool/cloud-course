@@ -8,5 +8,6 @@
     <select id="getNoticesByCourseId" parameterType="string" resultType="notice">
         select * from t_notice
         where course_id = #{courseId}
+        order by release_time desc
     </select>
 </mapper>

@@ -15,11 +15,10 @@ export function addMember (member) {
   })
 }
 
-export function deleteMember (member) {
+export function deleteMember (id) {
   return request({
-    url: 'v1/members',
-    method: 'delete',
-    data: JSON.stringify(member)
+    url: `v1/members/${id}`,
+    method: 'delete'
   })
 }
 
