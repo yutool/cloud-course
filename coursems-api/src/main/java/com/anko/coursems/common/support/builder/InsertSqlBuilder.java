@@ -1,6 +1,6 @@
-package com.anko.coursems.core.proxy;
+package com.anko.coursems.common.support.builder;
 
-import com.anko.coursems.core.BaseMapper;
+import com.anko.coursems.common.support.BaseMapper;
 import com.google.common.base.CaseFormat;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 

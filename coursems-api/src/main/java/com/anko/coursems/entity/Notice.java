@@ -1,5 +1,6 @@
 package com.anko.coursems.entity;
 
+import com.anko.coursems.common.support.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -9,9 +10,14 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author ankoye@qq.com
+ */
 @Data
 @Accessors(chain = true)
-public class Notice implements Serializable {
+public class Notice extends BaseEntity {
+//    private static final long serialVersionUID = 3044656695007853904L;
+
     private String noticeId;
 
     @Length(min=1, max=100, message = "消息内容长度在1-100范围内")

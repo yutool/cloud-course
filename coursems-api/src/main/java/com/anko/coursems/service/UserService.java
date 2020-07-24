@@ -1,6 +1,5 @@
 package com.anko.coursems.service;
 
-import com.anko.coursems.core.IService;
 import com.anko.coursems.entity.User;
 import com.anko.coursems.model.LoginForm;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,9 +1,9 @@
-package com.anko.coursems.core;
+package com.anko.coursems.common.support;
 
-import com.anko.coursems.core.proxy.DeleteSqlBuilder;
-import com.anko.coursems.core.proxy.InsertSqlBuilder;
-import com.anko.coursems.core.proxy.SelectSqlBuilder;
-import com.anko.coursems.core.proxy.UpdateSqlBuilder;
+import com.anko.coursems.common.support.builder.DeleteSqlBuilder;
+import com.anko.coursems.common.support.builder.InsertSqlBuilder;
+import com.anko.coursems.common.support.builder.SelectSqlBuilder;
+import com.anko.coursems.common.support.builder.UpdateSqlBuilder;
 import org.apache.ibatis.annotations.*;
 
 import java.lang.annotation.ElementType;
@@ -24,6 +24,9 @@ public interface BaseMapper<T> {
     @SelectProvider(type = SelectSqlBuilder.class, method= "buildSelectById")
     T selectById(Object id);
 
+    @SelectProvider(type = SelectSqlBuilder.class, method= "buildSelectByExId")
+    T selectByExId(Object exId);
+
     @SelectProvider(type = SelectSqlBuilder.class, method= "buildSelectList")
     T selectOne(T t);
 
@@ -39,8 +42,14 @@ public interface BaseMapper<T> {
     @UpdateProvider(type = UpdateSqlBuilder.class, method = "buildUpdateById")
     int updateById(T t);
 
+    @UpdateProvider(type = UpdateSqlBuilder.class, method = "buildUpdateByExId")
+    int updateByExId(T t);
+
     @DeleteProvider(type = DeleteSqlBuilder.class, method = "buildDelete")
     int delete(T t);
+
+    @DeleteProvider(type = DeleteSqlBuilder.class, method = "buildDeleteByExId")
+    int deleteByExId(Object exId);
 
     @DeleteProvider(type = DeleteSqlBuilder.class, method = "buildDeleteById")
     int deleteById(Object id);
@@ -55,6 +64,6 @@ public interface BaseMapper<T> {
     @Target(ElementType.TYPE)
     @interface Meta {
         String table();
-        String id();
+        String exId() default "";
     }
 }

@@ -3,7 +3,7 @@ package com.anko.coursems.controller;
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.constant.LogType;
 import com.anko.coursems.common.util.FileUrlUtils;
-import com.anko.coursems.core.BaseController;
+import com.anko.coursems.common.support.BaseController;
 import com.anko.coursems.entity.Course;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.CourseDTO;
@@ -42,8 +42,8 @@ public class CourseController extends BaseController {
     @ApiOperation(value = "创建课程")
     @LogAnnotation(operation = "创建课程")
     @PostMapping("/courses")
-    public Result createCourse(@RequestBody CourseDTO form) {
-        Course course = courseService.createCourse(form.convertToCourse());
+    public Result createCourse(@RequestBody Course form) {
+        Course course = courseService.createCourse(form);
         return handleResult(new CourseDTO().convertFor(course));
     }
 

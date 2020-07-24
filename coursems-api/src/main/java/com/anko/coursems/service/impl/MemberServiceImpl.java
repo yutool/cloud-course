@@ -1,7 +1,7 @@
 package com.anko.coursems.service.impl;
 
 import com.anko.coursems.common.exception.ServiceException;
-import com.anko.coursems.core.BaseService;
+import com.anko.coursems.common.support.BaseService;
 import com.anko.coursems.dao.MemberMapper;
 import com.anko.coursems.entity.Member;
 import com.anko.coursems.service.MemberService;

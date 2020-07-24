@@ -39,7 +39,7 @@
                   <el-radio label="女"></el-radio>
                 </el-radio-group>
               </el-form-item>
-              <el-form-item label="出生日期" prop="birthday" label-width="80px">
+              <el-form-item label="出生日期" prop="birthday" label-width="80px" value-format="yyyy-MM-dd">
                 <el-date-picker type="date" placeholder="选择日期" v-model="userInfo.birthday" style="width: 100%;"></el-date-picker>
               </el-form-item>
               <el-form-item label="个性签名" prop="signature" label-width="80px">

@@ -2,7 +2,7 @@ package com.anko.coursems.service.impl;
 
 import com.anko.coursems.common.util.FileContentTypeUtils;
 import com.anko.coursems.common.util.FileUtils;
-import com.anko.coursems.core.BaseService;
+import com.anko.coursems.common.support.BaseService;
 import com.anko.coursems.dao.ResourceMapper;
 import com.anko.coursems.entity.Resource;
 import com.anko.coursems.service.ResourceService;
@@ -31,8 +31,4 @@ public class ResourceServiceImpl extends BaseService<Resource> implements Resour
         return resource;
     }
 
-    @Override
-    public int deleteResource(String resId) {
-        return resourceMapper.deleteById(resId);
-    }
 }

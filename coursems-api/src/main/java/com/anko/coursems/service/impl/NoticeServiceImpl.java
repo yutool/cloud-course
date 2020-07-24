@@ -1,6 +1,6 @@
 package com.anko.coursems.service.impl;
 
-import com.anko.coursems.core.BaseService;
+import com.anko.coursems.common.support.BaseService;
 import com.anko.coursems.dao.NoticeMapper;
 import com.anko.coursems.entity.Notice;
 import com.anko.coursems.service.NoticeService;
@@ -22,10 +22,4 @@ public class NoticeServiceImpl extends BaseService<Notice> implements NoticeServ
         noticeMapper.insert(notice);
         return notice;
     }
-
-    @Override
-    public int deleteNotice(String id) {
-        return noticeMapper.deleteById(id);
-    }
-
 }

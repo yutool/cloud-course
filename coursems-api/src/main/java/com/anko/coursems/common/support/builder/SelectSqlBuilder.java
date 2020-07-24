@@ -1,7 +1,9 @@
-package com.anko.coursems.core.proxy;
+package com.anko.coursems.common.support.builder;
 
-import com.anko.coursems.core.BaseMapper;
+import com.anko.coursems.common.exception.ServiceException;
+import com.anko.coursems.common.support.BaseMapper;
 import com.google.common.base.CaseFormat;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 import org.apache.ibatis.jdbc.SQL;
 
@@ -18,12 +20,29 @@ public class SelectSqlBuilder {
     public String buildSelectById(ProviderContext context) {
         // 获取接口上的元注解（不是实体）
         final String table = context.getMapperType().getAnnotation(BaseMapper.Meta.class).table();
-        final String id = context.getMapperType().getAnnotation(BaseMapper.Meta.class).id();
 
         return new SQL(){{
             SELECT("*");
             FROM(table);
-            WHERE(id + " = #{id}");
+            WHERE("id = #{id}");
+        }}.toString();
+    }
+
+    /**
+     * 根据扩展ID查找
+     */
+    public String buildSelectByExId(ProviderContext context) {
+        // 获取接口上的元注解（不是实体）
+        final String table = context.getMapperType().getAnnotation(BaseMapper.Meta.class).table();
+        final String exId = context.getMapperType().getAnnotation(BaseMapper.Meta.class).exId();
+        if(StringUtils.isEmpty(exId)) {
+            throw new ServiceException("The extension id cannot be empty");
+        }
+
+        return new SQL(){{
+            SELECT("*");
+            FROM(table);
+            WHERE(exId + " = #{exId}");
         }}.toString();
     }
 

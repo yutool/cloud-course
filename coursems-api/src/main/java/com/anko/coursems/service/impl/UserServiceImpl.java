@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUserInfo(User user) {
-        userMapper.updateById(user);
-        return userMapper.selectById(user.getUserId());
+        userMapper.updateByExId(user);
+        return userMapper.selectByExId(user.getUserId());
     }
 
     @Override
@@ -58,8 +58,8 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUserId(id);
         user.setAvatar(path);
-        userMapper.updateById(user);
-        return userMapper.selectById(id);
+        userMapper.updateByExId(user);
+        return userMapper.selectByExId(id);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("邮箱已被注册");
         }
         userMapper.updateById(user);
-        return userMapper.selectById(user.getUserId());
+        return userMapper.selectByExId(user.getUserId());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("手机号码已被注册");
         }
         userMapper.updateById(user);
-        return userMapper.selectById(user.getUserId());
+        return userMapper.selectByExId(user.getUserId());
     }
 
     @Override

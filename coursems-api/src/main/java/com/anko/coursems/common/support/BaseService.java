@@ -1,6 +1,5 @@
-package com.anko.coursems.core;
+package com.anko.coursems.common.support;
 
-import com.anko.coursems.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -14,8 +13,13 @@ public abstract class BaseService<T> implements IService<T>{
     protected BaseMapper<T> mapper;
 
     @Override
-    public T selectById(Object id) {
+    public T selectById(Long id) {
         return mapper.selectById(id);
+    }
+
+    @Override
+    public T selectByExId(Object exId) {
+        return mapper.selectByExId(exId);
     }
 
     @Override
@@ -39,8 +43,18 @@ public abstract class BaseService<T> implements IService<T>{
     }
 
     @Override
-    public int deleteById(Object id) {
+    public int updateByExId(T t) {
+        return mapper.updateByExId(t);
+    }
+
+    @Override
+    public int deleteById(Long id) {
         return mapper.deleteById(id);
+    }
+
+    @Override
+    public int deleteByExId(Object exId) {
+        return mapper.deleteByExId(exId);
     }
 
     @Override

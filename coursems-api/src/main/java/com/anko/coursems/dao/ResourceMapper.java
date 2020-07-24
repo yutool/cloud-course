@@ -1,14 +1,11 @@
 package com.anko.coursems.dao;
 
-import com.anko.coursems.core.BaseMapper;
+import com.anko.coursems.common.support.BaseMapper;
 import com.anko.coursems.entity.Resource;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@BaseMapper.Meta(table = "t_resource", id = "res_id")
+@BaseMapper.Meta(table = "t_resource", exId = "res_id")
 public interface ResourceMapper extends BaseMapper<Resource> {
 
 //    @Select("delete from t_resource" +

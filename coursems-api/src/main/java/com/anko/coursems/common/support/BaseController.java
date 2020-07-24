@@ -1,4 +1,4 @@
-package com.anko.coursems.core;
+package com.anko.coursems.common.support;
 
 import com.anko.coursems.common.result.Result;
 

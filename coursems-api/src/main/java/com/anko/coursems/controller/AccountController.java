@@ -3,7 +3,7 @@ package com.anko.coursems.controller;
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.ResultCode;
 import com.anko.coursems.common.util.UserUtils;
-import com.anko.coursems.core.BaseController;
+import com.anko.coursems.common.support.BaseController;
 import com.anko.coursems.entity.User;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.LoginForm;

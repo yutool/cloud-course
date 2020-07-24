@@ -2,7 +2,7 @@ package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.constant.LogType;
-import com.anko.coursems.core.BaseController;
+import com.anko.coursems.common.support.BaseController;
 import com.anko.coursems.common.result.Result;
 import com.anko.coursems.model.CourseDTO;
 import com.anko.coursems.service.CourseService;

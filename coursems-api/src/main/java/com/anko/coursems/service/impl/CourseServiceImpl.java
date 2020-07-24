@@ -1,7 +1,7 @@
 package com.anko.coursems.service.impl;
 
 import com.anko.coursems.common.util.FileUtils;
-import com.anko.coursems.core.BaseService;
+import com.anko.coursems.common.support.BaseService;
 import com.anko.coursems.dao.CourseMapper;
 import com.anko.coursems.dao.MemberMapper;
 import com.anko.coursems.dao.NoticeMapper;
@@ -53,11 +53,12 @@ public class CourseServiceImpl extends BaseService<Course> implements CourseServ
 
     @Override
     public Course createCourse(Course course) {
-        course.setCourseId(RandomStringUtils.randomAlphanumeric(20));
+        String cId = RandomStringUtils.randomAlphanumeric(20);
+        course.setCourseId(cId);
         course.setCourseNum(RandomStringUtils.randomNumeric(6));
         course.setCoursePic("public/pic_default.jpeg");
         courseMapper.insert(course);
-        return course;
+        return courseMapper.selectByExId(cId);
     }
 
     @Override
@@ -66,18 +67,18 @@ public class CourseServiceImpl extends BaseService<Course> implements CourseServ
         memberMapper.delete(new Member().setCourseId(id));
         resourceMapper.delete(new Resource().setCourseId(id));
         noticeMapper.delete(new Notice().setCourseId(id));
-        courseMapper.deleteById(id);
+        courseMapper.deleteByExId(id);
         return true;
     }
 
     @Override
     public boolean toggleAppraise(String id) {
-        Course course = courseMapper.selectById(id);
+        Course course = courseMapper.selectByExId(id);
         // 跟新数据库
         Course tmp = new Course();
         tmp.setCourseId(id);
         tmp.setAppraise(!course.getAppraise());
-        courseMapper.updateById(tmp);
+        courseMapper.updateByExId(tmp);
         return tmp.getAppraise();
     }
 

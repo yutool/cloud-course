@@ -2,7 +2,7 @@ package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.Result;
-import com.anko.coursems.core.BaseController;
+import com.anko.coursems.common.support.BaseController;
 import com.anko.coursems.entity.Member;
 import com.anko.coursems.model.MemberDTO;
 import com.anko.coursems.service.MemberService;
@@ -28,7 +28,7 @@ public class MemberController extends BaseController {
     @ApiOperation(value = "退出课程/删除成员")
     @LogAnnotation(operation = "退出课程/删除成员")
     @DeleteMapping("/{id}")
-    public Result deleteMember(@PathVariable Integer id) {
+    public Result deleteMember(@PathVariable Long id) {
         return handleResult(memberService.deleteById(id));
     }
 

@@ -1,14 +1,12 @@
 package com.anko.coursems.dao;
 
-import com.anko.coursems.core.BaseMapper;
+import com.anko.coursems.common.support.BaseMapper;
 import com.anko.coursems.entity.User;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@BaseMapper.Meta(table = "t_user", id = "user_id")
+@BaseMapper.Meta(table = "t_user", exId = "user_id")
 public interface UserMapper extends BaseMapper<User> {
     int updatePassword(User user);
 

@@ -2,7 +2,7 @@ package com.anko.coursems.controller;
 
 import com.anko.coursems.common.annotation.LogAnnotation;
 import com.anko.coursems.common.result.Result;
-import com.anko.coursems.core.BaseController;
+import com.anko.coursems.common.support.BaseController;
 import com.anko.coursems.entity.Notice;
 import com.anko.coursems.service.NoticeService;
 import io.swagger.annotations.Api;
@@ -22,13 +22,13 @@ public class NoticeController extends BaseController {
     @PostMapping
     public Result sendNotice(@RequestBody Notice noticeForm) {
         Notice notice = noticeService.addNotice(noticeForm);
-        return Result.success(notice);
+        return handleResult(notice);
     }
 
     @ApiOperation(value = "删除通知")
     @LogAnnotation(operation = "删除通知")
     @DeleteMapping("/{id}")
     public Result deleteNotice(@PathVariable String id) {
-        return handleResult(noticeService.deleteNotice(id));
+        return handleResult(noticeService.deleteByExId(id));
     }
 }

@@ -131,7 +131,7 @@ public class ClazzServiceTests {
                 String[] c = formatDate(line);
                 String reality = "success";
                 try {
-                    if(noticeService.deleteNotice(c[1]) == 0) {
+                    if(noticeService.deleteByExId(c[1]) == 0) {
                         reality = "fail";
                     }
                 } catch (Exception e) {

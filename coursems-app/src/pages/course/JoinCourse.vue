@@ -78,9 +78,7 @@ export default {
     },
     confirm () {
       addMember({courseId: this.course.courseId, userId: this.userInfo.userId}).then(res => {
-        if (res.code === 0) {
-          this.$router.push('/course')
-        }
+        this.$router.push('/course')
       })
     }
   },

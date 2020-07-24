@@ -1,6 +1,6 @@
 package com.anko.coursems.dao;
 
-import com.anko.coursems.core.BaseMapper;
+import com.anko.coursems.common.support.BaseMapper;
 import com.anko.coursems.entity.Course;
 import com.anko.coursems.model.CourseDTO;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-@BaseMapper.Meta(table = "t_course", id = "course_id")
+@BaseMapper.Meta(table = "t_course", exId = "course_id")
 public interface CourseMapper extends BaseMapper<Course> {
 
     List<Course> joinList(String userId);

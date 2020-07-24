@@ -40,6 +40,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import {createCourse} from '@/api/course'
 
 export default {
   name: 'CreateCourse',
@@ -78,7 +79,9 @@ export default {
           this.courseForm.teacherId = this.userInfo.userId
           this.courseForm.teacherName = this.userInfo.userName
           this.$log.info('create/form', this.courseForm)
-          this.$store.dispatch('course/createCourse', this.courseForm)
+          createCourse(this.courseForm).then(res => {
+            this.$router.push('/course')
+          })
         } else {
           this.$log.info('create/form', 'error submit!!')
           return false

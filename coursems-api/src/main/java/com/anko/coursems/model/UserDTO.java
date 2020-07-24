@@ -51,7 +51,6 @@ public class UserDTO {
         return userDto;
     }
 
-
     private static class UserConverter extends Converter<UserDTO, User> {
         @Override
         protected User doForward(UserDTO userDto) {

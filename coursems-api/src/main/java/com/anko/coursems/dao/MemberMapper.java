@@ -1,14 +1,11 @@
 package com.anko.coursems.dao;
 
-import com.anko.coursems.core.BaseMapper;
+import com.anko.coursems.common.support.BaseMapper;
 import com.anko.coursems.entity.Member;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@BaseMapper.Meta(table = "t_member", id = "id")
+@BaseMapper.Meta(table = "t_member")
 public interface MemberMapper extends BaseMapper<Member> {
 
     int grade(Member scoreForm);

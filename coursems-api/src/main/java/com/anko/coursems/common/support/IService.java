@@ -1,6 +1,4 @@
-package com.anko.coursems.core;
-
-import com.anko.coursems.entity.Member;
+package com.anko.coursems.common.support;
 
 import java.util.List;
 
@@ -14,7 +12,14 @@ public interface IService<T> {
      * @param id the id
      * @return the entity
      */
-    T selectById(Object id);
+    T selectById(Long id);
+
+    /**
+     * 根据Id查找
+     * @param exId the service id
+     * @return the entity
+     */
+    T selectByExId(Object exId);
 
     /**
      * 根据存在的属性筛选数据
@@ -44,11 +49,25 @@ public interface IService<T> {
     int updateById(T t);
 
     /**
+     * 根据Id跟新表数据
+     * @param t the entity
+     * @return the int
+     */
+    int updateByExId(T t);
+
+    /**
      * 根据Id删除表数据
      * @param id the id
      * @return the int
      */
-    int deleteById(Object id);
+    int deleteById(Long id);
+
+    /**
+     * 根据Id删除表数据
+     * @param exId the service id
+     * @return the int
+     */
+    int deleteByExId(Object exId);
 
     /**
      * 删除数据

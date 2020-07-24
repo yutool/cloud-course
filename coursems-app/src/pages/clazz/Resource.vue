@@ -115,8 +115,12 @@ export default {
   },
   methods: {
     submitForm (formName) {
+      if (this.file == null) {
+        this.$message({type: 'info', message: '请选择资源'})
+        return
+      }
       this.$refs[formName].validate((valid) => {
-        if (valid && this.file != null) {
+        if (valid) {
           this.resourceForm['courseId'] = this.getCourseId
           const data = new FormData()
           data.append('info', JSON.stringify(this.resourceForm))

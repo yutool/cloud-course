@@ -1,13 +1,11 @@
 package com.anko.coursems.dao;
 
-import com.anko.coursems.core.BaseMapper;
+import com.anko.coursems.common.support.BaseMapper;
 import com.anko.coursems.entity.Notice;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@BaseMapper.Meta(table = "t_notice", id = "notice_id")
+@BaseMapper.Meta(table = "t_notice", exId = "notice_id")
 public interface NoticeMapper extends BaseMapper<Notice> {
 
 //    @Delete("delete from t_notice" +

@@ -1,6 +1,6 @@
 package com.anko.coursems.service;
 
-import com.anko.coursems.core.IService;
+import com.anko.coursems.common.support.IService;
 import com.anko.coursems.entity.Course;
 import com.anko.coursems.model.CourseDTO;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,7 +11,7 @@ public interface CourseService extends IService<Course> {
 
     /**
      * 获取用户所有课程
-     * @param id 用户id
+     * @param id 用户exId
      */
     List<Course> getAllCourses(String id);
 
