@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.anko.coursems.dao.CourseMapper">
+<mapper namespace="com.ankoye.coursems.dao.CourseMapper">
 
 <!--    <resultMap id="courseMap" type="course">-->
 <!--        <id property="courseId" column="course_id" />-->
@@ -17,7 +17,7 @@
 <!--        <result property="experiencesNum" column="experience_num" />-->
 <!--        <result property="appraise" column="appraise" />-->
 <!--        <association property="teacher" column="teacher_id"-->
-<!--                     select="com.anko.coursems.dao.UserMapper.selectById" />-->
+<!--                     select="UserMapper.selectById" />-->
 <!--    </resultMap>-->
 
     <resultMap id="courseDetailMap" type="courseDto">
@@ -35,11 +35,11 @@
         <result property="teacherId" column="teacher_id" />
         <result property="teacherName" column="user_name" />
         <collection property="members" column="course_id"
-                    select="com.anko.coursems.dao.MemberMapper.getMembersByCourseId" />
+                    select="com.ankoye.coursems.dao.MemberMapper.getMembersByCourseId" />
         <collection property="resources" column="course_id"
-                    select="com.anko.coursems.dao.ResourceMapper.getResourcesByCourseId" />
+                    select="com.ankoye.coursems.dao.ResourceMapper.getResourcesByCourseId" />
         <collection property="notices" column="course_id"
-                    select="com.anko.coursems.dao.NoticeMapper.getNoticesByCourseId" />
+                    select="com.ankoye.coursems.dao.NoticeMapper.getNoticesByCourseId" />
     </resultMap>
 
     <select id="getCourseDetail" parameterType="string" resultMap="courseDetailMap">

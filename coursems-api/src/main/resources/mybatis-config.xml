@@ -6,10 +6,10 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
-        <package name="com.anko.coursems.model"/>
+        <package name="com.ankoye.coursems.model"/>
     </typeAliases>
     <typeHandlers>
         <typeHandler jdbcType="INTEGER" javaType="boolean"
-                     handler="com.anko.coursems.common.typehandler.BooleanAndIntConverter" />
+                     handler="com.ankoye.coursems.common.typehandler.BooleanAndIntConverter" />
     </typeHandlers>
 </configuration>

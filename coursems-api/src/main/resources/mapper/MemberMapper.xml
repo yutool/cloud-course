@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.anko.coursems.dao.MemberMapper">
+<mapper namespace="com.ankoye.coursems.dao.MemberMapper">
 
 <!--    <resultMap id="memberMap" type="member">-->
 <!--        <id property="id" column="id" />-->
@@ -32,7 +32,7 @@
         update t_member
         set score = #{score}, remark = #{remark}
         where course_id = #{courseId}
-        and user_id = #{user.userId}
+        and user_id = #{userId}
     </update>
 
 </mapper>

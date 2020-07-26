@@ -8,8 +8,8 @@
         <version>2.2.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.anko</groupId>
-    <artifactId>coursems-api</artifactId>
+    <groupId>com.ankoye</groupId>
+    <artifactId>coursems</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>coursems</name>
     <description>Demo project for Spring Boot</description>
@@ -140,7 +140,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.anko.coursems.CoursemsApplication</mainClass>
+                    <mainClass>com.ankoye.coursems.CoursemsApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
